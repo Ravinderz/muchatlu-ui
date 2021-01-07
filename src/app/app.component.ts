@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'muchatlu-ui';
+  // title = 'websocket-frontend';
+  // input;
+  // constructor(private messageService: MessageService) {}
+  // sendMessage() {
+  //   if (this.input) {
+  //     this.messageService.sendMessage(this.input);
+  //     this.input = '';
+  //   }
+  // }
 }
