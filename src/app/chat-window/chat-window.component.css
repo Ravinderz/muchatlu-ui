@@ -3,21 +3,26 @@ body{
    
 }
 
-.container{
+/* .container{
     display: flex;
     flex-direction: column;
     justify-content: center;
     resize: vertical;
     overflow: hidden;
     height: calc(100vh - 30px);
+} */
+
+.container{
+    margin-top:30px
 }
 
 .row.row-broken {
     padding-bottom: 0;
 }
-.col-inside-lg {
-    padding: 20px;
-}
+/* .col-inside-lg {
+    padding: 0 20px 20px 20px;
+
+} */
 .chat {
     height: calc(100vh - 180px);
 }
@@ -27,6 +32,20 @@ body{
     box-shadow: 0px 15px 16.83px 0.17px rgba(0, 0, 0, 0.05);
     border-radius: 20px;
 }
+
+.chat-friends{
+    padding: 20px;
+    margin-bottom: 15px;
+    background: rgb(58,90,144);
+    background: linear-gradient(90deg, rgba(58,90,144,1) 0%, rgba(70,37,240,1) 45%, rgba(0,185,255,1) 100%);
+    color: #fff;
+}
+
+.chat-users{
+    padding-left:20px;
+    padding-right:20px;
+}
+
 .chat-users h6 {
     font-size: 20px;
     margin: 0 0 20px;
@@ -84,13 +103,59 @@ body{
     text-overflow: ellipsis;
 }
 .chat-users .user .mood {
-    font: 200 14px/20px "Raleway", sans-serif;
+    font: lighter 12px/16px "Raleway", sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 /*****************CHAT BODY *******************/
+
+.chat-body-header{
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #FF416C;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FF4B2B, #FF416C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.chat-body-header .header-avatar{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.chat-body-header .header-avatar img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.chat-body-header .status-text{
+    font-size: 14px;
+    color:#fff;
+}
+
+.chat-body-header .name{
+    color:#fff;
+}
+
+
+
+.chat-body-header .col-md-11 .avatar .status{
+    right: 4px;
+}
+
+.chat-body{
+    padding: 0 20px 0 20px;
+}
+
 .chat-body h6 {
     font-size: 20px;
     margin: 0 0 20px;
@@ -105,13 +170,14 @@ body{
     max-width: 600px;
     overflow: hidden;
     clear: both;
+    margin-bottom:10px;
 }
 .chat-body .answer.left .avatar {
     left: 0;
 }
-.chat-body .answer .avatar {
+/* .chat-body .answer .avatar {
     bottom: 36px;
-}
+} */
 .chat .avatar {
     width: 40px;
     height: 40px;
@@ -123,6 +189,7 @@ body{
     height: 100%;
 }
 .chat-body .answer .name {
+    display: none;
     font-size: 14px;
     line-height: 36px;
 }
@@ -138,7 +205,7 @@ body{
     border-radius: 8px 8px 8px 0;
 }
 .chat-body .answer .text {
-    padding: 12px;
+    padding: 8px;
     font-size: 16px;
     line-height: 26px;
     position: relative;
@@ -200,7 +267,10 @@ body{
     position: relative;
     margin: 20px -20px -20px;
     padding: 20px;
-    background: #46be8a;
+    background: rgb(59,154,10);
+    background: linear-gradient(90deg, rgba(59,154,10,1) 0%, rgba(29,222,10,1) 45%, rgba(25,182,46,1) 100%);
+    
+
 }
  .chat-body .answer-add input {
     padding: 10px;

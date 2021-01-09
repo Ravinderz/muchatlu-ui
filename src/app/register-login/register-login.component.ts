@@ -10,13 +10,16 @@ import { AuthService } from '../auth-service.service';
 })
 export class RegisterLoginComponent implements OnInit {
 
+  
+
   constructor(private authService: AuthService,private router: Router) { }
 
   registerForm = new FormGroup({
     username : new FormControl(''),
     email : new FormControl(''),
     password : new FormControl(''),
-    repassword : new FormControl('')
+    repassword : new FormControl(''),
+    avatar: new FormControl('')
   })
 
   loginForm = new FormGroup({
@@ -34,8 +37,11 @@ export class RegisterLoginComponent implements OnInit {
   }
 
   onRegisterSubmit(){
+
+
     this.authService.register(this.registerForm.value).subscribe((data) => {
       console.log(data);
+      sessionStorage.setItem('loggedUser', JSON.stringify(data));
       this.router.navigate(['chat']);
     })
   }
@@ -43,6 +49,7 @@ export class RegisterLoginComponent implements OnInit {
   onLoginSubmit(){
     this.authService.login(this.loginForm.value).subscribe((data) => {
       console.log(data);
+      sessionStorage.setItem('loggedUser', JSON.stringify(data));
       this.router.navigate(['chat']);
     })
   }
