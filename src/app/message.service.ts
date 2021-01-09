@@ -19,11 +19,15 @@ export class MessageService {
 
   public chats : BehaviorSubject<any>;
 
+  public loginEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
+
+  public logoutEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
+
   public msg = {
    
   };
   initializeWebSocketConnection(userId) {
-    const serverUrl = 'http://localhost:8080/chat';
+    const serverUrl = `http://localhost:8080/chat?userId=${userId}`;
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
@@ -52,24 +56,24 @@ export class MessageService {
         }
       });
 
-      // that.stompClient.subscribe(`/topic/public`, (message) => {
-      //   console.log(message);
-      //   if (message.body) {
-      //     let msg = JSON.parse(message.body);
-      //     console.log('inside stompClient :',userId,msg);
-      //     console.log('user if from :',msg.userIdFrom);
-      //     console.log(that.msg)
-      //     if(that.msg[msg.userIdFrom]){
-      //       that.msg[msg.userIdFrom].push(msg);
-      //     }else{
-      //       let arr = []
-      //       arr.push(msg);
-      //       that.msg[msg.userIdFrom] = arr;
-      //     }
-      //     that.setValue(that.msg);
-      //     //that.msg.push(message.body);
-      //   }
-      // });
+      
+      that.stompClient.subscribe(`/topic/public.login`, (message) => {
+        console.log(message);
+        if (message.body) {
+          let msg = JSON.parse(message.body);
+          that.loginEvent.next(msg);
+          console.log('inside loginevent : ' ,msg);
+        }
+      });
+
+      that.stompClient.subscribe(`/topic/public.logout`, (message) => {
+        console.log(message);
+        if (message.body) {
+          let msg = JSON.parse(message.body);
+          that.logoutEvent.next(msg);
+          console.log('inside logout event : ',msg);
+        }
+      });
     });
   }
 

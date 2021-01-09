@@ -10,10 +10,10 @@
                 <div class="user" (click) = "selectedUser(friend)">
                     <div class="avatar">
                     <img [src]="friend.avatar" alt="User name">
-                    <div class="status off"></div>
+                    <div [ngClass]="(friend.isOnline) ? 'status online':'status off'"></div>
                     </div>
                     <div class="name">{{friend.username}}</div>
-                    <div class="mood">online</div>
+                    <div class="mood">{{(friend.isOnline)? "Online" : "Offline"}}</div>
                 </div>
               </div>
             </div>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-11">
                   <div class="name">{{selectedFriend.username}}</div>
-                  <div class="status-text">online</div>
+                  <div class="status-text">{{(selectedFriend.isOnline)? "Online" : "Offline"}}</div>
                 </div>
               </div>
             </div>
@@ -40,7 +40,7 @@
               <div [ngClass]="(loggedUser.id === chat.userIdFrom) ? 'answer left' : 'answer right'">
                 <div class="avatar">
                   <img [src]="chat.avatarFrom" alt="User name">
-                  <div class="status offline"></div>
+                  <div class]="status offline"></div>
                 </div>
                 <div class="name">{{chat.usernameFrom}}</div>
                 <div class="text">

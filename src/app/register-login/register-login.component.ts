@@ -42,7 +42,7 @@ export class RegisterLoginComponent implements OnInit {
     this.authService.register(this.registerForm.value).subscribe((data) => {
       console.log(data);
       sessionStorage.setItem('loggedUser', JSON.stringify(data));
-      this.router.navigate(['chat']);
+      this.loadOtherSection();
     })
   }
 

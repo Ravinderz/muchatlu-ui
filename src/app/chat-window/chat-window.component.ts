@@ -23,18 +23,21 @@ export class ChatWindowComponent implements OnInit {
     'id':1,
     'username':'Ravi',
     'email':'ravi@abc.com',
-    'avatar':'https://images.pexels.com/photos/412840/pexels-photo-412840.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb'
+    'avatar':'https://images.pexels.com/photos/412840/pexels-photo-412840.jpeg?crop=faces&fit=crop&h=200&w=200&auto=compress&cs=tinysrgb',
+    'isOnline':true
   },
   {
     'id':3,
     'username':'Sindhu',
     'email':'sindhu@abc.com',
-    'avatar':'https://images.unsplash.com/photo-1529218164294-0d21b06ea831?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
+    'avatar':'https://images.unsplash.com/photo-1529218164294-0d21b06ea831?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
+    'isOnline':false
   },{
     'id':2,
     'username':'Bharath',
     'email':'bharath@abc.com',
-    'avatar':'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ'
+    'avatar':'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
+    'isOnline':false
   }];
 
   ngOnInit() {
@@ -46,6 +49,30 @@ export class ChatWindowComponent implements OnInit {
     this.messageService.getValue().subscribe((value) => {
       this.chats = value;
     });
+
+    this.messageService.loginEvent.subscribe((value) =>{
+      console.log("Inside chat window, login event value ::: ",value);
+      //let updatedFriends = this.friends;
+      this.friends.forEach(element => {
+        if(element.id === value.userId){
+          element.isOnline = value.online;
+        }
+      });
+
+     // this.friends = updatedFriends;
+    })
+
+    this.messageService.logoutEvent.subscribe((value) =>{
+      console.log("Inside chat window, login event value ::: ",value);
+      //let updatedFriends = this.friends;
+      this.friends.forEach(element => {
+        if(element.id === value.userId){
+          element.isOnline = value.online;
+        }
+      });
+
+      //this.friends = updatedFriends;
+    })
   }  
 
   selectedUser(friend){
