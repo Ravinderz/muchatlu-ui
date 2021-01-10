@@ -5,8 +5,19 @@
           <div class="col-inside-lg decor-default chat" style="overflow: auto; outline: none;" tabindex="5000">
             <h6 class="chat-friends">Friends</h6>
             <div class="chat-users">
+
+              <div class="add-friend">
+              <div class="user">
+                <div class="avatar">
+                <img src="../../assets/blank-profile-picture.svg" alt="User name">
+                <div class="status off"></div>
+                </div>
+                <div class="name">Add Friend</div>
+                <div class="name"><input placeholder="email" [(ngModel)]="email" (keyup.enter)="sendFriendRequest()"></div>
+            </div>
+          </div>
              
-              <div *ngFor="let friend of friends">
+              <div *ngFor="let friend of updatedFriends">
                 <div class="user" (click) = "selectedUser(friend)">
                     <div class="avatar">
                     <img [src]="friend.avatar" alt="User name">
@@ -15,6 +26,20 @@
                     <div class="name">{{friend.username}}</div>
                     <div class="mood">{{(friend.isOnline)? "Online" : "Offline"}}</div>
                 </div>
+              </div>
+              <div *ngIf="friendRequests && friendRequests.length > 0">
+              <div *ngFor="let request of friendRequests">
+                <div class="user" (click) = "acceptRequest()">
+                    <div class="avatar">
+                      <img src="../../assets/blank-profile-picture.svg" alt="User name">
+                    <div class="status off"></div>
+                    </div>
+                    <div class="name">{{request.requestFromUsername}}</div>
+                    <div class="mood">Offline</div>
+                    <button class="friend-request-btn" (click)="updateFriendRequest('ACCEPTED',request)">Accept</button>
+                    <button class="friend-request-btn" (click)="updateFriendRequest('REJECTED',request)">Reject</button>
+                </div>
+              </div>
               </div>
             </div>
           </div>
@@ -25,7 +50,7 @@
               <div class="row">
                 <div class="col-md-1">
                   <div class="header-avatar">
-                    <img [src]="selectedFriend.avatar" alt="User name">
+                    <img [src]="(selectedFriend && selectedFriend.avatar) ? selectedFriend.avatar : '../../assets/blank-profile-picture.svg'" alt="User name">
                   </div>
                 </div>
                 <div class="col-md-11">
@@ -40,7 +65,7 @@
               <div [ngClass]="(loggedUser.id === chat.userIdFrom) ? 'answer left' : 'answer right'">
                 <div class="avatar">
                   <img [src]="chat.avatarFrom" alt="User name">
-                  <div class]="status offline"></div>
+                  <div class="status offline"></div>
                 </div>
                 <div class="name">{{chat.usernameFrom}}</div>
                 <div class="text">

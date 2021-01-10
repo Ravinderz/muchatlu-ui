@@ -318,3 +318,9 @@ body{
     -webkit-appearance: none;
     border-radius: 0;
 }
+
+/*adding new css here*/
+
+.add-friend{
+    margin-bottom: 35px;
+}

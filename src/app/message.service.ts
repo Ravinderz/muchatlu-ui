@@ -23,6 +23,8 @@ export class MessageService {
 
   public logoutEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
 
+  public friendRequestEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
+
   public msg = {
    
   };
@@ -74,6 +76,17 @@ export class MessageService {
           console.log('inside logout event : ',msg);
         }
       });
+
+      that.stompClient.subscribe(`/topic/${userId}.friendRequest`, (message) => {
+        console.log(message);
+        if (message.body) {
+          let msg = JSON.parse(message.body);
+          that.friendRequestEvent.next(msg);
+          console.log('inside Friend Request event : ',msg);
+        }
+      });
+
+
     });
   }
 
