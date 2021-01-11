@@ -24,9 +24,6 @@ export class MessageService {
 
   public friendRequestEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
 
-  public msg = {
-   
-  };
   initializeWebSocketConnection(userId) {
     const serverUrl = `http://localhost:8080/chat?userId=${userId}`;
     const ws = new SockJS(serverUrl);
@@ -40,7 +37,6 @@ export class MessageService {
         console.log(message);
         if (message.body) {
           let msg = JSON.parse(message.body);
-          that.msg = msg;
           that.messageEvent.next(msg);
         }
       });
@@ -76,16 +72,7 @@ export class MessageService {
   }
 
   sendMessage(message) {
-    this.stompClient.send(`/app/chat.${message.userIdTo}` , {}, JSON.stringify(message));
-    if(this.msg[message.userIdTo]){
-      this.msg[message.userIdTo].push(message);
-    }else{
-      let arr = []
-      arr.push(message);
-      this.msg[message.userIdTo] = arr;
-    }
-    
-    //this.setValue(this.msg);
+    this.stompClient.send(`/app/chat.${message.userIdTo}` , {}, JSON.stringify(message)); 
   }
 
 }

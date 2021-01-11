@@ -25,6 +25,7 @@
                     </div>
                     <div class="name">{{friend.username}}</div>
                     <div class="mood">{{(friend.isOnline)? "Online" : "Offline"}}</div>
+                    <div class="mood" *ngIf="(unreadMessages && unreadMessages[friend.id] && unreadMessages[friend.id].length !== 0)">{{unreadMessages[friend.id].length}}</div>
                 </div>
               </div>
               <div *ngIf="friendRequests && friendRequests.length > 0">

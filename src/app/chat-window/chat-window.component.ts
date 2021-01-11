@@ -26,6 +26,8 @@ export class ChatWindowComponent implements OnInit,OnDestroy {
 
   friendRequests = [];
 
+  unreadMessages:any = {};
+
   updatedFriends = new Set();
   
   friends = [{
@@ -80,6 +82,15 @@ export class ChatWindowComponent implements OnInit,OnDestroy {
       }else{
         this.chats[value.userIdFrom].push(value);
       }
+
+      if(value.userIdFrom !== this.selectedChatId){
+        if(!this.unreadMessages[value.userIdFrom]){
+          this.unreadMessages[value.userIdFrom]= [1];
+        }else{
+          this.unreadMessages[value.userIdFrom].push(1);
+        }
+      }
+      
 
 
       console.log(this.chats);
@@ -153,9 +164,7 @@ export class ChatWindowComponent implements OnInit,OnDestroy {
     console.log(friend);
     this.selectedFriend = friend;
     this.selectedChatId = friend.id;
-    if(this.chats[friend.id]){
-
-    }
+    this.unreadMessages[friend.id] = [];
     }
 
     acceptRequest(){
