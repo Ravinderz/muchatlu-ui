@@ -29,7 +29,7 @@
               </div>
               <div *ngIf="friendRequests && friendRequests.length > 0">
               <div *ngFor="let request of friendRequests">
-                <div class="user" (click) = "acceptRequest()">
+                <div class="user">
                     <div class="avatar">
                       <img src="../../assets/blank-profile-picture.svg" alt="User name">
                     <div class="status off"></div>
@@ -61,6 +61,7 @@
             </div>
             <div class="chat-body" style="overflow: auto; outline: none; height:600px">
              
+              <div *ngIf="chats && chats[selectedChatId]">
               <div *ngFor="let chat of chats[selectedChatId]">
               <div [ngClass]="(loggedUser.id === chat.userIdFrom) ? 'answer left' : 'answer right'">
                 <div class="avatar">
@@ -74,6 +75,7 @@
                 <!-- <div class="time">5 min ago</div> -->
               </div>
             </div>
+          </div>
            
               <div class="answer-add" #chatinput>
                 <input placeholder="Write a message" [(ngModel)]="text" (keyup.enter)="sendMsg(chatinput)">

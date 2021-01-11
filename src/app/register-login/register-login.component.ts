@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from '../auth-service.service';
 
 @Component({
@@ -8,9 +9,9 @@ import { AuthService } from '../auth-service.service';
   templateUrl: './register-login.component.html',
   styleUrls: ['./register-login.component.css']
 })
-export class RegisterLoginComponent implements OnInit {
+export class RegisterLoginComponent implements OnInit,OnDestroy {
 
-  
+  subscriptions:Subscription[] = [];
 
   constructor(private authService: AuthService,private router: Router) { }
 
@@ -39,19 +40,23 @@ export class RegisterLoginComponent implements OnInit {
   onRegisterSubmit(){
 
 
-    this.authService.register(this.registerForm.value).subscribe((data) => {
+    this.subscriptions.push(this.authService.register(this.registerForm.value).subscribe((data) => {
       console.log(data);
       sessionStorage.setItem('loggedUser', JSON.stringify(data));
       this.loadOtherSection();
-    })
+    }));
   }
 
   onLoginSubmit(){
-    this.authService.login(this.loginForm.value).subscribe((data) => {
+    this.subscriptions.push(this.authService.login(this.loginForm.value).subscribe((data) => {
       console.log(data);
       sessionStorage.setItem('loggedUser', JSON.stringify(data));
       this.router.navigate(['chat']);
-    })
+    }));
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 

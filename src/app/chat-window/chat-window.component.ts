@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { MessageService } from '../message.service';
 import { UserService } from '../user.service';
 
@@ -7,7 +8,7 @@ import { UserService } from '../user.service';
   templateUrl: './chat-window.component.html',
   styleUrls: ['./chat-window.component.css']
 })
-export class ChatWindowComponent implements OnInit {
+export class ChatWindowComponent implements OnInit,OnDestroy {
 
   constructor(private userService:UserService, private messageService:MessageService, ) { 
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
@@ -19,8 +20,9 @@ export class ChatWindowComponent implements OnInit {
   selectedChatId:any;
   selectedFriend:any;
   text:String;
-  chats= {};
+  chats:any;
   email:string;
+  subscriptions:Subscription[] = [];
 
   friendRequests = [];
 
@@ -35,37 +37,18 @@ export class ChatWindowComponent implements OnInit {
   },
  ];
 
-//  {
-//   'id':3,
-//   'username':'Sindhu',
-//   'email':'sindhu@abc.com',
-//   'avatar':'https://images.unsplash.com/photo-1529218164294-0d21b06ea831?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-//   'isOnline':false
-// },{
-//   'id':2,
-//   'username':'Bharath',
-//   'email':'bharath@abc.com',
-//   'avatar':'https://images.unsplash.com/photo-1542345812-d98b5cd6cf98?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&ixid=eyJhcHBfaWQiOjE3Nzg0fQ',
-//   'isOnline':false
-// }
-
   ngOnInit() {
     
     if(this.loggedUser){
       console.log("inside logged user :: ",this.loggedUser)
-      this.userService.getFriends(this.loggedUser).subscribe( (value:any) => {
+      this.subscriptions.push(this.userService.getFriends(this.loggedUser).subscribe( (value:any) => {
 
+        console.log("friends ::: ",value)
         value.friends.forEach(element => {
-          this.updatedFriends.add(element);
-        });
-        
-        value.friendsTo.forEach(element => {
           if(element && element != null && typeof element == 'object'){
-            this.updatedFriends.add(element);
-          }
-          
-        });        
-
+                this.updatedFriends.add(element);
+              }
+        });
         this.friends = value.friends;
         if(!this.friends){
           this.friends = [];
@@ -73,7 +56,7 @@ export class ChatWindowComponent implements OnInit {
         if(!this.selectedFriend){
           this.selectedFriend = this.friends[0];
         }
-      });
+      }));
     }
 
     if(!this.selectedFriend){
@@ -81,11 +64,28 @@ export class ChatWindowComponent implements OnInit {
     }
     
     console.log(this.loggedUser);
-    this.messageService.getValue().subscribe((value) => {
-      this.chats = value;
-    });
+    this.subscriptions.push(this.messageService.messageEvent.subscribe((value) =>{
+      console.log("Inside chat window, message event value ::: ",value);
+      if(!this.chats){
+        this.chats = {}
+      }
+      if(!this.chats[value.userIdTo]){
+        this.chats[value.userIdTo]= [value];
+      }else{
+        this.chats[value.userIdTo].push(value);
+      }
 
-    this.messageService.loginEvent.subscribe((value) =>{
+      if(!this.chats[value.userIdFrom]){
+        this.chats[value.userIdFrom]= [value];
+      }else{
+        this.chats[value.userIdFrom].push(value);
+      }
+
+
+      console.log(this.chats);
+    }));
+
+    this.subscriptions.push(this.messageService.loginEvent.subscribe((value) =>{
       console.log("Inside chat window, login event value ::: ",value);
       //let updatedFriends = this.friends;
       this.friends.forEach(element => {
@@ -95,9 +95,9 @@ export class ChatWindowComponent implements OnInit {
       });
 
      // this.friends = updatedFriends;
-    })
+    }));
 
-    this.messageService.logoutEvent.subscribe((value) =>{
+    this.subscriptions.push(this.messageService.logoutEvent.subscribe((value) =>{
       console.log("Inside chat window, login event value ::: ",value);
       //let updatedFriends = this.friends;
       this.friends.forEach(element => {
@@ -107,22 +107,26 @@ export class ChatWindowComponent implements OnInit {
       });
 
       //this.friends = updatedFriends;
-    })
+    }));
 
-    this.messageService.friendRequestEvent.subscribe((value) =>{
-      console.log("Inside chat window, friendRequest event value ::: ",value);
-
-      console.log("friend requests :: ",this.friendRequests);
+    this.subscriptions.push(this.messageService.friendRequestEvent.subscribe((value) =>{
+      console.log("Inside chat window, friendRequest event value ::: ",value);      
       //let updatedFriends = this.friends;
       if(value && value.requestFromUserId && value.status === 'PENDING'){
         this.friendRequests.push(value);
       }
 
       if(value.requestFromUser && value.status === 'ACCEPTED'){
-        if(value.requestFromUserId === this.loggedUser.id){
-          this.friends.push(value.requestToUser);
+        console.log("isndie accepted status ::::: ",value)
+        console.log("isndie accepted status logged user ::::: ",this.loggedUser)
+        if(value.requestFromUserId === this.loggedUser.id){ 
+          if(value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object'){
+            this.updatedFriends.add(value.requestToUser);
+          }
         }else if(value.requestToUserId === this.loggedUser.id){
-          this.friends.push(value.requestFromUser);
+          if(value.requestFromUser && value.requestFromUser != null && typeof value.requestFromUser == 'object'){
+            this.updatedFriends.add(value.requestFromUser);
+          }
         }
         this.friendRequests.forEach((element,index)=>{
           if(element.id===value.id) {
@@ -140,7 +144,7 @@ export class ChatWindowComponent implements OnInit {
        });
       }
       
-    });
+    }));
     
    
   }  
@@ -166,17 +170,15 @@ export class ChatWindowComponent implements OnInit {
       'requestFromUsername':this.loggedUser.username
       }
       console.log(friendRequest);
-      this.userService.sendFriendRequest(friendRequest).subscribe((value) => {
-        console.log(value);
-      });
+      this.subscriptions.push(this.userService.sendFriendRequest(friendRequest).subscribe((value) => {
+      }));
     }
 
     updateFriendRequest(status:String,request:any){
       request.status = status;
       console.log(request);
-      this.userService.updateFriendRequest(request).subscribe((value) => {
-        console.log(value);
-      });
+      this.subscriptions.push(this.userService.updateFriendRequest(request).subscribe((value) => {
+      }));
     }
 
     sendMsg(el: HTMLElement){
@@ -190,10 +192,23 @@ export class ChatWindowComponent implements OnInit {
         'message':this.text
       }
       this.messageService.sendMessage(msg);
+      if(!this.chats){
+        this.chats = {};
+      }
+      if(!this.chats[msg.userIdTo]){
+        this.chats[msg.userIdTo]= [msg];
+      }else{
+        this.chats[msg.userIdTo].push(msg);
+      }
+      
       this.text = '';
       this.scrollTo.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
       var elmnt = document.getElementById("scrollTo");
       elmnt.scrollIntoView();
     } 
+
+    ngOnDestroy(){
+      this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
 }
