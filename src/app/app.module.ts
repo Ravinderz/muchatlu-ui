@@ -10,6 +10,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { RegisterComponent } from './register/register.component';
 import { GroupListComponent } from './group-list/group-list.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
+import { ItemHeaderComponent } from './item-header/item-header.component';
+import { FriendChatComponent } from './friend-chat/friend-chat.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: 'home', pathMatch: 'full' },
@@ -27,7 +30,10 @@ const routes: Routes = [
     RegisterComponent,
     LoginComponent,
     HomeComponent,
-    GroupListComponent
+    GroupListComponent,
+    SearchBoxComponent,
+    ItemHeaderComponent,
+    FriendChatComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

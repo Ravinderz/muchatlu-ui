@@ -2,25 +2,19 @@
   <div class="row content-container">
     <div class="col-sm-2 side-bar-nav">
       <ul class="nav flex-column mt-5">
-        <li
-          class="nav-item d-flex justify-content-start align-items-center"
-        >
+        <li class="nav-item d-flex justify-content-start align-items-center">
           <i class="bi bi-chat-dots"></i>
           <a class="nav-link" aria-current="page" href="#"
             ><span class="link-text">Chats</span></a
           >
         </li>
-        <li
-          class="nav-item d-flex justify-content-start align-items-center"
-        >
+        <li class="nav-item d-flex justify-content-start align-items-center">
           <i class="bi bi-people"></i>
           <a class="nav-link" href="#"
             ><span class="link-text">Friends</span></a
           >
         </li>
-        <li
-          class="nav-item d-flex justify-content-start align-items-center"
-        >
+        <li class="nav-item d-flex justify-content-start align-items-center">
           <i class="bi bi-person-check"></i>
           <a class="nav-link" href="#"
             ><span class="link-text">Friend Requests</span></a
@@ -37,31 +31,15 @@
       </ul>
     </div>
 
-
     <div class="col-sm-3 list-container">
-      <div class="search-box mb-4 mt-4 pb-2">
-        <form class="row g-2" autocomplete="off">
-          <div class="col-10">
-            <input
-              type="text"
-              class="form-control"
-              id="search"
-              placeholder="Search"
-            />
-          </div>
-          <div class="col-1">
-            <button type="submit" class="btn btn-primary mb-3">
-              <i class="bi bi-search"></i>
-            </button>
-          </div>
-        </form>
-      </div>
+      <app-search-box></app-search-box>
       <div class="groups-container">
         <app-group-list></app-group-list>
       </div>
     </div>
     <div class="col-sm-7 chat-body-container">
-      <div class="user-header">
+      <app-item-header></app-item-header>
+      <!-- <div class="user-header">
         <div class="chat-list-item d-flex">
           <img
             class="avatar"
@@ -78,14 +56,16 @@
             <i class="bi bi-three-dots-vertical"></i>
           </div>
         </div>
-      </div>
-      <div class="chat-body">
+      </div> -->
+
+      <app-friend-chat></app-friend-chat>
+      <!-- <div class="chat-body">
         <div class="msg-left d-flex">
           <div class="message-left">
             <div><span class="member-name">Bharath</span></div>
             <p class="msg">
-              This is how the message looks like asdf sadf sadf asdf asdf
-              sadf ewrfwr adsfwea radfa sd
+              This is how the message looks like asdf sadf sadf asdf asdf sadf
+              ewrfwr adsfwea radfa sd
             </p>
             <div class="time-wrapper">
               <span class="msg-time">10:50 PM</span>
@@ -124,8 +104,8 @@
           <div class="message-left">
             <div><span class="member-name">Bharath</span></div>
             <p class="msg">
-              This is how the message looks like asdf sadf sadf asdf asdf
-              sadf ewrfwr adsfwea radfa sd
+              This is how the message looks like asdf sadf sadf asdf asdf sadf
+              ewrfwr adsfwea radfa sd
             </p>
             <div class="time-wrapper">
               <span class="msg-time">10:50 PM</span>
@@ -136,8 +116,8 @@
           <div class="message-left">
             <div><span class="member-name">Bharath</span></div>
             <p class="msg">
-              This is how the message looks like asdf sadf sadf asdf asdf
-              sadf ewrfwr adsfwea radfa sd
+              This is how the message looks like asdf sadf sadf asdf asdf sadf
+              ewrfwr adsfwea radfa sd
             </p>
             <div class="time-wrapper">
               <span class="msg-time">10:50 PM</span>
@@ -180,7 +160,7 @@
             </div>
           </form>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
