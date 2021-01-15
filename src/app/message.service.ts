@@ -32,7 +32,7 @@ export class MessageService {
     // tslint:disable-next-line:only-arrow-functions
     this.stompClient.connect({}, function(frame) {
 
-      
+      console.log(frame);
       that.stompClient.subscribe(`/topic/${userId}/messages`, (message) => {
         console.log(message);
         if (message.body) {

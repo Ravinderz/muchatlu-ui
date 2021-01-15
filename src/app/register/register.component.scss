@@ -1,0 +1,50 @@
+.content-container {
+  height: calc(100vh - 10vh) !important;
+
+  img {
+    width: 600px;
+    text-align: center;
+  }
+
+  input {
+    border-radius: 20px;
+    background-color: #f4f2ff;
+    border: none;
+    outline: none;
+  }
+
+  input:focus {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: darken($color: #f4f2ff, $amount: 3) !important;
+  }
+
+  ::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    text-align: center;
+  }
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    text-align: center;
+  }
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    text-align: center;
+  }
+  :-moz-placeholder {
+    /* Firefox 18- */
+    text-align: center;
+  }
+
+  button {
+    border-radius: 20px;
+    background-color: #6159e6;
+    border: none;
+    outline: none;
+  }
+
+  .sign-up-link {
+    color: #6159e6;
+    text-decoration: none;
+  }
+}
