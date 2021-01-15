@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-group-list',
@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GroupListComponent implements OnInit {
 
+  @Input() list: any;
+  @Input() listType: string;
+
+  @Output() selectedItemEvent = new EventEmitter<any>();
+
   constructor() { }
 
+  selectedItemIndex: string = null;
+
   ngOnInit() {
+    console.log(this.list);
   }
 
+  selectedItem(index:any){
+    this.selectedItemIndex = index;
+    this.selectedItemEvent.emit(this.list[index]);
+  }
 }

@@ -1,16 +1,16 @@
-<div class="chat-body">
-  <div class="msg-left d-flex">
-    <div class="message-left">
-      <p class="msg">
-        This is how the message looks like asdf sadf sadf asdf asdf sadf
-        ewrfwr adsfwea radfa sd
+<div class="chat-body" *ngIf="chats && chats[selectedItem.id]">
+  <div [ngClass]="(chat.userIdFrom === loggedInId) ? 'msg-left' : 'msg-right'" class="d-flex" *ngFor="let chat of chats[selectedItem.id]">
+    <div [ngClass]="(chat.userIdFrom === loggedInId) ? 'message-left' : 'message-right float-end'">
+      <p [ngClass]="(chat.userIdFrom === loggedInId) ? 'msg' : 'msg float-end'">
+        <!-- This is how the message looks like asdf sadf sadf asdf asdf sadf
+        ewrfwr adsfwea radfa sd -->{{chat.message}}
       </p>
       <div class="time-wrapper">
         <span class="msg-time">10:50 PM</span>
       </div>
     </div>
   </div>
-  <div class="msg-right d-flex">
+  <!-- <div class="msg-right d-flex">
     <div class="message-right float-end">
       <p class="msg float-end">May I interest you into a beverage</p>
       <div class="time-wrapper">
@@ -90,7 +90,7 @@
         <span class="msg-time">10:50 PM</span>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="message-input-container">
   <div class="msg-input mt-4">

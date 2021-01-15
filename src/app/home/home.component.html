@@ -2,26 +2,40 @@
   <div class="row content-container">
     <div class="col-sm-2 side-bar-nav">
       <ul class="nav flex-column mt-5">
-        <li class="nav-item d-flex justify-content-start align-items-center">
+        <li
+          class="nav-item d-flex justify-content-start align-items-center"
+          (click)="loadPage('chats', $event)"
+          [ngClass]="activeLink === 'chats' ? 'nav-active' : ''"
+        >
           <i class="bi bi-chat-dots"></i>
           <a class="nav-link" aria-current="page" href="#"
             ><span class="link-text">Chats</span></a
           >
         </li>
-        <li class="nav-item d-flex justify-content-start align-items-center">
+        <li
+          class="nav-item d-flex justify-content-start align-items-center"
+          (click)="loadPage('friends', $event)"
+          [ngClass]="activeLink === 'friends' ? 'nav-active' : ''"
+        >
           <i class="bi bi-people"></i>
           <a class="nav-link" href="#"
             ><span class="link-text">Friends</span></a
           >
         </li>
-        <li class="nav-item d-flex justify-content-start align-items-center">
+        <li
+          class="nav-item d-flex justify-content-start align-items-center"
+          (click)="loadPage('friend requests', $event)"
+          [ngClass]="activeLink === 'friend requests' ? 'nav-active' : ''"
+        >
           <i class="bi bi-person-check"></i>
-          <a class="nav-link" href="#"
+          <a class="nav-link" href=""
             ><span class="link-text">Friend Requests</span></a
           >
         </li>
         <li
-          class="nav-item d-flex justify-content-start align-items-center nav-active"
+          class="nav-item d-flex justify-content-start align-items-center"
+          (click)="loadPage('groups', $event)"
+          [ngClass]="activeLink === 'groups' ? 'nav-active' : ''"
         >
           <i class="bi bi-ui-radios-grid"></i>
           <a class="nav-link" href="#" tabindex="-1" aria-disabled="true"
@@ -32,135 +46,16 @@
     </div>
 
     <div class="col-sm-3 list-container">
-      <app-search-box></app-search-box>
+      <app-search-box [placeholder]="placeholder"></app-search-box>
       <div class="groups-container">
-        <app-group-list></app-group-list>
+        <div *ngIf="list && list.length > 0">
+        <app-group-list [listType]="friend" [list]="list" (selectedItemEvent) = "itemSelected($event)"></app-group-list>
+        </div>
       </div>
     </div>
     <div class="col-sm-7 chat-body-container">
       <app-item-header></app-item-header>
-      <!-- <div class="user-header">
-        <div class="chat-list-item d-flex">
-          <img
-            class="avatar"
-            src="./assets/images/97.jpg"
-            alt=""
-            height="60px"
-            width="60px"
-          />
-          <div class="text-content">
-            <h4>Movies</h4>
-            <p>Bharath, Nishant, Sruthi, Sindhu</p>
-          </div>
-          <div class="menu-dots">
-            <i class="bi bi-three-dots-vertical"></i>
-          </div>
-        </div>
-      </div> -->
-
-      <app-friend-chat></app-friend-chat>
-      <!-- <div class="chat-body">
-        <div class="msg-left d-flex">
-          <div class="message-left">
-            <div><span class="member-name">Bharath</span></div>
-            <p class="msg">
-              This is how the message looks like asdf sadf sadf asdf asdf sadf
-              ewrfwr adsfwea radfa sd
-            </p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:50 PM</span>
-            </div>
-          </div>
-        </div>
-        <div class="msg-right d-flex">
-          <div class="message-right float-end">
-            <div><span class="member-name float-end">You</span></div>
-            <p class="msg float-end">May I interest you into a beverage</p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:40 AM</span>
-            </div>
-          </div>
-        </div>
-        <div class="msg-left d-flex">
-          <div class="message-left">
-            <p class="msg">This is how the message looks like</p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:50 PM</span>
-            </div>
-          </div>
-        </div>
-        <div class="msg-right d-flex">
-          <div class="message-right float-end">
-            <p class="msg float-end">
-              May I interest you into a beverage kjlashd fklasjd fklja sdkfj
-              asdlksadjflaks dflk
-            </p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:40 AM</span>
-            </div>
-          </div>
-        </div>
-        <div class="msg-left d-flex">
-          <div class="message-left">
-            <div><span class="member-name">Bharath</span></div>
-            <p class="msg">
-              This is how the message looks like asdf sadf sadf asdf asdf sadf
-              ewrfwr adsfwea radfa sd
-            </p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:50 PM</span>
-            </div>
-          </div>
-        </div>
-        <div class="msg-left d-flex">
-          <div class="message-left">
-            <div><span class="member-name">Bharath</span></div>
-            <p class="msg">
-              This is how the message looks like asdf sadf sadf asdf asdf sadf
-              ewrfwr adsfwea radfa sd
-            </p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:50 PM</span>
-            </div>
-          </div>
-        </div>
-        <div class="msg-right d-flex">
-          <div class="message-right float-end">
-            <div><span class="member-name float-end">You</span></div>
-            <p class="msg float-end">May I interest you into a beverage</p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:40 AM</span>
-            </div>
-          </div>
-        </div>
-        <div class="msg-left d-flex">
-          <div class="message-left">
-            <p class="msg">This is how the message looks like</p>
-            <div class="time-wrapper">
-              <span class="msg-time">10:50 PM</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="message-input-container">
-        <div class="msg-input mt-4">
-          <form class="row g-2" autocomplete="off">
-            <div class="col-10">
-              <input
-                type="text"
-                class="form-control"
-                id="message"
-                placeholder="Message"
-              />
-            </div>
-            <div class="col-1">
-              <button type="submit" class="btn btn-primary mb-3">
-                <i class="bi bi-cursor-fill"></i>
-              </button>
-            </div>
-          </form>
-        </div>
-      </div> -->
+      <app-friend-chat [selectedItem]="selectedListItem"></app-friend-chat>
     </div>
   </div>
 </div>
