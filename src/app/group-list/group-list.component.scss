@@ -5,13 +5,22 @@
     border: 2px solid #fff;
   }
 
-  .text-content {
+  .friend-text-content {
     margin-top: -3px;
     h4,
     p {
       color: #fff !important;
     }
   }
+
+  .group-text-content {
+    margin-top: -3px;
+    h4,
+    p {
+      color: #fff !important;
+    }
+  }
+
   .time {
     p {
       color: #fff !important;
@@ -30,7 +39,27 @@
       border-radius: 50%;
     }
 
-    .text-content {
+    .friend-text-content {
+      margin-left: 0.7em;
+      margin-top: 0.5em;
+
+      h4 {
+        font-size: 16px;
+        color: #3f3d56;
+        margin-bottom: 0.2rem;
+      }
+
+      p {
+        word-wrap: none;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        font-size: 12px;
+        color: #a4a4a4;
+        margin-bottom: 0.2em;
+        overflow: hidden;
+      }
+    }
+    .group-text-content {
       margin-left: 0.7em;
       max-width: 50%;
 

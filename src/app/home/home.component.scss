@@ -5,7 +5,7 @@
 }
 
 .content-container {
-  height: calc(100vh - 10vh) !important;
+  height: calc(100vh - 7vh) !important;
 
   input {
     border-radius: 20px;
@@ -77,7 +77,8 @@
     background: rgba(161, 143, 245, 0.5);
 
     i,
-    li {
+    li,
+    .link-text {
       color: #fff;
     }
   }
@@ -85,179 +86,6 @@
 
 .list-container {
   border-right: 1px solid rgba(100, 100, 100, 0.2);
-  // .search-box{
-  //   margin-left:1em;
-  //   border-bottom: 1px solid rgba(100, 100, 100, 0.2);
-
-  //   button{
-  //     border-radius: 50%;
-  //     background-color: #6159E6;
-  //     border: none;
-  //     outline: none;
-  // }
-
-  // }
-
-  .chats-container {
-    .active-chat {
-      background: #6159e6;
-      .text-content {
-        h4,
-        p {
-          color: #fff;
-        }
-      }
-      .time {
-        p {
-          color: #fff;
-        }
-      }
-    }
-
-    .chat-list-item {
-      padding: 0.7em 0.7em 0.7em;
-      margin-left: 0.2em;
-      border-bottom: 1px solid rgba(100, 100, 100, 0.2);
-      img {
-        border-radius: 50%;
-      }
-
-      .text-content {
-        margin-left: 0.7em;
-        margin-top: 0.5em;
-
-        h4 {
-          font-size: 16px;
-          color: #3f3d56;
-          margin-bottom: 0.2rem;
-        }
-
-        p {
-          font-size: 12px;
-          color: #a4a4a4;
-        }
-      }
-
-      .time {
-        margin-left: 0.7em;
-        margin-top: 0.5em;
-        flex-grow: 100;
-        p {
-          font-size: 12px;
-          color: #a4a4a4;
-          float: right;
-        }
-      }
-    }
-  }
-}
-
-.chat-body-container {
-  // .user-header{
-  //   .chat-list-item{
-  //     padding:0.7em 0.7em 0.7em;
-  //     margin-left:0.2em;
-  //     border-bottom: 1px solid rgba(100, 100, 100, 0.2);
-  //     img{
-  //       border-radius: 50%;
-  //     }
-
-  //     .text-content{
-
-  //       margin-left:0.7em;
-
-  //       h4{
-  //         font-size:16px;
-  //         color: #3F3D56;
-  //         margin-bottom: 0.2rem;
-  //       }
-
-  //       p{
-  //         margin-bottom: 0.1rem;
-  //         font-size: 12px;
-  //         color: #A4A4A4;
-  //       }
-  //     }
-
-  //     .time{
-  //       margin-left:0.7em;
-  //       margin-top:0.5em;
-  //       flex-grow: 100;
-  //       i{
-  //         font-size: 12px;
-  //         color: #A4A4A4;
-  //         float:right;
-  //       }
-  //     }
-  //   }
-  // }
-
-  // .chat-body {
-  //   .msg-left {
-  //     align-items: flex-start;
-  //     flex-direction: column;
-  //     .message-left {
-  //       max-width: 80%;
-  //       margin-top: 1em;
-  //       margin-left: 0.3em;
-  //       padding: 1em;
-  //       border-top-right-radius: 0.7em;
-  //       border-bottom-right-radius: 0.7em;
-  //       border-bottom-left-radius: 0.7em;
-  //       background: #6159e6;
-
-  //       p {
-  //         margin-bottom: 0;
-  //       }
-
-  //       .msg {
-  //         color: #fff;
-  //         font-size: 14px;
-  //       }
-  //       .msg-time {
-  //         white-space: nowrap;
-  //         color: rgba(255, 255, 255, 0.5);
-  //         font-size: 12px;
-  //         float: right;
-  //         margin: 0 0 -5px 0;
-  //       }
-  //     }
-  //   }
-
-  //   .msg-right {
-  //     align-items: flex-end;
-  //     flex-direction: column;
-  //     .message-right {
-  //       align-items: flex-end;
-  //       margin-left: auto;
-  //       max-width: 80%;
-  //       margin-top: 1em;
-  //       margin-left: 0.3em;
-  //       padding: 1em;
-  //       border-top-left-radius: 0.7em;
-  //       border-bottom-right-radius: 0.7em;
-  //       border-bottom-left-radius: 0.7em;
-  //       background: #7e7e81;
-
-  //       p {
-  //         margin-bottom: 0;
-  //       }
-
-  //       .msg {
-  //         color: #fff;
-  //         font-size: 14px;
-  //       }
-
-  //       .msg-time {
-  //         white-space: nowrap;
-  //         height: 15px;
-  //         line-height: 15px;
-  //         color: rgba(255, 255, 255, 0.5);
-  //         font-size: 12px;
-  //         float: left;
-  //         margin: 5px 0 -5px 0;
-  //       }
-  //     }
-  //   }
-  // }
+  padding-left: 0;
+  padding-right: 0;
 }
