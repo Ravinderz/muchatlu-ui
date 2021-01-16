@@ -1,0 +1,22 @@
+<div class="friend-details-container" *ngIf="selectedItem">
+  <div
+    class="request-main d-flex flex-column align-items-center justify-content-center"
+  >
+    <div class="avatar-container">
+      <img [src]="selectedItem.avatar" alt="" />
+    </div>
+    <div class="name">
+      <h5>{{selectedItem.requestFromUsername}}</h5>
+    </div>
+    <div class="request-actions d-inline-flex">
+      <div class="actions" (click)="updateFriendRequest('ACCEPTED')">
+        <i class="bi bi-check-circle accept"></i>
+        <p>Accept</p>
+      </div>
+      <div class="actions" (click)="updateFriendRequest('REJECTED')">
+        <i class="bi bi-x-circle reject"></i>
+        <p>Reject</p>
+      </div>
+    </div>
+  </div>
+</div>

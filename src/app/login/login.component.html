@@ -5,14 +5,14 @@
     </div>
     <div class="col-sm-3 align-self-center">
           <h3 class="text-center mb-4">Sign in</h3>
-          <form>
+          <form [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="mb-4">
               <!-- <label for="exampleInputEmail1" class="form-label">Email address</label> -->
-              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email address" autocomplete="off">
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email address" autocomplete="off" formControlName="email">
             </div>
             <div class="mb-4">
               <!-- <label for="exampleInputPassword1" class="form-label">Password</label> -->
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" autocomplete="off">
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" autocomplete="off" formControlName="password">
             </div>
             <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary">Submit</button>

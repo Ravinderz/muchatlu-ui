@@ -48,13 +48,23 @@
     <div class="col-sm-3 list-container">
       <app-search-box [placeholder]="placeholder"></app-search-box>
       <div class="groups-container">
-        <div *ngIf="list && list.length > 0">
-        <app-group-list [listType]="friend" [list]="list" (selectedItemEvent) = "itemSelected($event)"></app-group-list>
+        <!-- <div *ngIf="list && list.length > 0"> -->
+        <div *ngIf="list | async as list">
+          <app-group-list
+            listType="friend"
+            [list]="list"
+            (selectedItemEvent)="itemSelected($event)"
+            (friendRequestEvent)="addFriend($event)"
+          ></app-group-list>
         </div>
       </div>
     </div>
     <div class="col-sm-7 chat-body-container">
       <app-item-header></app-item-header>
+      <app-friend-request-display
+        *ngIf="listType === 'friend Request'"
+        [selectedItem]="selectedListItem"
+      ></app-friend-request-display>
       <app-friend-chat [selectedItem]="selectedListItem"></app-friend-chat>
     </div>
   </div>

@@ -6,11 +6,14 @@
         class="form-control"
         id="search"
         placeholder="{{placeholder}}"
+        name="input"
+        [(ngModel)] = "inputText"
       />
     </div>
     <div class="col-1">
       <button type="submit" class="btn btn-primary mb-3">
-        <i class="bi bi-search"></i>
+        <i class="bi bi-search" *ngIf="!inputText || (inputText && !inputText.includes('@'))"></i>
+        <i class="bi bi-plus" *ngIf="(inputText && inputText.includes('@'))"></i>
       </button>
     </div>
   </form>

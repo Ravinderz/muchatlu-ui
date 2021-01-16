@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { UserService } from '../user.service';
 
 @Component({
@@ -16,33 +16,9 @@ export class HomeComponent implements OnInit {
   chats:any;
   email:string;
   subscriptions:Subscription[] = [];
-  friends= [{
-    'id':1,
-    'username':'Ravinder Singh',
-    'email':'ravi@abc.com',
-    'avatar':'./assets/images/44.jpg',
-    'status':'This is my latest message',
-    'isOnline':true
-  },
-  {
-    'id':2,
-    'username':'Bharath',
-    'email':'ravi@abc.com',
-    'avatar':'./assets/images/46.jpg',
-    'status':'How do you thing this area is looking',
-    'isOnline':true
-  },
-  {
-    'id':3,
-    'username':'Sindhu',
-    'email':'ravi@abc.com',
-    'avatar':'./assets/images/97.jpg',
-    'status':'This app is going to be awesome',
-    'isOnline':true
-  },
- ]
+  friends:any;
 
-  friendRequests = [];
+  friendRequests:any;
 
   unreadMessages:any = {};
 
@@ -79,7 +55,36 @@ export class HomeComponent implements OnInit {
       }));
 
       this.list = this.friends;
+      this.listType = 'friend';
     }
+
+    this.friends =of([{
+      'id':1,
+      'username':'Ravinder Singh',
+      'email':'ravi@abc.com',
+      'avatar':'./assets/images/44.jpg',
+      'status':'This is my latest message',
+      'isOnline':true
+    },
+    {
+      'id':2,
+      'username':'Bharath',
+      'email':'ravi@abc.com',
+      'avatar':'./assets/images/46.jpg',
+      'status':'How do you thing this area is looking',
+      'isOnline':true
+    },
+    {
+      'id':3,
+      'username':'Sindhu',
+      'email':'ravi@abc.com',
+      'avatar':'./assets/images/97.jpg',
+      'status':'This app is going to be awesome',
+      'isOnline':true
+    }]);
+
+    this.list = of(this.updatedFriends);
+
   }
 
   loadPage(name:String,e:any){
@@ -100,7 +105,7 @@ export class HomeComponent implements OnInit {
     if(name === "friend requests"){
       console.log("friend requests");
       this.placeholder = 'Search / Add friends';
-      this.list = this.friends;
+      this.list = this.friendRequests;
       this.listType = 'friend';
     }
     if(name === "groups"){
@@ -114,6 +119,19 @@ export class HomeComponent implements OnInit {
   itemSelected(e:any){
     console.log(e)
     this.selectedListItem = e;
+  }
+
+  addFriend(value:any){
+
+    if(value.requestFromUserId === this.loggedUser.id){
+      if(value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object'){
+        this.updatedFriends.add(value.requestToUser);
+      }
+    }else if(value.requestToUserId === this.loggedUser.id){
+      if(value.requestFromUser && value.requestFromUser != null && typeof value.requestFromUser == 'object'){
+        this.updatedFriends.add(value.requestFromUser);
+      }
+    }
   }
 
 }

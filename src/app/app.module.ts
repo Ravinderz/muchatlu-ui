@@ -13,6 +13,7 @@ import { GroupListComponent } from './group-list/group-list.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { ItemHeaderComponent } from './item-header/item-header.component';
 import { FriendChatComponent } from './friend-chat/friend-chat.component';
+import { FriendRequestDisplayComponent } from './friend-request-display/friend-request-display.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: 'home', pathMatch: 'full' },
@@ -33,7 +34,8 @@ const routes: Routes = [
     GroupListComponent,
     SearchBoxComponent,
     ItemHeaderComponent,
-    FriendChatComponent
+    FriendChatComponent,
+    FriendRequestDisplayComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

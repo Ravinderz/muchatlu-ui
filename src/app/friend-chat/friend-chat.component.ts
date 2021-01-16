@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 })
 export class FriendChatComponent implements OnInit {
 
-  @Input() selectedItem: any;
+  @Input() selectedItem: any = null;
 
   subscriptions:Subscription[] = [];
   messageService: any;
@@ -68,35 +68,35 @@ export class FriendChatComponent implements OnInit {
       },]
     }
 
-    this.subscriptions.push(this.messageService.messageEvent.subscribe((value) =>{
-      console.log("Inside chat window, message event value ::: ",value);
-      if(!this.chats){
-        this.chats = {}
-      }
-      if(!this.chats[value.userIdTo]){
-        this.chats[value.userIdTo]= [value];
-      }else{
-        this.chats[value.userIdTo].push(value);
-      }
+    // this.subscriptions.push(this.messageService.messageEvent.subscribe((value) =>{
+    //   console.log("Inside chat window, message event value ::: ",value);
+    //   if(!this.chats){
+    //     this.chats = {}
+    //   }
+    //   if(!this.chats[value.userIdTo]){
+    //     this.chats[value.userIdTo]= [value];
+    //   }else{
+    //     this.chats[value.userIdTo].push(value);
+    //   }
 
-      if(!this.chats[value.userIdFrom]){
-        this.chats[value.userIdFrom]= [value];
-      }else{
-        this.chats[value.userIdFrom].push(value);
-      }
+    //   if(!this.chats[value.userIdFrom]){
+    //     this.chats[value.userIdFrom]= [value];
+    //   }else{
+    //     this.chats[value.userIdFrom].push(value);
+    //   }
 
-      if(value.userIdFrom !== this.selectedChatId){
-        if(!this.unreadMessages[value.userIdFrom]){
-          this.unreadMessages[value.userIdFrom]= [1];
-        }else{
-          this.unreadMessages[value.userIdFrom].push(1);
-        }
-      }
+    //   if(value.userIdFrom !== this.selectedChatId){
+    //     if(!this.unreadMessages[value.userIdFrom]){
+    //       this.unreadMessages[value.userIdFrom]= [1];
+    //     }else{
+    //       this.unreadMessages[value.userIdFrom].push(1);
+    //     }
+    //   }
 
 
 
-      console.log(this.chats);
-    }));
+    //   console.log(this.chats);
+    // }));
   }
 
 }

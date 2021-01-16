@@ -1,5 +1,5 @@
-<div class="chat-body" *ngIf="chats && chats[selectedItem.id]">
-  <div [ngClass]="(chat.userIdFrom === loggedInId) ? 'msg-left' : 'msg-right'" class="d-flex" *ngFor="let chat of chats[selectedItem.id]">
+<div class="chat-body" *ngIf="chats && chats[selectedItem?.id]">
+  <div [ngClass]="(chat.userIdFrom === loggedInId) ? 'msg-left' : 'msg-right'" class="d-flex" *ngFor="let chat of chats[selectedItem?.id]">
     <div [ngClass]="(chat.userIdFrom === loggedInId) ? 'message-left' : 'message-right float-end'">
       <p [ngClass]="(chat.userIdFrom === loggedInId) ? 'msg' : 'msg float-end'">
         <!-- This is how the message looks like asdf sadf sadf asdf asdf sadf
