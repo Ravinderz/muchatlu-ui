@@ -21,4 +21,8 @@ export class UserService {
     return this.http.post(`http://localhost:8080/updateFriendRequest`,request);
   }
 
+  getFriendRequests(id:string){
+    return this.http.get(`http://localhost:8080/getFriendRequests/${id}`);
+  }
+
 }

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { CommonService } from '../common.service';
 import { MessageService } from '../message.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-group-list',
@@ -15,58 +17,70 @@ export class GroupListComponent implements OnInit {
   @Output() selectedItemEvent = new EventEmitter<any>();
   @Output() friendRequestEvent = new EventEmitter<any>();
 
-  constructor(private messageService:MessageService) { }
+  friendRequests :any;
+
+  constructor(private messageService:MessageService, private userService:UserService, private commonService: CommonService) {
+    this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+  }
 
   loggedUser:any;
-  selectedItemIndex: string = null;
+  selectedItemIndex: string;
   subscriptions:Subscription[] = [];
 
   ngOnInit() {
     console.log(this.list);
 
-    this.subscriptions.push(this.messageService.friendRequestEvent.subscribe((value) =>{
-      console.log("Inside chat window, friendRequest event value ::: ",value);
+    this.subscriptions.push(this.messageService.loginEvent.subscribe((value) =>{
+      console.log("Inside chat window, login event value ::: ",value);
       //let updatedFriends = this.friends;
-      if(value && value.requestFromUserId && value.status === 'PENDING'){
-        this.list.push(value);
-      }
+      this.list.forEach(element => {
+        if(element.id === value.userId){
+          element.isOnline = value.online;
+        }
+      });
 
-      if(value.requestFromUser && value.status === 'ACCEPTED'){
-        console.log("isndie accepted status ::::: ",value)
-        console.log("isndie accepted status logged user ::::: ",this.loggedUser)
-        if(value.requestFromUserId === this.loggedUser.id){
-          if(value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object'){
-            this.friendRequestEvent.emit(value.requestToUser);
-            //this.updatedFriends.add(value.requestToUser);
+     // this.friends = updatedFriends;
+    }));
+
+    this.subscriptions.push(this.messageService.logoutEvent.subscribe((value) =>{
+      console.log("Inside chat window, login event value ::: ",value);
+      //let updatedFriends = this.friends;
+      this.list.forEach(element => {
+        if(element.id === value.userId){
+          element.isOnline = value.online;
+        }
+      });
+
+      //this.friends = updatedFriends;
+    }));
+
+    this.subscriptions.push(this.commonService.friendChangeEvent.subscribe((value) =>{
+
+      if (value.requestFromUser && value.status === 'ACCEPTED') {
+        console.log("isndie accepted status ::::: ", value)
+        console.log("isndie accepted status logged user ::::: ", this.loggedUser)
+        if (value.requestFromUserId === this.loggedUser.id) {
+          if (value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object') {
+              this.list.push(value.requestToUser);
           }
-        }else if(value.requestToUserId === this.loggedUser.id){
-          if(value.requestFromUser && value.requestFromUser != null && typeof value.requestFromUser == 'object'){
-            this.friendRequestEvent.emit(value.requestFromUser);
-            //this.updatedFriends.add(value.requestFromUser);
+        } else if (value.requestToUserId === this.loggedUser.id) {
+          if (value.requestFromUser && value.requestFromUser != null && typeof value.requestFromUser == 'object') {
+            this.list.push(value.requestFromUser)
           }
         }
-        this.list.forEach((element,index)=>{
-          if(element.id===value.id) {
-            this.list.splice(index,1);
-          }
-       });
       }
-
-      if(value && value.status === 'REJECTED'){
-        console.log('sindie rejectred  ... ',this.list);
-        this.list.forEach((element,index)=>{
-          if(element.id===value.id) {
-            this.list.splice(index,1);
-          }
-       });
-      }
-
     }));
+
+
 
   }
 
   selectedItem(index:any){
     this.selectedItemIndex = index;
-    this.selectedItemEvent.emit(this.list[index]);
+    let obj = {
+      'selectedItem':this.list[index],
+      'itemType':this.listType
+    }
+    this.selectedItemEvent.emit(obj);
   }
 }

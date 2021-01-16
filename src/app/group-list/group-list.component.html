@@ -13,9 +13,12 @@
         width="60px"
       />
       <div class="friend-text-content">
-        <h4>{{ item.username }}</h4>
-        <p *ngIf="listType === 'group'">Bharath,Nishant,Sindhu,Sruthi</p>
-        <p>{{ item.status }}</p>
+        <h4 *ngIf="listType === 'friends'">{{ item.username }}</h4>
+        <h4 *ngIf="listType === 'friend requests'">{{ item.requestFromUserId === loggedUser.id ? item.requestToEmailId : item.requestFromUsername }}</h4>
+
+        <p *ngIf="listType === 'groups'">Bharath,Nishant,Sindhu,Sruthi</p>
+        <p *ngIf="listType === 'friends'">{{ item.isOnline ? 'online' : 'offline' }}</p>
+        <p *ngIf="listType !== 'friends'">{{ item.status }}</p>
       </div>
       <div class="time">
         <p>10:30 PM</p>

@@ -15,6 +15,7 @@ export class FriendRequestDisplayComponent implements OnInit {
   subscriptions:Subscription[] = [];
 
   ngOnInit() {
+    console.log(this.selectedItem)
   }
 
   updateFriendRequest(status:string){

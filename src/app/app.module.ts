@@ -5,18 +5,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
+import { FriendChatComponent } from './friend-chat/friend-chat.component';
+import { FriendRequestDisplayComponent } from './friend-request-display/friend-request-display.component';
+import { GroupListComponent } from './group-list/group-list.component';
 import { HomeComponent } from './home/home.component';
+import { ItemHeaderComponent } from './item-header/item-header.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { RegisterComponent } from './register/register.component';
-import { GroupListComponent } from './group-list/group-list.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
-import { ItemHeaderComponent } from './item-header/item-header.component';
-import { FriendChatComponent } from './friend-chat/friend-chat.component';
-import { FriendRequestDisplayComponent } from './friend-request-display/friend-request-display.component';
 
 const routes: Routes = [
-  { path: '',   redirectTo: 'home', pathMatch: 'full' },
+  { path: '',   redirectTo: 'login', pathMatch: 'full' },
   { path: 'login',   component: LoginComponent },
   { path: 'signup',   component: RegisterComponent },
   { path: 'home', component: HomeComponent },

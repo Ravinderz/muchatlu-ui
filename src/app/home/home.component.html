@@ -49,9 +49,9 @@
       <app-search-box [placeholder]="placeholder"></app-search-box>
       <div class="groups-container">
         <!-- <div *ngIf="list && list.length > 0"> -->
-        <div *ngIf="list | async as list">
+        <div *ngIf="list">
           <app-group-list
-            listType="friend"
+            [listType]="listType"
             [list]="list"
             (selectedItemEvent)="itemSelected($event)"
             (friendRequestEvent)="addFriend($event)"
@@ -61,11 +61,16 @@
     </div>
     <div class="col-sm-7 chat-body-container">
       <app-item-header></app-item-header>
-      <app-friend-request-display
-        *ngIf="listType === 'friend Request'"
+      <!-- *ngIf="listType === 'friend Requests'" -->
+      <ng-template [ngIf]="itemType === 'friend requests'">
+        <app-friend-request-display
         [selectedItem]="selectedListItem"
       ></app-friend-request-display>
+    </ng-template>
+    <ng-template [ngIf]="itemType === 'friend'">
       <app-friend-chat [selectedItem]="selectedListItem"></app-friend-chat>
+  </ng-template>
+
     </div>
   </div>
 </div>
