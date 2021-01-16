@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
   itemType: any;
   selectedListItem: any;
   showFriendRequestDetails = false;
+  conversationId:any;
 
 
   ngOnInit() {
@@ -128,6 +129,7 @@ export class HomeComponent implements OnInit {
       this.showFriendRequestDetails = true;
     }
     this.itemType = e.itemType;
+    this.conversationId = e.conversationId;
 
   }
 

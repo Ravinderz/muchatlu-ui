@@ -10,6 +10,7 @@ import { MessageService } from '../message.service';
 export class FriendChatComponent implements OnInit {
 
   @Input() selectedItem: any;
+  @Input() conversationId: any;
 
   subscriptions:Subscription[] = [];
   chats: any;
@@ -75,6 +76,7 @@ export class FriendChatComponent implements OnInit {
       'avatarFrom': this.loggedUser.avatar,
       'usernameTo':this.selectedItem.username,
       'message':this.text,
+      'conversationId':this.conversationId,
       'timestamp':null
     }
     this.messageService.sendMessage(msg);

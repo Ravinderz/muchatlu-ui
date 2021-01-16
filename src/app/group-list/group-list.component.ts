@@ -77,10 +77,22 @@ export class GroupListComponent implements OnInit {
 
   selectedItem(index:any){
     this.selectedItemIndex = index;
-    let obj = {
-      'selectedItem':this.list[index],
-      'itemType':this.listType
+
+    if(this.listType === 'friends'){
+      this.commonService.getConversationId(this.loggedUser.id,this.list[index].id).subscribe(value => {
+        let obj = {
+          'selectedItem':this.list[index],
+          'itemType':this.listType,
+          'conversationId':value
+        }
+        this.selectedItemEvent.emit(obj);
+      })
+    }else{
+      let obj = {
+        'selectedItem':this.list[index],
+        'itemType':this.listType
+      }
+      this.selectedItemEvent.emit(obj);
     }
-    this.selectedItemEvent.emit(obj);
   }
 }

@@ -67,8 +67,8 @@
         [selectedItem]="selectedListItem"
       ></app-friend-request-display>
     </ng-template>
-    <ng-template [ngIf]="itemType === 'friend'">
-      <app-friend-chat [selectedItem]="selectedListItem"></app-friend-chat>
+    <ng-template [ngIf]="itemType === 'friends'">
+      <app-friend-chat [selectedItem]="selectedListItem"  [conversationId]="conversationId"></app-friend-chat>
   </ng-template>
 
     </div>
