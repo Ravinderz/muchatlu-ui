@@ -15,4 +15,9 @@ export class CommonService {
     return this.http.get(`http://localhost:8080/getConversationId/${fromId}/${toId}`);
   }
 
+  getConversation(fromId,toId){
+    return this.http.get(`http://localhost:8080/getConversation/${fromId}/${toId}`);
+  }
+
+
 }

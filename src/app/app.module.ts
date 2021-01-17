@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
+import { FriendDetailsComponent } from './friend-details/friend-details.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: 'login', pathMatch: 'full' },
@@ -35,7 +36,8 @@ const routes: Routes = [
     SearchBoxComponent,
     ItemHeaderComponent,
     FriendChatComponent,
-    FriendRequestDisplayComponent
+    FriendRequestDisplayComponent,
+    FriendDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes),

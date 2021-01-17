@@ -1,0 +1,107 @@
+<div class="friend-details-container">
+  <div
+    class="friend-detail d-flex flex-column justify-content-center align-items-center mb-3"
+  >
+    <div class="avatar-container mb-2">
+      <img [src]="selectedItem.avatar" alt="" />
+    </div>
+    <div class="text-content text-center">
+      <h4>{{selectedItem.username}}</h4>
+      <p class="mb-0">{{selectedItem.email}}</p>
+      <p class="mb-0">{{selectedItem.status ? selectedItem.status : 'Hi! I am available'}}</p>
+      <p>{{selectedItem.isOnline ? 'Online' : 'Offline'}}</p>
+    </div>
+  </div>
+  <div class="media-heading"><h5>Shared Media</h5></div>
+  <div class="media-container d-flex justify-content-around">
+    <div class="media-item">
+      <img src="./assets/images/images.svg" alt="" width="50px" height="50px" />
+      <p>Item Name</p>
+    </div>
+    <div class="media-item">
+      <img
+        src="./assets/images/file-earmark-music.svg"
+        alt=""
+        width="50px"
+        height="50px"
+      />
+      <p>Item Name</p>
+    </div>
+    <div class="media-item">
+      <img
+        src="./assets/images/file-earmark-richtext.svg"
+        alt=""
+        width="50px"
+        height="50px"
+      />
+      <p>Item Name</p>
+    </div>
+    <div class="media-item">
+      <img
+        src="./assets/images/file-earmark-richtext.svg"
+        alt=""
+        width="50px"
+        height="50px"
+      />
+      <p>Item Name</p>
+    </div>
+    <div class="media-item">
+      <img src="./assets/images/images.svg" alt="" width="50px" height="50px" />
+      <p>Item Name</p>
+    </div>
+    <div class="media-item">
+      <img src="./assets/images/images.svg" alt="" width="50px" height="50px" />
+      <p>Item Name</p>
+    </div>
+  </div>
+  <div class="common-groups-container">
+    <div class="common-groups-heading"><h5>Common Groups</h5></div>
+    <div class="groups-container">
+      <div class="group-list active-group">
+        <div class="d-flex group-list-item">
+          <img
+            class="avatar"
+            src="./assets/images/cinema.jpg"
+            alt=""
+            height="60px"
+            width="60px"
+          />
+          <div class="text-content">
+            <h4>Movies</h4>
+            <p>Bharath, Nishant, Sindhu, Sruthi</p>
+          </div>
+        </div>
+      </div>
+      <div class="group-list">
+        <div class="d-flex group-list-item">
+          <img
+            class="avatar"
+            src="./assets/images/tech.jpg"
+            alt=""
+            height="60px"
+            width="60px"
+          />
+          <div class="text-content">
+            <h4>Technology</h4>
+            <p>Bharath,Nishant,Sindhu,Sruthi</p>
+          </div>
+        </div>
+      </div>
+      <div class="group-list">
+        <div class="d-flex group-list-item">
+          <img
+            class="avatar"
+            src="./assets/images/holi.jpg"
+            alt=""
+            height="60px"
+            width="60px"
+          />
+          <div class="text-content">
+            <h4>Celebrations</h4>
+            <p>Bharath,Nishant,Sindhu,Sruthi</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,4 +25,8 @@ export class UserService {
     return this.http.get(`http://localhost:8080/getFriendRequests/${id}`);
   }
 
+  getUserConversations(id:string){
+    return this.http.get(`http://localhost:8080/getUserConversations/${id}`);
+  }
+
 }

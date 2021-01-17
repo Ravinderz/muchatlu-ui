@@ -60,17 +60,25 @@
       </div>
     </div>
     <div class="col-sm-7 chat-body-container">
-      <app-item-header></app-item-header>
+      <ng-template [ngIf]="itemType !== 'friends'">
+        <app-item-header [selectedItem]="selectedListItem"></app-item-header>
+      </ng-template>
       <!-- *ngIf="listType === 'friend Requests'" -->
       <ng-template [ngIf]="itemType === 'friend requests'">
         <app-friend-request-display
-        [selectedItem]="selectedListItem"
-      ></app-friend-request-display>
-    </ng-template>
-    <ng-template [ngIf]="itemType === 'friends'">
-      <app-friend-chat [selectedItem]="selectedListItem"  [conversationId]="conversationId"></app-friend-chat>
-  </ng-template>
-
+          [selectedItem]="selectedListItem"
+        ></app-friend-request-display>
+      </ng-template>
+      <ng-template [ngIf]="itemType === 'chats'">
+        <app-friend-chat
+          [selectedItem]="selectedListItem"
+          [conversationId]="conversationId"
+          [conversation]="conversation"
+        ></app-friend-chat>
+      </ng-template>
+      <ng-template [ngIf]="itemType === 'friends'">
+        <app-friend-details [selectedItem]="friendDetails"></app-friend-details>
+      </ng-template>
     </div>
   </div>
 </div>

@@ -1,0 +1,111 @@
+.friend-details-container {
+  margin: 3em;
+  margin-top: 3em;
+
+  .avatar-container {
+    flex-grow: 100;
+
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+  }
+
+  .text-content {
+    color: #3f3d56;
+    p {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-size: 14px;
+      color: #3f3d56;
+      margin-bottom: 0.2em;
+      overflow: hidden;
+    }
+  }
+
+  .empty-window-container {
+    button {
+      margin-left: 0.5em;
+      background-color: transparent;
+      background: transparent;
+      color: #6159e6;
+      border: 1px solid #6159e6;
+    }
+  }
+
+  .empty-window {
+    height: 400px;
+    margin-top: 5em;
+  }
+
+  .media-heading,
+  .common-groups-heading {
+    width: 100%;
+    padding-left: 1rem;
+  }
+
+  .common-groups-heading {
+    margin-bottom: 1.2rem;
+  }
+
+  .groups-container {
+    // .chat-list-item{
+    .group-list {
+      padding: 0.7em 0.7em 0 0.7em;
+
+      .group-list-item {
+        padding-bottom: 0.7em;
+        border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+        img {
+          border-radius: 50%;
+        }
+
+        .text-content {
+          margin-top: 0.5em;
+          margin-left: 0.7em;
+          max-width: 50%;
+
+          h4 {
+            font-size: 16px;
+            color: #3f3d56;
+            margin-bottom: 0.2rem;
+          }
+
+          p {
+            word-wrap: none;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 12px;
+            color: #a4a4a4;
+            margin-bottom: 0.2em;
+            overflow: hidden;
+          }
+        }
+
+        .time {
+          white-space: nowrap;
+          margin-left: 0.7em;
+          margin-top: 0.5em;
+          flex-grow: 100;
+          p {
+            font-size: 12px;
+            color: #a4a4a4;
+            float: right;
+          }
+        }
+      }
+    }
+  }
+
+  .media-container {
+    padding: 2em;
+
+    .media-item {
+      text-align: center;
+      img {
+        color: darken($color: #f4f2ff, $amount: 3) !important;
+      }
+    }
+  }
+}

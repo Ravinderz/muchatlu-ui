@@ -5,23 +5,32 @@
     *ngFor="let item of list; let i = index"
   >
     <div class="d-flex group-list-item" (click)="selectedItem(i)">
-      <img
+      <img *ngIf="listType !== 'chats'"
         class="avatar"
         [src]="item.avatar"
         alt=""
         height="60px"
         width="60px"
       />
+      <img *ngIf="listType === 'chats'"
+        class="avatar"
+        [src]="loggedUser.id === item.userIdFrom ? item.avatarTo : item.avatarFrom"
+        alt=""
+        height="60px"
+        width="60px"
+      />
       <div class="friend-text-content">
         <h4 *ngIf="listType === 'friends'">{{ item.username }}</h4>
+        <h4 *ngIf="listType === 'chats'">{{ loggedUser.id === item.userIdFrom ? item.usernameTo : item.usernameFrom }}</h4>
         <h4 *ngIf="listType === 'friend requests'">{{ item.requestFromUserId === loggedUser.id ? item.requestToEmailId : item.requestFromUsername }}</h4>
-
+        <p *ngIf="listType === 'chats'">{{item.lastMessageFrom}} : {{item.lastMessage}}</p>
         <p *ngIf="listType === 'groups'">Bharath,Nishant,Sindhu,Sruthi</p>
         <p *ngIf="listType === 'friends'">{{ item.isOnline ? 'online' : 'offline' }}</p>
         <p *ngIf="listType !== 'friends'">{{ item.status }}</p>
       </div>
       <div class="time">
-        <p>10:30 PM</p>
+        <p *ngIf="listType !== 'chats'">10:30 PM</p>
+        <p *ngIf="listType === 'chats'">{{ item.lastMessageTimestamp | date : 'shortTime'}}</p>
       </div>
     </div>
   </div>

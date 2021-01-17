@@ -2,13 +2,13 @@
   <div class="chat-list-item d-flex">
     <img
       class="avatar"
-      src="./assets/images/97.jpg"
+      [src]="selectedItem.avatarTo"
       alt=""
       height="60px"
       width="60px"
     />
     <div class="text-content">
-      <h4>Jim Halper</h4>
+      <h4>{{selectedItem.usernameTo}}</h4>
       <p>Identity theft is not a joke Jim!!!</p>
       <p>Online</p>
     </div>

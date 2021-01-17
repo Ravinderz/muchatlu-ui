@@ -1,8 +1,8 @@
-<div class="chat-body" *ngIf="chats && chats[selectedItem?.id]">
+<div class="chat-body" *ngIf="conversation">
   <div
     [ngClass]="chat.userIdFrom === loggedUser.id ? 'msg-left' : 'msg-right'"
     class="d-flex"
-    *ngFor="let chat of chats[selectedItem?.id]"
+    *ngFor="let chat of conversation.message"
   >
     <div
       [ngClass]="
@@ -16,7 +16,7 @@
         ewrfwr adsfwea radfa sd -->{{ chat.message }}
       </p>
       <div class="time-wrapper">
-        <span class="msg-time">{{chat.timestamp}}</span>
+        <span class="msg-time">{{chat.timestamp | date : 'shortTime'}}</span>
       </div>
     </div>
   </div>

@@ -16,19 +16,13 @@ export class HomeComponent implements OnInit {
   selectedFriend: any;
   text: String;
   chats: any;
+  conversations: any;
   email: string;
   subscriptions: Subscription[] = [];
   friends: any;
-
   friendRequests: any;
-
   unreadMessages: any = {};
-
-  constructor(private userService: UserService, private messageService: MessageService, private commonService:CommonService) {
-    this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
-  }
-
-  activeLink: String = "chats";
+  activeLink: string = "chats";
   placeholder: string;
   list: any;
   listType: String = 'friend';
@@ -36,11 +30,36 @@ export class HomeComponent implements OnInit {
   selectedListItem: any;
   showFriendRequestDetails = false;
   conversationId:any;
+  conversation:any;
+  friendDetails: any;
+
+  constructor(private userService: UserService, private messageService: MessageService, private commonService:CommonService) {
+    this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+  }
 
 
   ngOnInit() {
     if (this.loggedUser) {
       console.log("inside logged user :: ", this.loggedUser)
+
+      this.subscriptions.push(this.userService.getUserConversations(this.loggedUser.id).subscribe((value: any) => {
+
+        if (!this.conversations) {
+          this.conversations = [];
+        }
+
+        console.log("conversations ::: ", value)
+        value.forEach(element => {
+          if (element && element != null && typeof element == 'object') {
+            this.conversations.push(element)
+          }
+        });
+
+        this.list = this.conversations;
+        this.listType = 'chats';
+        this.selectedListItem = this.list[0];
+      }));
+
       this.subscriptions.push(this.userService.getFriends(this.loggedUser).subscribe((value: any) => {
 
         if (!this.friends) {
@@ -53,9 +72,6 @@ export class HomeComponent implements OnInit {
             this.friends.push(element)
           }
         });
-
-        this.list = this.friends;
-        this.listType = 'friend';
       }));
 
       this.userService.getFriendRequests(this.loggedUser.id).subscribe(value => {
@@ -96,24 +112,27 @@ export class HomeComponent implements OnInit {
 
   }
 
-  loadPage(name: String, e: any) {
+  loadPage(name: string, e: any) {
     e.preventDefault();
     this.activeLink = name;
     this.listType = name;
     if (name === "chats") {
       console.log("load chats");
       this.placeholder = 'Search';
-      this.list = this.friends;
+      this.list = this.conversations;
+      this.selectedListItem = this.list[0];
     }
     if (name === "friends") {
       console.log("friends");
       this.placeholder = 'Search / Add friends';
       this.list = this.friends;
+      this.friendDetails = this.list[0];
     }
     if (name === "friend requests") {
       console.log("friend requests");
       this.placeholder = 'Search / Add friends';
       this.list = this.friendRequests;
+      this.selectedListItem = this.list[0];
     }
     if (name === "groups") {
       console.log("groups");
@@ -130,7 +149,12 @@ export class HomeComponent implements OnInit {
     }
     this.itemType = e.itemType;
     this.conversationId = e.conversationId;
-
+    if (e.itemType === 'chats') {
+      this.conversation = e.conversation;
+    }
+    if(e.itemType === 'friends'){
+      this.friendDetails = e.selectedItem;
+    }
   }
 
   addFriend(value: any) {

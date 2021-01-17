@@ -24,11 +24,12 @@ export class GroupListComponent implements OnInit {
   }
 
   loggedUser:any;
-  selectedItemIndex: string;
+  selectedItemIndex: any;
   subscriptions:Subscription[] = [];
 
   ngOnInit() {
     console.log(this.list);
+    //this.selectedItemIndex = 0;
 
     this.subscriptions.push(this.messageService.loginEvent.subscribe((value) =>{
       console.log("Inside chat window, login event value ::: ",value);
@@ -84,6 +85,15 @@ export class GroupListComponent implements OnInit {
           'selectedItem':this.list[index],
           'itemType':this.listType,
           'conversationId':value
+        }
+        this.selectedItemEvent.emit(obj);
+      })
+    }else if(this.listType === 'chats'){
+      this.commonService.getConversation(this.list[index].userIdFrom,this.list[index].userIdTo).subscribe(value => {
+        let obj = {
+          'selectedItem':this.list[index],
+          'itemType':this.listType,
+          'conversation':value
         }
         this.selectedItemEvent.emit(obj);
       })
