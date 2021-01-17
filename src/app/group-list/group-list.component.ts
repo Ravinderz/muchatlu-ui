@@ -13,7 +13,7 @@ export class GroupListComponent implements OnInit {
 
   @Input() list: any;
   @Input() listType: string;
-
+  @Input() selectedItemIndex: any;
   @Output() selectedItemEvent = new EventEmitter<any>();
   @Output() friendRequestEvent = new EventEmitter<any>();
 
@@ -24,7 +24,7 @@ export class GroupListComponent implements OnInit {
   }
 
   loggedUser:any;
-  selectedItemIndex: any;
+
   subscriptions:Subscription[] = [];
 
   ngOnInit() {
@@ -54,26 +54,6 @@ export class GroupListComponent implements OnInit {
 
       //this.friends = updatedFriends;
     }));
-
-    this.subscriptions.push(this.commonService.friendChangeEvent.subscribe((value) =>{
-
-      if (value.requestFromUser && value.status === 'ACCEPTED') {
-        console.log("isndie accepted status ::::: ", value)
-        console.log("isndie accepted status logged user ::::: ", this.loggedUser)
-        if (value.requestFromUserId === this.loggedUser.id) {
-          if (value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object') {
-              this.list.push(value.requestToUser);
-          }
-        } else if (value.requestToUserId === this.loggedUser.id) {
-          if (value.requestFromUser && value.requestFromUser != null && typeof value.requestFromUser == 'object') {
-            this.list.push(value.requestFromUser)
-          }
-        }
-      }
-    }));
-
-
-
   }
 
   selectedItem(index:any){

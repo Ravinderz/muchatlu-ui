@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-friend-details',
@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./friend-details.component.scss']
 })
 export class FriendDetailsComponent implements OnInit {
+  loggedUser: any;
 
 
   constructor() {
@@ -13,9 +14,13 @@ export class FriendDetailsComponent implements OnInit {
    }
 
   @Input() selectedItem: any;
-  loggedUser: any;
+  @Output() startChatEvent = new EventEmitter<any>();
 
   ngOnInit() {
+  }
+
+  startChat(){
+    this.startChatEvent.emit(this.selectedItem);
   }
 
 }

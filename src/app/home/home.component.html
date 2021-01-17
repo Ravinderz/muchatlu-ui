@@ -53,6 +53,7 @@
           <app-group-list
             [listType]="listType"
             [list]="list"
+            [selectedItemIndex]="selectedItemIndex"
             (selectedItemEvent)="itemSelected($event)"
             (friendRequestEvent)="addFriend($event)"
           ></app-group-list>
@@ -60,7 +61,7 @@
       </div>
     </div>
     <div class="col-sm-7 chat-body-container">
-      <ng-template [ngIf]="itemType !== 'friends'">
+      <ng-template [ngIf]="itemType !== 'friends' && selectedListItem">
         <app-item-header [selectedItem]="selectedListItem"></app-item-header>
       </ng-template>
       <!-- *ngIf="listType === 'friend Requests'" -->
@@ -76,8 +77,8 @@
           [conversation]="conversation"
         ></app-friend-chat>
       </ng-template>
-      <ng-template [ngIf]="itemType === 'friends'">
-        <app-friend-details [selectedItem]="friendDetails"></app-friend-details>
+      <ng-template [ngIf]="itemType === 'friends' && friendDetails">
+        <app-friend-details [selectedItem]="friendDetails" (startChatEvent)="startChat($event)"></app-friend-details>
       </ng-template>
     </div>
   </div>

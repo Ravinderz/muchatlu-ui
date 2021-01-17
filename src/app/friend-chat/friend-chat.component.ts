@@ -29,7 +29,6 @@ export class FriendChatComponent implements OnInit {
     console.log(this.selectedItem);
     this.subscriptions.push(this.messageService.messageEvent.subscribe((value) =>{
       console.log("Inside chat window, message event value ::: ",value);
-      value.timestamp = new Date(value.timestamp).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
       if(this.conversation){
         this.conversation.message.push(value)

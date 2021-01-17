@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
   conversationId:any;
   conversation:any;
   friendDetails: any;
+  selectedItemIndex: any = 0;
 
   constructor(private userService: UserService, private messageService: MessageService, private commonService:CommonService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
@@ -93,9 +94,20 @@ export class HomeComponent implements OnInit {
         this.friendRequests.push(value);
       }
 
-      if (value.requestFromUser && value.status === 'ACCEPTED') {
-        this.commonService.friendChangeEvent.next(value);
-      }
+
+        if (value.requestFromUser && value.status === 'ACCEPTED') {
+          console.log("isndie accepted status ::::: ", value)
+          console.log("isndie accepted status logged user ::::: ", this.loggedUser)
+          if (value.requestFromUserId === this.loggedUser.id) {
+            if (value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object') {
+                this.friends.push(value.requestToUser);
+            }
+          } else if (value.requestToUserId === this.loggedUser.id) {
+            if (value.requestFromUser && value.requestFromUser != null && typeof value.requestFromUser == 'object') {
+              this.friends.push(value.requestFromUser)
+            }
+          }
+        }
 
       if (value && value.status === 'REJECTED') {
         console.log('sindie rejectred  ... ', this.list);
@@ -117,27 +129,31 @@ export class HomeComponent implements OnInit {
     this.activeLink = name;
     this.listType = name;
     if (name === "chats") {
-      console.log("load chats");
       this.placeholder = 'Search';
       this.list = this.conversations;
       this.selectedListItem = this.list[0];
+      this.itemType = name;
+      this.selectedItemIndex = 0;
     }
     if (name === "friends") {
-      console.log("friends");
       this.placeholder = 'Search / Add friends';
       this.list = this.friends;
       this.friendDetails = this.list[0];
+      this.itemType = name;
+      this.selectedItemIndex = 0;
     }
     if (name === "friend requests") {
-      console.log("friend requests");
       this.placeholder = 'Search / Add friends';
       this.list = this.friendRequests;
       this.selectedListItem = this.list[0];
+      this.itemType = name;
+      this.selectedItemIndex = 0;
     }
     if (name === "groups") {
-      console.log("groups");
       this.placeholder = 'Search';
       this.list = this.friends;
+      this.itemType = name;
+      this.selectedItemIndex = 0;
     }
   }
 
@@ -168,6 +184,11 @@ export class HomeComponent implements OnInit {
         this.friends.add(value.requestFromUser);
       }
     }
+  }
+
+  startChat(value: any){
+    console.log("start chat ",value);
+
   }
 
 }

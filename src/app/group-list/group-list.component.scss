@@ -7,9 +7,15 @@
 
   .friend-text-content {
     margin-top: -3px;
+    overflow: hidden;
     h4,
     p {
       color: #fff !important;
+        white-space: nowrap;
+        text-overflow: ellipsis !important;
+        font-size: 12px;
+        margin-bottom: 0.2em;
+        overflow: hidden !important;
     }
   }
 
@@ -43,6 +49,7 @@
     .friend-text-content {
       margin-left: 0.7em;
       margin-top: 0.5em;
+      overflow: hidden;
 
       h4 {
         font-size: 16px;

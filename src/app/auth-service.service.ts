@@ -10,21 +10,22 @@ export class AuthService {
   user:any;
 
   avatars:any;
+  imgPath = "./../../assets/avatars/";
 
-  constructor(private http: HttpClient){ 
+  constructor(private http: HttpClient){
 
     if(!localStorage.getItem('avatars')){
       this.getAvatarImg().subscribe(data => {
         console.log(data);
         this.avatars = data;
         localStorage.setItem('avatars',JSON.stringify(this.avatars));
-        
+
       })
     }else{
       this.avatars = JSON.parse(localStorage.getItem('avatars'));
     }
 
-    
+
   }
 
   apikey = 'DE94E4AE-B7774FFF-9D379FD1-FBD35969';
@@ -41,12 +42,13 @@ export class AuthService {
 
   }
 
-  randomIntFromInterval(min, max) { // min and max included 
+  randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
   register(user:any){
-    user.avatar = this.avatars[this.randomIntFromInterval(0, 29)].photo;
+    user.avatar = this.imgPath+"cats_"+this.randomIntFromInterval(1,33)+".jpg";
+    user.status = "Hi! I am available.";
     console.log(user);
     return this.http.post("http://localhost:8080/register",user);
   }
