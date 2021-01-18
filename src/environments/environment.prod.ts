@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://muchatlu-backend.herokuapp.com/'
+  baseUrl: 'http://muchatlu-backend.herokuapp.com/'
 };
