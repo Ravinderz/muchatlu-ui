@@ -52,17 +52,29 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(this.userService.getUserDetails(this.email).subscribe((value:any) => {
       console.log(value);
-    friendRequest.requestToUsername = value.username;
-    friendRequest.avatarTo = value.avatar;
-    friendRequest.requestToUserId = value.id;
-    console.log(friendRequest);
-    this.subscriptions.push(this.userService.sendFriendRequest(friendRequest).subscribe((value) => {
-      if(value){
-        this.message = "Friend request sent";
-        console.log(value);
-        this.friendRequestSentEvent.emit(value);
+      if(value.id){
+        friendRequest.requestToUsername = value.username;
+        friendRequest.avatarTo = value.avatar;
+        friendRequest.requestToUserId = value.id;
+        console.log(friendRequest);
+        this.subscriptions.push(this.userService.sendFriendRequest(friendRequest).subscribe((request) => {
+          if(request){
+            this.message = `Friend Request to ${value.username} sent successfully`;
+            console.log(request);
+            this.inputText = '';
+            this.friendRequestSentEvent.emit(request);
+            setTimeout(() => {
+                this.message = null;
+            }, 5000);
+          }
+        }));
+      }else{
+        this.message = "User doesn't exist";
+        setTimeout(() => {
+          this.message = null;
+      }, 5000);
       }
-    }));
+
     }));
 
 
