@@ -6,7 +6,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "http-server-spa dist/angular-reddit-clone index.html $PORT",
+    "start": "http-server-spa dist/muchatlu-ui index.html $PORT",
     "heroku-postbuild": "ng build --prod && npm install -g http-server-spa",
     "build": "ng build",
     "test": "ng test",
