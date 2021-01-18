@@ -191,6 +191,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
+  frndRqstSent(value: any){
+    console.log("friendrequestsenbt",value);
+    this.list = value;
+    this.listType = 'friend requests';
+  }
+
   ngOnDestroy(){
     this.subscriptions.forEach(s => s.unsubscribe());
   }

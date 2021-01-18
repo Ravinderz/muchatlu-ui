@@ -26,22 +26,27 @@ export class FriendRequestDisplayComponent implements OnInit,OnChanges,OnDestroy
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.selectedItem);
 
-    if(this.selectedItem.requestFromUserId === this.loggedUser.id){
-      if(this.selectedItem.status === 'Accepted' || this.selectedItem.status === 'Rejected'){
-        this.showActionBtn = false;
+    if(this.selectedItem){
+      if(this.selectedItem.requestFromUserId === this.loggedUser.id){
+        if(this.selectedItem.status === 'Accepted' || this.selectedItem.status === 'Rejected'){
+          this.showActionBtn = false;
+        }
+      }
+      if(this.selectedItem.requestFromUserId !== this.loggedUser.id){
+        if(this.selectedItem.status === 'Pending'){
+          this.showActionBtn = true;
+        }
       }
     }
-    if(this.selectedItem.requestFromUserId !== this.loggedUser.id){
-      if(this.selectedItem.status === 'Pending'){
-        this.showActionBtn = true;
-      }
-    }
+
   }
 
   updateFriendRequest(status:string){
     this.selectedItem.status = status;
     console.log(this.selectedItem);
+
     this.subscriptions.push(this.userService.updateFriendRequest(this.selectedItem).subscribe((value) => {
+      this.showActionBtn = false;
     }));
   }
 

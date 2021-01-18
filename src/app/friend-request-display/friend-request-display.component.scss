@@ -1,40 +1,61 @@
 .friend-details-container {
-
   margin: 4em;
   margin-top: 10em;
 
-  .avatar-container{
+  .avatar-container {
     flex-grow: 100;
 
-    img{
+    img {
       width: 100px;
-      height:100px;
+      height: 100px;
       border-radius: 50%;
     }
   }
+  .request-main {
+    .name {
+      color: #3f3d56;
+      h5 {
+        margin-bottom: 0.1em;
+      }
+      p {
+        font-size: 14px;
+        color: #3f3d56;
+        margin-bottom: 0.2em;
+        overflow: hidden;
+      }
+    }
 
-  .request-actions{
+    .status {
+      p{
+      border: 1px solid #ffb01c;
+      padding: 0.5em;
+      border-radius: 30px;
+      font-weight: 500;
+      color:darken($color: #ffb01c, $amount: 5)
+    }
+    }
+  }
 
+  .request-actions {
     cursor: pointer;
-    .actions{
+    .actions {
       padding: 1em;
       margin-right: 1em;
-      margin-left:1em;
+      margin-left: 1em;
       align-content: center;
     }
 
-
-    .accept{
+    .accept {
       padding-left: 0.2em;
       text-align: center;
-      font-size:32px;
-      color:#53D769;
+      font-size: 32px;
+      color: #53d769;
     }
-    .reject{
+    .reject {
       padding-left: 0.2em;
       text-align: center;
-      font-size:32px;
-      color:#FF4E4E;
+      font-size: 32px;
+      color: #ff4e4e;
     }
   }
 }

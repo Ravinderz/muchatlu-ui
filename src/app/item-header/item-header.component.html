@@ -2,14 +2,14 @@
   <div class="chat-list-item d-flex">
     <img
       class="avatar"
-      [src]="selectedItem.avatarTo"
+      [src]="loggedUser.id === selectedItem?.userIdTo ? selectedItem?.avatarFrom : selectedItem?.avatarTo"
       alt=""
       height="60px"
       width="60px"
     />
     <div class="text-content">
-      <h4>{{selectedItem.usernameTo}}</h4>
-      <p>{{selectedItem.staus}}</p>
+      <h4>{{loggedUser.id === selectedItem?.userIdTo ? selectedItem?.usernameFrom : selectedItem?.usernameTo}}</h4>
+      <p>{{selectedItem?.staus}}</p>
       <p>Online</p>
     </div>
     <!-- <div class="text-content">

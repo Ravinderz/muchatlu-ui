@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../common.service';
 import { MessageService } from '../message.service';
@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
   templateUrl: './group-list.component.html',
   styleUrls: ['./group-list.component.scss']
 })
-export class GroupListComponent implements OnInit, OnDestroy {
+export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
 
   @Input() list: any;
   @Input() listType: string;
@@ -21,6 +21,13 @@ export class GroupListComponent implements OnInit, OnDestroy {
 
   constructor(private messageService:MessageService, private userService:UserService, private commonService: CommonService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.listType === 'friend requests'){
+      console.log(changes);
+    }
   }
 
   loggedUser:any;
