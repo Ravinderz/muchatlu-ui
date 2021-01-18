@@ -1,6 +1,9 @@
 {
   "name": "muchatlu-ui",
   "version": "0.0.0",
+  "engines": {
+    "node": "13.x"
+  },
   "scripts": {
     "ng": "ng",
     "start": "http-server-spa dist/angular-reddit-clone index.html $PORT",
