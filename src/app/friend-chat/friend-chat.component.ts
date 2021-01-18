@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MessageService } from '../message.service';
 
@@ -7,76 +7,109 @@ import { MessageService } from '../message.service';
   templateUrl: './friend-chat.component.html',
   styleUrls: ['./friend-chat.component.scss']
 })
-export class FriendChatComponent implements OnInit {
+export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() selectedItem: any;
   @Input() conversationId: any;
   @Input() conversation: any;
 
-  subscriptions:Subscription[] = [];
+  subscriptions: Subscription[] = [];
   selectedChatId: any;
-  unreadMessages:any = {};
-  text:any;
+  unreadMessages: any = {};
+  text: any;
   loggedUser: any;
 
 
 
-  constructor(private messageService:MessageService) {
+  constructor(private messageService: MessageService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+
+    console.log(changes);
+
+    var elem = document.getElementById('empty-div');
+    if (elem) {
+      setTimeout(() => {
+        elem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+      }, 10);
+    } else {
+      setTimeout(() => {
+        elem = document.getElementById('empty-div');
+        elem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+      }, 10);
+    }
+
   }
 
   ngOnInit() {
     console.log(this.selectedItem);
-    this.subscriptions.push(this.messageService.messageEvent.subscribe((value) =>{
-      console.log("Inside chat window, message event value ::: ",value);
+    this.subscriptions.push(this.messageService.messageEvent.subscribe((value) => {
+      console.log("Inside chat window, message event value ::: ", value);
 
-      if(this.conversation){
-        this.conversation.message.push(value)
+      if (this.conversation) {
+        if(!this.isEmpty(value)){
+          if(this.conversation.message[this.conversation.message.length-1].id !== value.id){
+            this.conversation.message.push(value);
+            setTimeout(() => {
+              let elem = document.getElementById('empty-div');
+              elem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+            }, 10);
+          }
+        }
       }
 
-      if(value.userIdFrom !== this.selectedChatId){
-        if(!this.unreadMessages[value.userIdFrom]){
-          this.unreadMessages[value.userIdFrom]= [1];
-        }else{
+      if (value.userIdFrom !== this.selectedChatId) {
+        if (!this.unreadMessages[value.userIdFrom]) {
+          this.unreadMessages[value.userIdFrom] = [1];
+        } else {
           this.unreadMessages[value.userIdFrom].push(1);
         }
       }
-     }));
+    }));
   }
 
-  sendMessage(){
+  isEmpty(obj: any) {
+    for (var prop in obj) {
+      if (obj.hasOwnProperty(prop))
+        return false;
+    }
+    return true;
+  }
+
+  sendMessage() {
     console.log(this.text);
-    if(!this.text){
+    if (!this.text) {
       return;
     }
-    if(this.text && this.text.trim() === ""){
+    if (this.text && this.text.trim() === "") {
       return;
     }
 
     let msg;
-    if(this.loggedUser.id === this.selectedItem.userIdFrom){
-       msg = {
-        'userIdFrom':this.loggedUser.id,
-        'userIdTo':this.selectedItem.userIdTo,
-        'usernameFrom':this.loggedUser.username,
-        'avatarFrom': this.loggedUser.avatar,
-        'usernameTo':this.selectedItem.usernameTo,
-        'avatarTo':this.selectedItem.avatarTo,
-        'message':this.text.trim(),
-        'conversationId':this.selectedItem.id,
-        'timestamp':null
-      }
-    }else{
+    if (this.loggedUser.id === this.selectedItem.userIdFrom) {
       msg = {
-        'userIdFrom':this.loggedUser.id,
-        'userIdTo':this.selectedItem.userIdFrom,
-        'usernameFrom':this.loggedUser.username,
+        'userIdFrom': this.loggedUser.id,
+        'userIdTo': this.selectedItem.userIdTo,
+        'usernameFrom': this.loggedUser.username,
         'avatarFrom': this.loggedUser.avatar,
-        'usernameTo':this.selectedItem.usernameFrom,
-        'avatarTo':this.selectedItem.avatarFrom,
-        'message':this.text.trim(),
-        'conversationId':this.selectedItem.id,
-        'timestamp':null
+        'usernameTo': this.selectedItem.usernameTo,
+        'avatarTo': this.selectedItem.avatarTo,
+        'message': this.text.trim(),
+        'conversationId': this.selectedItem.id,
+        'timestamp': null
+      }
+    } else {
+      msg = {
+        'userIdFrom': this.loggedUser.id,
+        'userIdTo': this.selectedItem.userIdFrom,
+        'usernameFrom': this.loggedUser.username,
+        'avatarFrom': this.loggedUser.avatar,
+        'usernameTo': this.selectedItem.usernameFrom,
+        'avatarTo': this.selectedItem.avatarFrom,
+        'message': this.text.trim(),
+        'conversationId': this.selectedItem.id,
+        'timestamp': null
       }
     }
 
@@ -84,21 +117,18 @@ export class FriendChatComponent implements OnInit {
     this.messageService.sendMessage(msg);
     msg.timestamp = new Date();
     console.log(msg);
-    // if(!this.chats){
-    //   this.chats = {};
-    // }
-    // if(!this.chats[msg.userIdTo]){
-    //   this.chats[msg.userIdTo]= [msg];
-    // }else{
-    //   this.chats[msg.userIdTo].push(msg);
-    // }
-    if(this.conversation){
+    if (this.conversation) {
       this.conversation.message.push(msg)
     }
     this.text = '';
-    var elmnt = document.getElementById("empty-div");
-    elmnt.scrollIntoView();
+    var elem = document.getElementById('empty-div');
+    setTimeout(() => {
+      elem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+    }, 10);
+  }
 
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }

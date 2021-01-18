@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../common.service';
 import { MessageService } from '../message.service';
@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   loggedUser: any;
   selectedChatId: any;
@@ -189,6 +189,10 @@ export class HomeComponent implements OnInit {
   startChat(value: any){
     console.log("start chat ",value);
 
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }

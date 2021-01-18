@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../common.service';
 import { MessageService } from '../message.service';
@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
   templateUrl: './group-list.component.html',
   styleUrls: ['./group-list.component.scss']
 })
-export class GroupListComponent implements OnInit {
+export class GroupListComponent implements OnInit, OnDestroy {
 
   @Input() list: any;
   @Input() listType: string;
@@ -84,5 +84,9 @@ export class GroupListComponent implements OnInit {
       }
       this.selectedItemEvent.emit(obj);
     }
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 }

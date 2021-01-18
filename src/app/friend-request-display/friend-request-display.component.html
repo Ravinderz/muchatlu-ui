@@ -8,12 +8,15 @@
     <div class="name">
       <h5>{{selectedItem.requestFromUsername}}</h5>
     </div>
-    <div class="request-actions d-inline-flex">
-      <div class="actions" (click)="updateFriendRequest('ACCEPTED')">
+    <div class="Status">
+      <h5>{{selectedItem.status}}</h5>
+    </div>
+    <div class="request-actions d-inline-flex" *ngIf="showActionBtn">
+      <div class="actions" (click)="updateFriendRequest('Accepted')">
         <i class="bi bi-check-circle accept"></i>
         <p>Accept</p>
       </div>
-      <div class="actions" (click)="updateFriendRequest('REJECTED')">
+      <div class="actions" (click)="updateFriendRequest('Rejected')">
         <i class="bi bi-x-circle reject"></i>
         <p>Reject</p>
       </div>

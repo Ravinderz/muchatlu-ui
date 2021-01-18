@@ -2,7 +2,8 @@
   <div
     [ngClass]="chat.userIdFrom === loggedUser.id ? 'msg-left' : 'msg-right'"
     class="d-flex"
-    *ngFor="let chat of conversation.message"
+    *ngFor="let chat of conversation.message; let i = index"
+
   >
     <div
       [ngClass]="

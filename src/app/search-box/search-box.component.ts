@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
 
@@ -7,13 +7,13 @@ import { UserService } from '../user.service';
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss']
 })
-export class SearchBoxComponent implements OnInit {
+export class SearchBoxComponent implements OnInit, OnDestroy {
 
   @Input() placeholder: String;
   loggedUser: any;
   email: any;
   subscriptions:Subscription[] = [];
-  friendRequests
+  friendRequests = [];
 
 
   constructor(private userService:UserService) {
@@ -27,15 +27,23 @@ export class SearchBoxComponent implements OnInit {
   }
 
   sendFriendRequest(){
+    if(this.email === this.friendRequests[this.friendRequests.length-1]){
+      return;
+    }
     let friendRequest = {
-    'status':'PENDING',
+    'status':'Pending',
     'requestFromUserId':this.loggedUser.id,
     'requestToEmailId':this.email,
     'requestFromUsername':this.loggedUser.username
     }
     console.log(friendRequest);
+    this.friendRequests.push(this.email);
     this.subscriptions.push(this.userService.sendFriendRequest(friendRequest).subscribe((value) => {
     }));
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }

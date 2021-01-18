@@ -23,4 +23,6 @@ export class FriendDetailsComponent implements OnInit {
     this.startChatEvent.emit(this.selectedItem);
   }
 
+
+
 }
