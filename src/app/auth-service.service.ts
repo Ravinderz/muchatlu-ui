@@ -1,14 +1,15 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  baseUrl = environment.baseUrl;
 
   user:any;
-
   avatars:any;
   imgPath = "./../../assets/avatars/";
 
@@ -24,8 +25,6 @@ export class AuthService {
     }else{
       this.avatars = JSON.parse(localStorage.getItem('avatars'));
     }
-
-
   }
 
   apikey = 'DE94E4AE-B7774FFF-9D379FD1-FBD35969';
@@ -50,11 +49,11 @@ export class AuthService {
     user.avatar = this.imgPath+"cats_"+this.randomIntFromInterval(1,33)+".jpg";
     user.status = "Hi! I am available.";
     console.log(user);
-    return this.http.post("http://localhost:8080/register",user);
+    return this.http.post(`${this.baseUrl}register`,user);
   }
 
   login(user:any){
-    return this.http.post("http://localhost:8080/login",user);
+    return this.http.post(`${this.baseUrl}login`,user);
   }
 
   getUser(){

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { AuthService } from './auth-service.service';
 declare var SockJS;
 declare var Stomp;
@@ -7,6 +8,8 @@ declare var Stomp;
   providedIn: 'root'
 })
 export class MessageService {
+
+  baseUrl = environment.baseUrl;
 
   loggedUser:any;
 
@@ -25,7 +28,7 @@ export class MessageService {
   public friendRequestEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
 
   initializeWebSocketConnection(userId) {
-    const serverUrl = `http://localhost:8080/chat?userId=${userId}`;
+    const serverUrl = `${this.baseUrl}chat?userId=${userId}`;
     const ws = new SockJS(serverUrl);
     this.stompClient = Stomp.over(ws);
     const that = this;
@@ -41,7 +44,7 @@ export class MessageService {
         }
       });
 
-      
+
       that.stompClient.subscribe(`/topic/public.login`, (message) => {
         if (message.body) {
           let msg = JSON.parse(message.body);
@@ -72,7 +75,7 @@ export class MessageService {
   }
 
   sendMessage(message) {
-    this.stompClient.send(`/app/chat.${message.userIdTo}` , {}, JSON.stringify(message)); 
+    this.stompClient.send(`/app/chat.${message.userIdTo}` , {}, JSON.stringify(message));
   }
 
 }

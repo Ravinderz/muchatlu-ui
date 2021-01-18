@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "http-server-spa dist/angular-reddit-clone index.html $PORT",
+    "heroku-postbuild": "ng build --prod &amp;&amp; npm install -g http-server-spa",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
