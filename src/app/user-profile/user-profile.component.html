@@ -1,0 +1,38 @@
+<div class="friend-details-container">
+  <div
+    class="friend-detail d-flex flex-column justify-content-center align-items-center mb-3"
+  >
+    <div class="avatar-container mb-2">
+      <img [src]="loggedUser?.avatar" alt="" />
+      <i class="bi bi-pencil-square"></i>
+    </div>
+    <div class="text-content text-center">
+      <h4>{{ loggedUser?.username }}</h4>
+      <p class="mb-0">{{ loggedUser?.email }}</p>
+      <div class="user-status d-flex justify-content-around align-items-center">
+        <p *ngIf="!showStatusInput">
+          {{ loggedUser?.status }}
+        </p>
+        <div class="search-box pb-2" *ngIf="showStatusInput">
+          <form class="row g-2" autocomplete="off">
+            <div class="col-10">
+              <input
+                type="text"
+                class="form-control"
+                id="search"
+                placeholder="status"
+                name="input"
+                [(ngModel)]="status"
+              />
+            </div>
+            <div class="col-1 d-flex">
+              <i class="bi bi-check-circle" (click)="updateUserStatus()"></i>
+              <i class="bi bi-x-circle" (click)="toggleStatusEdit()"></i>
+            </div>
+          </form>
+        </div>
+        <i class="bi bi-pencil-square" *ngIf="!showStatusInput" (click)="toggleStatusEdit()"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-7 chat-body-container">
+    <div class="col-sm chat-body-container">
       <ng-template [ngIf]="itemType === 'chats' && selectedListItem">
         <app-item-header [selectedItem]="selectedListItem"></app-item-header>
       </ng-template>
@@ -84,6 +84,9 @@
       <ng-template [ngIf]="itemType === 'friends' && friendDetails">
         <app-friend-details [selectedItem]="friendDetails" (startChatEvent)="startChat($event)"></app-friend-details>
       </ng-template>
+    </div>
+    <div class="col-sm-2 profile-container">
+      <app-user-profile></app-user-profile>
     </div>
   </div>
 </div>
