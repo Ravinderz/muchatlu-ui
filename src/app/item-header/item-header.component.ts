@@ -1,13 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-item-header',
   templateUrl: './item-header.component.html',
   styleUrls: ['./item-header.component.scss']
 })
-export class ItemHeaderComponent implements OnInit {
+export class ItemHeaderComponent implements OnInit, OnChanges {
+  loggedUser: any;
 
-  constructor() { }
+  constructor() {
+    this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+   }
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
 
   @Input() selectedItem: any;
 

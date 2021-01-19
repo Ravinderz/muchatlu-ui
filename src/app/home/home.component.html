@@ -6,9 +6,10 @@
           class="nav-item d-flex justify-content-start align-items-center"
           (click)="loadPage('chats', $event)"
           [ngClass]="activeLink === 'chats' ? 'nav-active' : ''"
+          id = "chats"
         >
           <i class="bi bi-chat-dots"></i>
-          <a class="nav-link" aria-current="page" href="#"
+          <a class="nav-link" aria-current="page" href=""
             ><span class="link-text">Chats</span></a
           >
         </li>
@@ -16,9 +17,10 @@
           class="nav-item d-flex justify-content-start align-items-center"
           (click)="loadPage('friends', $event)"
           [ngClass]="activeLink === 'friends' ? 'nav-active' : ''"
+          id = "friends"
         >
           <i class="bi bi-people"></i>
-          <a class="nav-link" href="#"
+          <a class="nav-link" href=""
             ><span class="link-text">Friends</span></a
           >
         </li>
@@ -26,6 +28,7 @@
           class="nav-item d-flex justify-content-start align-items-center"
           (click)="loadPage('friend requests', $event)"
           [ngClass]="activeLink === 'friend requests' ? 'nav-active' : ''"
+          id = "friend-requests"
         >
           <i class="bi bi-person-check"></i>
           <a class="nav-link" href=""
@@ -36,9 +39,10 @@
           class="nav-item d-flex justify-content-start align-items-center"
           (click)="loadPage('groups', $event)"
           [ngClass]="activeLink === 'groups' ? 'nav-active' : ''"
+          id = "groups"
         >
           <i class="bi bi-ui-radios-grid"></i>
-          <a class="nav-link" href="#" tabindex="-1" aria-disabled="true"
+          <a class="nav-link" href="" tabindex="-1" aria-disabled="true"
             ><span class="link-text">Groups</span></a
           >
         </li>
@@ -46,7 +50,7 @@
     </div>
 
     <div class="col-sm-3 list-container">
-      <app-search-box [placeholder]="placeholder"></app-search-box>
+      <app-search-box [placeholder]="placeholder" (friendRequestSentEvent)="frndRqstSent($event)"></app-search-box>
       <div class="groups-container">
         <!-- <div *ngIf="list && list.length > 0"> -->
         <div *ngIf="list">
@@ -61,7 +65,7 @@
       </div>
     </div>
     <div class="col-sm-7 chat-body-container">
-      <ng-template [ngIf]="itemType !== 'friends' && selectedListItem">
+      <ng-template [ngIf]="itemType === 'chats' && selectedListItem">
         <app-item-header [selectedItem]="selectedListItem"></app-item-header>
       </ng-template>
       <!-- *ngIf="listType === 'friend Requests'" -->

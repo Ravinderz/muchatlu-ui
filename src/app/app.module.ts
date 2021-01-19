@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AppComponent } from './app.component';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { FriendChatComponent } from './friend-chat/friend-chat.component';
+import { FriendDetailsComponent } from './friend-details/friend-details.component';
 import { FriendRequestDisplayComponent } from './friend-request-display/friend-request-display.component';
 import { GroupListComponent } from './group-list/group-list.component';
 import { HomeComponent } from './home/home.component';
@@ -14,7 +16,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterLoginComponent } from './register-login/register-login.component';
 import { RegisterComponent } from './register/register.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
-import { FriendDetailsComponent } from './friend-details/friend-details.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: 'login', pathMatch: 'full' },
@@ -44,7 +45,8 @@ const routes: Routes = [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxSkeletonLoaderModule.forRoot()
   ],
   exports: [RouterModule],
   providers: [],

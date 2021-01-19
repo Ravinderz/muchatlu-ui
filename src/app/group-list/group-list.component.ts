@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../common.service';
 import { MessageService } from '../message.service';
@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
   templateUrl: './group-list.component.html',
   styleUrls: ['./group-list.component.scss']
 })
-export class GroupListComponent implements OnInit {
+export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
 
   @Input() list: any;
   @Input() listType: string;
@@ -23,40 +23,68 @@ export class GroupListComponent implements OnInit {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
   }
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.listType === 'friend requests'){
+    }
+    if(this.listType === 'chats'){
+      if(changes.list.currentValue && changes.list.currentValue.length > 0){
+        if(this.selectedItemIndex){
+          this.selectedItem(this.selectedItemIndex)
+        }else{
+          if(this.list.length > 0)
+          this.selectedItem(0)
+        }
+      }
+    }
+    if(this.listType === 'friends'){
+      if(changes.list.currentValue && changes.list.currentValue.length > 0){
+        if(this.selectedItemIndex){
+          this.selectedItem(this.selectedItemIndex)
+        }else{
+          if(this.list.length > 0)
+          this.selectedItem(0)
+        }
+      }
+    }
+  }
+
   loggedUser:any;
 
   subscriptions:Subscription[] = [];
 
   ngOnInit() {
-    console.log(this.list);
-    //this.selectedItemIndex = 0;
+    if(this.selectedItemIndex){
+      this.selectedItem(this.selectedItemIndex)
+    }else{
+      if(this.list.length > 0)
+      this.selectedItem(0)
+    }
+    
 
     this.subscriptions.push(this.messageService.loginEvent.subscribe((value) =>{
-      console.log("Inside chat window, login event value ::: ",value);
-      //let updatedFriends = this.friends;
+      
       this.list.forEach(element => {
         if(element.id === value.userId){
           element.isOnline = value.online;
         }
       });
 
-     // this.friends = updatedFriends;
     }));
 
     this.subscriptions.push(this.messageService.logoutEvent.subscribe((value) =>{
-      console.log("Inside chat window, login event value ::: ",value);
-      //let updatedFriends = this.friends;
+      
       this.list.forEach(element => {
         if(element.id === value.userId){
           element.isOnline = value.online;
         }
       });
 
-      //this.friends = updatedFriends;
     }));
   }
 
   selectedItem(index:any){
+    
     this.selectedItemIndex = index;
 
     if(this.listType === 'friends'){
@@ -84,5 +112,9 @@ export class GroupListComponent implements OnInit {
       }
       this.selectedItemEvent.emit(obj);
     }
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 }

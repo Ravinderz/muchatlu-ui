@@ -44,4 +44,12 @@ button:hover{
   background-color: darken($color: #6159e6, $amount: 3);
 }
 
+.feedback-message{
+  padding-right:10px;
+  text-align: center;
+  color: green;
+  margin-top: 0;
+  font-size: 14px;
+}
+
 }

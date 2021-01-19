@@ -16,5 +16,8 @@
         <i class="bi bi-plus" *ngIf="(email && email.includes('@'))"></i>
       </button>
     </div>
+    <div class="feedback-message" *ngIf="message">
+      {{message}}
+    </div>
   </form>
 </div>

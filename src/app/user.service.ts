@@ -32,4 +32,8 @@ export class UserService {
     return this.http.get(`${this.baseUrl}getUserConversations/${id}`);
   }
 
+  getUserDetails(value:string){
+    return this.http.get(`${this.baseUrl}getUserDetails/${value}`);
+  }
+
 }

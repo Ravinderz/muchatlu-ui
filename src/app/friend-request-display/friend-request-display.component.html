@@ -3,17 +3,22 @@
     class="request-main d-flex flex-column align-items-center justify-content-center"
   >
     <div class="avatar-container">
-      <img [src]="selectedItem.avatar" alt="" />
+      <img [src]="selectedItem.requestToUserId === loggedUser.id ? selectedItem.avatarFrom : selectedItem.avatarTo" alt="" />
     </div>
-    <div class="name">
-      <h5>{{selectedItem.requestFromUsername}}</h5>
+    <div class="name text-center">
+      <h5>{{selectedItem.requestToUserId === loggedUser.id ? selectedItem.requestFromUsername : selectedItem.requestToUsername}}</h5>
+      <p class="mb-0">{{selectedItem.email}}</p>
+      <p>{{selectedItem.isOnline ? 'Online' : 'Offline'}}</p>
     </div>
-    <div class="request-actions d-inline-flex">
-      <div class="actions" (click)="updateFriendRequest('ACCEPTED')">
+    <div class="status">
+      <p>{{selectedItem.status}}</p>
+    </div>
+    <div class="request-actions d-inline-flex" *ngIf="showActionBtn">
+      <div class="actions" (click)="updateFriendRequest('Accepted')">
         <i class="bi bi-check-circle accept"></i>
         <p>Accept</p>
       </div>
-      <div class="actions" (click)="updateFriendRequest('REJECTED')">
+      <div class="actions" (click)="updateFriendRequest('Rejected')">
         <i class="bi bi-x-circle reject"></i>
         <p>Reject</p>
       </div>

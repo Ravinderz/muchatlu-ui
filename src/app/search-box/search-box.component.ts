@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
 
@@ -7,13 +7,15 @@ import { UserService } from '../user.service';
   templateUrl: './search-box.component.html',
   styleUrls: ['./search-box.component.scss']
 })
-export class SearchBoxComponent implements OnInit {
+export class SearchBoxComponent implements OnInit, OnDestroy {
 
   @Input() placeholder: String;
+  @Output() friendRequestSentEvent  = new EventEmitter<any>();
   loggedUser: any;
   email: any;
   subscriptions:Subscription[] = [];
-  friendRequests
+  friendRequests = [];
+  message:any;
 
 
   constructor(private userService:UserService) {
@@ -24,18 +26,62 @@ export class SearchBoxComponent implements OnInit {
 
   ngOnInit() {
     this.placeholder = 'Search'
+    // this.subscriptions.push(this.userService.getUserDetails('b@abc.com').subscribe((value) => {
+    //   console.log(value);
+    // }));
   }
 
   sendFriendRequest(){
+    if(this.email === this.friendRequests[this.friendRequests.length-1]){
+      return;
+    }
     let friendRequest = {
-    'status':'PENDING',
+    'status':'Pending',
     'requestFromUserId':this.loggedUser.id,
     'requestToEmailId':this.email,
-    'requestFromUsername':this.loggedUser.username
+    'requestFromUsername':this.loggedUser.username,
+    'requestToUsername':'',
+    'requestToUserId':'',
+    'avatarTo':'',
+    'avatarFrom':this.loggedUser.avatar
     }
     console.log(friendRequest);
-    this.subscriptions.push(this.userService.sendFriendRequest(friendRequest).subscribe((value) => {
+    this.friendRequests.push(this.email);
+
+
+
+    this.subscriptions.push(this.userService.getUserDetails(this.email).subscribe((value:any) => {
+      console.log(value);
+      if(value.id){
+        friendRequest.requestToUsername = value.username;
+        friendRequest.avatarTo = value.avatar;
+        friendRequest.requestToUserId = value.id;
+        console.log(friendRequest);
+        this.subscriptions.push(this.userService.sendFriendRequest(friendRequest).subscribe((request) => {
+          if(request){
+            this.message = `Friend Request to ${value.username} sent successfully`;
+            console.log(request);
+            this.inputText = '';
+            this.friendRequestSentEvent.emit(request);
+            setTimeout(() => {
+                this.message = null;
+            }, 5000);
+          }
+        }));
+      }else{
+        this.message = "User doesn't exist";
+        setTimeout(() => {
+          this.message = null;
+      }, 5000);
+      }
+
     }));
+
+
+  }
+
+  ngOnDestroy(){
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }
