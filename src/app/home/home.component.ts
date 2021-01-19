@@ -128,12 +128,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (name === "start chat") {
       this.placeholder = 'Search';
       this.list = this.conversations;
-      console.log(this.list);
       this.selectedItemIndex = this.list.findIndex(x => x.id === e.conversationId);
       this.selectedListItem = this.list[this.selectedItemIndex];
       this.conversationId = e.conversationId;
-      this.itemType = "chats";
-      this.listType = "chats";
+      this.itemType = this.listType = "chats";
+      this.conversation = this.list[this.selectedItemIndex];
     } else {
       e.preventDefault();
       this.activeLink = name;
@@ -177,7 +176,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.itemType = e.itemType;
     this.conversationId = e.conversationId;
+    console.log(e)
     if (e.itemType === 'chats') {
+      
       this.conversation = e.conversation;
     }
     if (e.itemType === 'friends') {

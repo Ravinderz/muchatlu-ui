@@ -12,8 +12,7 @@ export class ItemHeaderComponent implements OnInit, OnChanges {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
    }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-    console.log(this.selectedItem);
+
   }
 
   @Input() selectedItem: any;

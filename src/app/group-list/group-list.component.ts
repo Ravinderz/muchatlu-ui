@@ -30,8 +30,14 @@ export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
     }
     if(this.listType === 'chats'){
       console.log(changes);
-      if(changes.currentValue){
-        this.list = changes.currentValue;
+      console.log(changes.currentValue);
+      if(changes.list.currentValue && changes.list.currentValue.length > 0){
+        if(this.selectedItemIndex){
+          this.selectedItem(this.selectedItemIndex)
+        }else{
+          if(this.list.length > 0)
+          this.selectedItem(0)
+        }
       }
     }
   }
@@ -43,6 +49,13 @@ export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
   ngOnInit() {
     console.log(this.list);
     //this.selectedItemIndex = 0;
+    if(this.selectedItemIndex){
+      this.selectedItem(this.selectedItemIndex)
+    }else{
+      if(this.list.length > 0)
+      this.selectedItem(0)
+    }
+    
 
     this.subscriptions.push(this.messageService.loginEvent.subscribe((value) =>{
       console.log("Inside chat window, login event value ::: ",value);
@@ -70,6 +83,7 @@ export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
   }
 
   selectedItem(index:any){
+    console.log("index ",index)
     this.selectedItemIndex = index;
 
     if(this.listType === 'friends'){
