@@ -28,6 +28,12 @@ export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
     if(this.listType === 'friend requests'){
       console.log(changes);
     }
+    if(this.listType === 'chats'){
+      console.log(changes);
+      if(changes.currentValue){
+        this.list = changes.currentValue;
+      }
+    }
   }
 
   loggedUser:any;

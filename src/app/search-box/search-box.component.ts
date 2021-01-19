@@ -26,9 +26,9 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.placeholder = 'Search'
-    this.subscriptions.push(this.userService.getUserDetails('b@abc.com').subscribe((value) => {
-      console.log(value);
-    }));
+    // this.subscriptions.push(this.userService.getUserDetails('b@abc.com').subscribe((value) => {
+    //   console.log(value);
+    // }));
   }
 
   sendFriendRequest(){
