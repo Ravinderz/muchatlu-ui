@@ -41,51 +41,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.loggedUser) {
-      console.log("inside logged user :: ", this.loggedUser)
 
-      this.subscriptions.push(this.userService.getUserConversations(this.loggedUser.id).subscribe((value: any) => {
-
-        if (!this.conversations) {
-          this.conversations = [];
-        }
-
-        console.log("conversations ::: ", value)
-        value.forEach(element => {
-          if (element && element != null && typeof element == 'object') {
-            this.conversations.push(element)
-          }
-        });
-
-        this.list = this.conversations;
-        this.listType = 'chats';
-        this.selectedListItem = this.list[0];
-      }));
-
-      this.subscriptions.push(this.userService.getFriends(this.loggedUser).subscribe((value: any) => {
-
-        if (!this.friends) {
-          this.friends = [];
-        }
-
-        console.log("friends ::: ", value)
-        value.friends.forEach(element => {
-          if (element && element != null && typeof element == 'object') {
-            this.friends.push(element)
-          }
-        });
-      }));
-
-      this.userService.getFriendRequests(this.loggedUser.id).subscribe(value => {
-        console.log(value);
-        this.friendRequests = value;
-      });
+      this.getConversation().then(() => { });
+      this.getFriends().then(() => { });
+      this.getFriendRequests().then(() => { });
 
     }
 
     // code for friend request subscription
     this.subscriptions.push(this.messageService.friendRequestEvent.subscribe((value) => {
-      console.log("Inside chat window, friendRequest event value ::: ", value);
-      //let updatedFriends = this.friends;
       if (!this.friendRequests) {
         this.friendRequests = [];
       }
@@ -94,10 +58,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.friendRequests.push(value);
       }
 
-
       if (value.requestFromUser && value.status === 'ACCEPTED') {
-        console.log("isndie accepted status ::::: ", value)
-        console.log("isndie accepted status logged user ::::: ", this.loggedUser)
         if (value.requestFromUserId === this.loggedUser.id) {
           if (value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object') {
             this.friends.push(value.requestToUser);
@@ -110,7 +71,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
 
       if (value && value.status === 'REJECTED') {
-        console.log('sindie rejectred  ... ', this.list);
         this.friendRequests.forEach((element, index) => {
           if (element.id === value.id) {
             this.friendRequests.splice(index, 1);
@@ -124,40 +84,95 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   }
 
+  async getConversation() {
+    this.subscriptions.push(this.userService.getUserConversations(this.loggedUser.id).subscribe((value: any) => {
+
+      if (!this.conversations) {
+        this.conversations = [];
+      }
+      let temp = [];
+      value.forEach(element => {
+        if (element && element != null && typeof element == 'object') {
+          temp.push(element);
+        }
+      });
+      this.conversations = temp;
+
+      this.list = this.conversations;
+      this.listType = 'chats';
+      this.selectedListItem = this.list[0];
+    }));
+
+  }
+
+  async getFriends() {
+    this.subscriptions.push(this.userService.getFriends(this.loggedUser).subscribe((value: any) => {
+
+      if (!this.friends) {
+        this.friends = [];
+      }
+      let temp = [];
+      value.friends.forEach(element => {
+        if (element && element != null && typeof element == 'object') {
+          temp.push(element);
+          //this.friends.push(element)
+        }
+      });
+      this.friends = temp;
+
+    }));
+  }
+
+  async getFriendRequests() {
+    this.userService.getFriendRequests(this.loggedUser.id).subscribe(value => {
+      console.log(value);
+      this.friendRequests = value;
+    });
+  }
+
   loadPage(name: string, e: any) {
     if (name === "start chat") {
-      this.placeholder = 'Search';
-      this.list = this.conversations;
-      this.selectedItemIndex = this.list.findIndex(x => x.id === e.conversationId);
-      this.selectedListItem = this.list[this.selectedItemIndex];
-      this.conversationId = e.conversationId;
-      this.itemType = this.listType = "chats";
-      this.conversation = this.list[this.selectedItemIndex];
+      this.getConversation().then(() => {
+        this.placeholder = 'Search';
+        this.list = this.conversations;
+        this.selectedItemIndex = this.list.findIndex(x => x.id === e.conversationId);
+        this.selectedListItem = this.list[this.selectedItemIndex];
+        this.conversationId = e.conversationId;
+        this.itemType = this.listType = "chats";
+        this.conversation = this.list[this.selectedItemIndex];
+      });
+
     } else {
       e.preventDefault();
       this.activeLink = name;
       this.listType = name;
       if (name === "chats") {
-        this.placeholder = 'Search';
-        this.list = this.conversations;
-        this.selectedListItem = this.list[0];
-        this.itemType = name;
-        this.selectedItemIndex = 0;
+        this.getConversation().then(() => {
+          this.placeholder = 'Search';
+          this.list = this.conversations;
+          this.selectedListItem = this.list[0];
+          this.itemType = name;
+          this.selectedItemIndex = 0;
+        });
       }
 
       if (name === "friends") {
-        this.placeholder = 'Search / Add friends';
-        this.list = this.friends;
-        this.friendDetails = this.list[0];
-        this.itemType = name;
-        this.selectedItemIndex = 0;
+        this.getFriends().then(() => {
+          this.placeholder = 'Search / Add friends';
+          this.list = this.friends;
+          this.friendDetails = this.list[0];
+          this.itemType = name;
+          this.selectedItemIndex = 0;
+        });
       }
       if (name === "friend requests") {
-        this.placeholder = 'Search / Add friends';
-        this.list = this.friendRequests;
-        this.selectedListItem = this.list[0];
-        this.itemType = name;
-        this.selectedItemIndex = 0;
+        this.getFriendRequests().then(() => {
+          this.placeholder = 'Search / Add friends';
+          this.list = this.friendRequests;
+          this.selectedListItem = this.list[0];
+          this.itemType = name;
+          this.selectedItemIndex = 0;
+        });
       }
       if (name === "groups") {
         this.placeholder = 'Search';
@@ -169,16 +184,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   itemSelected(e: any) {
-    console.log(e)
     this.selectedListItem = e.selectedItem;
     if (e.itemType === 'friend requests') {
       this.showFriendRequestDetails = true;
     }
     this.itemType = e.itemType;
     this.conversationId = e.conversationId;
-    console.log(e)
     if (e.itemType === 'chats') {
-      
       this.conversation = e.conversation;
     }
     if (e.itemType === 'friends') {
@@ -201,18 +213,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   startChat(value: any) {
-    console.log("start chat ", value);
 
     var elm = document.getElementById('friends');
     elm.classList.remove("nav-active");
     elm = document.getElementById('chats');
     elm.classList.add("nav-active");
-
     this.loadPage('start chat', value);
+
   }
 
   frndRqstSent(value: any) {
-    console.log("friendrequestsenbt", value);
     this.list = value;
     this.listType = 'friend requests';
   }

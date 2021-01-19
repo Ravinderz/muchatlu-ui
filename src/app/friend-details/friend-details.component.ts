@@ -17,6 +17,7 @@ export class FriendDetailsComponent implements OnInit {
   @Output() startChatEvent = new EventEmitter<any>();
 
   ngOnInit() {
+    
   }
 
   startChat(){

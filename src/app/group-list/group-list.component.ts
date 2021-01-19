@@ -26,11 +26,18 @@ export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(this.listType === 'friend requests'){
-      console.log(changes);
     }
     if(this.listType === 'chats'){
-      console.log(changes);
-      console.log(changes.currentValue);
+      if(changes.list.currentValue && changes.list.currentValue.length > 0){
+        if(this.selectedItemIndex){
+          this.selectedItem(this.selectedItemIndex)
+        }else{
+          if(this.list.length > 0)
+          this.selectedItem(0)
+        }
+      }
+    }
+    if(this.listType === 'friends'){
       if(changes.list.currentValue && changes.list.currentValue.length > 0){
         if(this.selectedItemIndex){
           this.selectedItem(this.selectedItemIndex)
@@ -47,8 +54,6 @@ export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
   subscriptions:Subscription[] = [];
 
   ngOnInit() {
-    console.log(this.list);
-    //this.selectedItemIndex = 0;
     if(this.selectedItemIndex){
       this.selectedItem(this.selectedItemIndex)
     }else{
@@ -58,32 +63,28 @@ export class GroupListComponent implements OnInit,OnChanges ,OnDestroy {
     
 
     this.subscriptions.push(this.messageService.loginEvent.subscribe((value) =>{
-      console.log("Inside chat window, login event value ::: ",value);
-      //let updatedFriends = this.friends;
+      
       this.list.forEach(element => {
         if(element.id === value.userId){
           element.isOnline = value.online;
         }
       });
 
-     // this.friends = updatedFriends;
     }));
 
     this.subscriptions.push(this.messageService.logoutEvent.subscribe((value) =>{
-      console.log("Inside chat window, login event value ::: ",value);
-      //let updatedFriends = this.friends;
+      
       this.list.forEach(element => {
         if(element.id === value.userId){
           element.isOnline = value.online;
         }
       });
 
-      //this.friends = updatedFriends;
     }));
   }
 
   selectedItem(index:any){
-    console.log("index ",index)
+    
     this.selectedItemIndex = index;
 
     if(this.listType === 'friends'){
