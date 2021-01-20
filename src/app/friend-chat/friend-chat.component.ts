@@ -18,6 +18,7 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
   unreadMessages: any = {};
   text: any;
   loggedUser: any;
+  isTyping: boolean = false;
 
 
 
@@ -66,6 +67,27 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
           this.unreadMessages[value.userIdFrom].push(1);
         }
       }
+    }));
+
+    this.subscriptions.push(this.messageService.typingEvent.subscribe((value) => {
+      console.log("Inside chat window, message event value ::: ", value);
+      if (this.conversation) {
+        if (!this.isEmpty(value)) {
+          if (this.conversation.id === value.conversationId) {
+            if(this.loggedUser.id !== value.userIdFrom){
+              this.isTyping = value.isTyping;
+            }else{
+              this.isTyping = value.isTyping;
+            }
+            setTimeout(() => {
+              let elem = document.getElementById('empty-div');
+              elem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+            }, 10);
+          }
+        }
+      }
+      
+
     }));
   }
 
@@ -121,10 +143,40 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
       this.conversation.message.push(msg)
     }
     this.text = '';
+    this.typing();
     var elem = document.getElementById('empty-div');
     setTimeout(() => {
       elem.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
     }, 10);
+  }
+
+  typing(){
+    let msg;
+    
+    if (this.loggedUser.id === this.selectedItem.userIdFrom) {
+      msg = {
+        'userIdFrom': this.loggedUser.id,
+        'userIdTo': this.selectedItem.userIdTo,
+        'isTyping': true,
+        'conversationId': this.selectedItem.id,
+        
+      }
+    } else {
+      msg = {
+        'userIdFrom': this.loggedUser.id,
+        'userIdTo': this.selectedItem.userIdFrom,
+        'isTyping': true,
+        'conversationId': this.selectedItem.id,
+      }
+    }
+
+    if(this.text && this.text !== ''){
+      msg.isTyping = true;
+    }else{
+      msg.isTyping = false;
+    }
+
+    this.messageService.isTyping(msg);
   }
 
   ngOnDestroy() {

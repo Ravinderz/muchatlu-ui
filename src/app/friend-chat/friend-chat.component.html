@@ -21,6 +21,15 @@
         <span class="msg-time">{{ chat.timestamp | date: "shortTime" }}</span>
       </div>
     </div>
+  </div>  
+  <div class="typing d-flex" *ngIf="isTyping">
+    <div class="typing-content">
+    <span>{{loggedUser.id === selectedItem.userIdTo ? selectedItem.usernameFrom : selectedItem.usernameTo}} is typing ... </span>
+  </div>
+    <!-- <ngx-skeleton-loader count="3" appearance="circle" animation="progress-dark" [theme]="{ 
+      height: '10px',
+      width:'10px'
+    }"></ngx-skeleton-loader> -->
   </div>
   <div id="empty-div"></div>
 </div>
@@ -36,6 +45,7 @@
           name="message"
           [(ngModel)]="text"
           (keyup.enter)="sendMessage()"
+          (keyup)="typing()"
         />
       </div>
       <div class="col-1">

@@ -23,16 +23,24 @@ export class FriendRequestDisplayComponent implements OnInit, OnChanges, OnDestr
 
     this.subscriptions.push(this.messageService.loginEvent.subscribe((value) => {
 
-      if (this.selectedItem.id === value.userId) {
-        this.selectedItem.isOnline = value.online;
+      if (this.selectedItem.requestToUserId === value.userId) {
+        this.selectedItem['isOnline'] = value.online;
+      }
+
+      if(this.selectedItem.requestFromUserId === value.userId){
+        this.selectedItem['isOnline'] = value.online;
       }
 
     }));
 
     this.subscriptions.push(this.messageService.logoutEvent.subscribe((value) => {
 
-      if (this.selectedItem.id === value.userId) {
-        this.selectedItem.isOnline = value.online;
+      if (this.selectedItem.requestToUserId === value.userId) {
+        this.selectedItem['isOnline'] = value.online;
+      }
+
+      if(this.selectedItem.requestFromUserId === value.userId){
+        this.selectedItem['isOnline'] = value.online;
       }
 
     }));

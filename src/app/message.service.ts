@@ -21,6 +21,8 @@ export class MessageService {
 
   public messageEvent : BehaviorSubject<any> = new BehaviorSubject<any>({});
 
+  public typingEvent : BehaviorSubject<any> = new BehaviorSubject<any>({});
+
   public loginEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
 
   public logoutEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
@@ -41,6 +43,14 @@ export class MessageService {
         if (message.body) {
           let msg = JSON.parse(message.body);
           that.messageEvent.next(msg);
+        }
+      });
+
+      that.stompClient.subscribe(`/topic/${userId}/messages.typing`, (message) => {
+        console.log(message);
+        if (message.body) {
+          let msg = JSON.parse(message.body);
+          that.typingEvent.next(msg);
         }
       });
 
@@ -76,6 +86,10 @@ export class MessageService {
 
   sendMessage(message) {
     this.stompClient.send(`/app/chat.${message.userIdTo}` , {}, JSON.stringify(message));
+  }
+
+  isTyping(message) {
+    this.stompClient.send(`/app/chat.typing.${message.userIdTo}` , {}, JSON.stringify(message));
   }
 
 }
