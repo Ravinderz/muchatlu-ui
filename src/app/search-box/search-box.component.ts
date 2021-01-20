@@ -10,19 +10,19 @@ import { UserService } from '../user.service';
 export class SearchBoxComponent implements OnInit, OnDestroy {
 
   @Input() placeholder: String;
-  @Output() friendRequestSentEvent  = new EventEmitter<any>();
+  @Output() friendRequestSentEvent = new EventEmitter<any>();
   loggedUser: any;
   email: any;
-  subscriptions:Subscription[] = [];
+  subscriptions: Subscription[] = [];
   friendRequests = [];
-  message:any;
+  message: any;
 
 
-  constructor(private userService:UserService) {
+  constructor(private userService: UserService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
   }
 
-  inputText:string;
+  inputText: string;
 
   ngOnInit() {
     this.placeholder = 'Search'
@@ -31,48 +31,48 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
     // }));
   }
 
-  sendFriendRequest(){
-    if(this.email === this.friendRequests[this.friendRequests.length-1]){
+  sendFriendRequest() {
+    if (this.email === this.friendRequests[this.friendRequests.length - 1]) {
       return;
     }
     let friendRequest = {
-    'status':'Pending',
-    'requestFromUserId':this.loggedUser.id,
-    'requestToEmailId':this.email,
-    'requestFromUsername':this.loggedUser.username,
-    'requestToUsername':'',
-    'requestToUserId':'',
-    'avatarTo':'',
-    'avatarFrom':this.loggedUser.avatar
+      'status': 'Pending',
+      'requestFromUserId': this.loggedUser.id,
+      'requestToEmailId': this.email,
+      'requestFromUsername': this.loggedUser.username,
+      'requestToUsername': '',
+      'requestToUserId': '',
+      'avatarTo': '',
+      'avatarFrom': this.loggedUser.avatar
     }
     console.log(friendRequest);
     this.friendRequests.push(this.email);
 
 
 
-    this.subscriptions.push(this.userService.getUserDetails(this.email).subscribe((value:any) => {
+    this.subscriptions.push(this.userService.getUserDetails(this.email).subscribe((value: any) => {
       console.log(value);
-      if(value.id){
+      if (value.id) {
         friendRequest.requestToUsername = value.username;
         friendRequest.avatarTo = value.avatar;
         friendRequest.requestToUserId = value.id;
         console.log(friendRequest);
         this.subscriptions.push(this.userService.sendFriendRequest(friendRequest).subscribe((request) => {
-          if(request){
+          if (request) {
             this.message = `Friend Request to ${value.username} sent successfully`;
             console.log(request);
-            this.inputText = '';
+            this.email = '';
             this.friendRequestSentEvent.emit(request);
             setTimeout(() => {
-                this.message = null;
+              this.message = null;
             }, 5000);
           }
         }));
-      }else{
+      } else {
         this.message = "User doesn't exist";
         setTimeout(() => {
           this.message = null;
-      }, 5000);
+        }, 5000);
       }
 
     }));
@@ -80,7 +80,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 

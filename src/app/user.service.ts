@@ -36,4 +36,8 @@ export class UserService {
     return this.http.get(`${this.baseUrl}getUserDetails/${value}`);
   }
 
+  updateUserDetails(value:any){
+    return this.http.put(`${this.baseUrl}updateUserDetails`,value);
+  }
+
 }

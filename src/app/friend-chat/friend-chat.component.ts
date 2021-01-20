@@ -48,8 +48,8 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
       console.log("Inside chat window, message event value ::: ", value);
 
       if (this.conversation) {
-        if(!this.isEmpty(value)){
-          if(this.conversation.message[this.conversation.message.length-1].id !== value.id){
+        if (!this.isEmpty(value)) {
+          if (this.conversation.message[this.conversation.message.length - 1].id !== value.id) {
             this.conversation.message.push(value);
             setTimeout(() => {
               let elem = document.getElementById('empty-div');
@@ -127,7 +127,7 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
     }, 10);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 

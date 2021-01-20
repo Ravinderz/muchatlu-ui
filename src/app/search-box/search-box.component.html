@@ -5,19 +5,26 @@
         type="text"
         class="form-control"
         id="search"
-        placeholder="{{placeholder}}"
+        placeholder="{{ placeholder }}"
         name="input"
-        [(ngModel)] = "email"
+        [(ngModel)]="email"
       />
     </div>
     <div class="col-1">
-      <button type="submit" class="btn btn-primary mb-3" (click)="sendFriendRequest()">
-        <i class="bi bi-search" *ngIf="!email || (email && !email.includes('@'))"></i>
-        <i class="bi bi-plus" *ngIf="(email && email.includes('@'))"></i>
+      <button
+        type="submit"
+        class="btn btn-primary mb-3"
+        (click)="sendFriendRequest()"
+      >
+        <i
+          class="bi bi-search"
+          *ngIf="!email || (email && !email.includes('@'))"
+        ></i>
+        <i class="bi bi-plus" *ngIf="email && email.includes('@')"></i>
       </button>
     </div>
     <div class="feedback-message" *ngIf="message">
-      {{message}}
+      {{ message }}
     </div>
   </form>
 </div>

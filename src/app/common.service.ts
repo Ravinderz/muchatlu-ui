@@ -14,6 +14,8 @@ export class CommonService {
 
   public friendChangeEvent : BehaviorSubject<any> = new BehaviorSubject<any>({});
 
+  public showProfileEvent : BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   getConversationId(fromId,toId){
     return this.http.get(`${this.baseUrl}getConversationId/${fromId}/${toId}`);
   }

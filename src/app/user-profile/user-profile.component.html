@@ -4,6 +4,8 @@
   >
     <div class="avatar-container mb-2">
       <img [src]="loggedUser?.avatar" alt="" />
+      <!-- <img src="https://muchatlu.s3.ap-south-1.amazonaws.com/Farcry3.jpg" alt="" /> -->
+
       <i class="bi bi-pencil-square"></i>
     </div>
     <div class="text-content text-center">
@@ -31,7 +33,11 @@
             </div>
           </form>
         </div>
-        <i class="bi bi-pencil-square" *ngIf="!showStatusInput" (click)="toggleStatusEdit()"></i>
+        <i
+          class="bi bi-pencil-square"
+          *ngIf="!showStatusInput"
+          (click)="toggleStatusEdit()"
+        ></i>
       </div>
     </div>
   </div>

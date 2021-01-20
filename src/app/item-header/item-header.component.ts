@@ -10,7 +10,7 @@ export class ItemHeaderComponent implements OnInit, OnChanges {
 
   constructor() {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
-   }
+  }
   ngOnChanges(changes: SimpleChanges): void {
 
   }

@@ -3,7 +3,6 @@
     [ngClass]="chat.userIdFrom === loggedUser.id ? 'msg-left' : 'msg-right'"
     class="d-flex"
     *ngFor="let chat of conversation.message; let i = index"
-
   >
     <div
       [ngClass]="
@@ -12,12 +11,14 @@
           : 'message-right float-end'
       "
     >
-      <p [ngClass]="chat.userIdFrom === loggedUser.id ? 'msg' : 'msg float-end'">
+      <p
+        [ngClass]="chat.userIdFrom === loggedUser.id ? 'msg' : 'msg float-end'"
+      >
         <!-- This is how the message looks like asdf sadf sadf asdf asdf sadf
         ewrfwr adsfwea radfa sd -->{{ chat.message }}
       </p>
       <div class="time-wrapper">
-        <span class="msg-time">{{chat.timestamp | date : 'shortTime'}}</span>
+        <span class="msg-time">{{ chat.timestamp | date: "shortTime" }}</span>
       </div>
     </div>
   </div>

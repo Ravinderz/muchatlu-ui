@@ -94,12 +94,12 @@
     outline: none;
   }
 
-  button:focus{
-    outline:none;
+  button:focus {
+    outline: none;
     box-shadow: none;
   }
 
-  button:hover{
+  button:hover {
     background-color: darken($color: #6159e6, $amount: 3);
   }
 

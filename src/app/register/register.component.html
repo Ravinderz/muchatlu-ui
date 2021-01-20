@@ -1,28 +1,55 @@
 <div class="container content-container">
   <div class="row content-container">
     <div class="col-sm-3 align-self-center">
-        <h3 class="text-center mb-4">Sign Up</h3>
-        <form [formGroup]="registerForm" (ngSubmit)="register()">
-            <div class="mb-4">
-                <!-- <label for="exampleInputEmail1" class="form-label">Email address</label> -->
-                <input type="text" class="form-control" id="username" placeholder="Username" formControlName="username">
-              </div>
-          <div class="mb-4">
-            <!-- <label for="exampleInputEmail1" class="form-label">Email address</label> -->
-            <input type="email" class="form-control" id="email" placeholder="Email address" formControlName="email">
-          </div>
-          <div class="mb-4">
-            <!-- <label for="exampleInputPassword1" class="form-label">Password</label> -->
-            <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
-          </div>
-          <div class="d-grid gap-2">
+      <h3 class="text-center mb-4">Sign Up</h3>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="mb-4">
+          <!-- <label for="exampleInputEmail1" class="form-label">Email address</label> -->
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Username"
+            formControlName="username"
+          />
+        </div>
+        <div class="mb-4">
+          <!-- <label for="exampleInputEmail1" class="form-label">Email address</label> -->
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Email address"
+            formControlName="email"
+          />
+        </div>
+        <div class="mb-4">
+          <!-- <label for="exampleInputPassword1" class="form-label">Password</label> -->
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+            formControlName="password"
+          />
+        </div>
+        <div class="d-grid gap-2">
           <button type="submit" class="btn btn-primary">Sign up</button>
         </div>
-        </form>
-        <p class="mt-3 text-center">Already a member? <a [routerLink]="['/login']" class="sign-up-link">Sign in</a></p>
-  </div>
+      </form>
+      <p class="mt-3 text-center">
+        Already a member?
+        <a [routerLink]="['/login']" class="sign-up-link">Sign in</a>
+      </p>
+    </div>
     <div class="col-sm-9 align-self-center">
-      <img class="mx-auto d-block" src="./../../assets/images/undraw_Mobile_life_re_jtih.svg" alt="" width="650px" height="575px">
+      <img
+        class="mx-auto d-block"
+        src="./../../assets/images/undraw_Mobile_life_re_jtih.svg"
+        alt=""
+        width="650px"
+        height="575px"
+      />
     </div>
   </div>
 </div>

@@ -11,19 +11,19 @@ import { AuthService } from '../auth-service.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService,private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
-  subscriptions:Subscription[] = [];
+  subscriptions: Subscription[] = [];
 
   loginForm = new FormGroup({
-    email : new FormControl(''),
-    password : new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
   })
 
   ngOnInit() {
   }
 
-  login(){
+  login() {
     this.subscriptions.push(this.authService.login(this.loginForm.value).subscribe((data) => {
       console.log(data);
       sessionStorage.setItem('loggedUser', JSON.stringify(data));
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }));
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 

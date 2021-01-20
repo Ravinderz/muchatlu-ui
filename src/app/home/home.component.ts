@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   conversation: any;
   friendDetails: any;
   selectedItemIndex: any = 0;
+  showProfile: boolean = false;
 
   constructor(private userService: UserService, private messageService: MessageService, private commonService: CommonService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+
     if (this.loggedUser) {
 
       this.getConversation().then(() => { });
@@ -48,17 +50,24 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     }
 
+    this.subscriptions.push(this.commonService.showProfileEvent.subscribe((value: boolean) => {
+      this.showProfile = value;
+    }));
+
     // code for friend request subscription
     this.subscriptions.push(this.messageService.friendRequestEvent.subscribe((value) => {
+      console.log(value);
       if (!this.friendRequests) {
         this.friendRequests = [];
       }
 
-      if (value && value.requestFromUserId && value.status === 'PENDING') {
+      if (value && value.requestFromUserId && value.status === 'Pending') {
+        console.log("inside pending");
         this.friendRequests.push(value);
+        this.loadPage('friend requests', null);
       }
 
-      if (value.requestFromUser && value.status === 'ACCEPTED') {
+      if (value.requestFromUser && value.status === 'Accepted') {
         if (value.requestFromUserId === this.loggedUser.id) {
           if (value.requestToUser && value.requestToUser != null && typeof value.requestToUser == 'object') {
             this.friends.push(value.requestToUser);
@@ -68,14 +77,18 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.friends.push(value.requestFromUser)
           }
         }
+
+        this.loadPage('friends', null);
+
       }
 
-      if (value && value.status === 'REJECTED') {
+      if (value && value.status === 'Rejected') {
         this.friendRequests.forEach((element, index) => {
           if (element.id === value.id) {
             this.friendRequests.splice(index, 1);
           }
         });
+        this.loadPage('friend requests', null);
       }
 
     }));
@@ -143,7 +156,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
 
     } else {
-      e.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
       this.activeLink = name;
       this.listType = name;
       if (name === "chats") {
@@ -223,8 +238,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   frndRqstSent(value: any) {
-    this.list = value;
-    this.listType = 'friend requests';
+    console.log("inside friend request sent", value)
+    console.log(this.friendRequests);
+    this.friendRequests.push(value);
+    console.log(this.friendRequests);
+    this.loadPage('friend requests', null);
   }
 
   ngOnDestroy() {

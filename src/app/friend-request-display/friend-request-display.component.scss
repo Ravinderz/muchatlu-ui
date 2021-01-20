@@ -26,13 +26,13 @@
     }
 
     .status {
-      p{
-      border: 1px solid #ffb01c;
-      padding: 0.5em;
-      border-radius: 30px;
-      font-weight: 500;
-      color:darken($color: #ffb01c, $amount: 5)
-    }
+      p {
+        border: 1px solid #ffb01c;
+        padding: 0.5em;
+        border-radius: 30px;
+        font-weight: 500;
+        color: darken($color: #ffb01c, $amount: 5);
+      }
     }
   }
 
