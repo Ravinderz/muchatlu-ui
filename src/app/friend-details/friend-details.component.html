@@ -6,11 +6,15 @@
       <img [src]="selectedItem.avatar" alt="" />
     </div>
     <div class="text-content text-center">
-      <h4>{{selectedItem.username}}</h4>
-      <p class="mb-0">{{selectedItem.email}}</p>
-      <p class="mb-0">{{selectedItem.status ? selectedItem.status : 'Hi! I am available'}}</p>
-      <p>{{selectedItem.isOnline ? 'Online' : 'Offline'}}</p>
-      <button class="btn btn-primary mb-3" (click)="startChat()">start chat</button>
+      <h4>{{ selectedItem.username }}</h4>
+      <p class="mb-0">{{ selectedItem.email }}</p>
+      <p class="mb-0">
+        {{ selectedItem.status ? selectedItem.status : "Hi! I am available" }}
+      </p>
+      <p>{{ selectedItem.isOnline ? "Online" : "Offline" }}</p>
+      <button class="btn btn-primary mb-3" (click)="startChat()">
+        start chat
+      </button>
     </div>
   </div>
   <div class="media-heading"><h5>Shared Media</h5></div>

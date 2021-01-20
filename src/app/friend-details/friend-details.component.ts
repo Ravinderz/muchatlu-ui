@@ -11,16 +11,16 @@ export class FriendDetailsComponent implements OnInit {
 
   constructor() {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
-   }
+  }
 
   @Input() selectedItem: any;
   @Output() startChatEvent = new EventEmitter<any>();
 
   ngOnInit() {
-    
+
   }
 
-  startChat(){
+  startChat() {
     this.startChatEvent.emit(this.selectedItem);
   }
 

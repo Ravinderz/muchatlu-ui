@@ -1,55 +1,58 @@
-.search-box{
-  margin-left:1em;
+.search-box {
+  margin-left: 1em;
   border-bottom: 1px solid rgba(100, 100, 100, 0.2);
 
-  input{
+  input {
     border-radius: 20px;
-    background-color: #F4F2FF;
+    background-color: #f4f2ff;
     border: none;
     outline: none;
-}
-
-input:focus {
-  border: none !important;
-  box-shadow: none !important;
-  background-color: darken($color: #f4f2ff, $amount: 3) !important;
-}
-
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-   text-align: center;
-  }
-  ::-moz-placeholder { /* Firefox 19+ */
-    text-align: center;
-  }
-  :-ms-input-placeholder { /* IE 10+ */
-    text-align: center;
-  }
-  :-moz-placeholder { /* Firefox 18- */
-    text-align: center;
   }
 
-  button{
+  input:focus {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: darken($color: #f4f2ff, $amount: 3) !important;
+  }
+
+  ::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    text-align: center;
+  }
+  ::-moz-placeholder {
+    /* Firefox 19+ */
+    text-align: center;
+  }
+  :-ms-input-placeholder {
+    /* IE 10+ */
+    text-align: center;
+  }
+  :-moz-placeholder {
+    /* Firefox 18- */
+    text-align: center;
+  }
+
+  button {
     border-radius: 50%;
-    background-color: #6159E6;
+    background-color: #6159e6;
     border: none;
     outline: none;
-}
+  }
 
-button:focus{
-  outline:none;
-  box-shadow: none;
-}
+  button:focus {
+    outline: none;
+    box-shadow: none;
+  }
 
-button:hover{
-  background-color: darken($color: #6159e6, $amount: 3);
-}
+  button:hover {
+    background-color: darken($color: #6159e6, $amount: 3);
+  }
 
-.feedback-message{
-  padding-right:10px;
-  text-align: center;
-  color: green;
-  margin-top: 0;
-  font-size: 14px;
-}
-
+  .feedback-message {
+    padding-right: 10px;
+    text-align: center;
+    color: green;
+    margin-top: 0;
+    font-size: 14px;
+  }
 }

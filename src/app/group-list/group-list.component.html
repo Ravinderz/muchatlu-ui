@@ -4,7 +4,7 @@
     [ngClass]="i === selectedItemIndex ? 'active-group' : ''"
     *ngFor="let item of list; let i = index"
   >
-  <!-- <div class="dropdown float-end">
+    <!-- <div class="dropdown float-end">
     <a class="btn btn-secondary dropdown-icon" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
       <i class="bi bi-three-dots"></i>
     </a>
@@ -15,13 +15,17 @@
       <li><a class="dropdown-item" href="#">Something else here</a></li>
     </ul>
   </div> -->
-  <i class="bi bi-three-dots"></i>
-  <!-- <div class="clearfix"></div> -->
+    <i class="bi bi-three-dots"></i>
+    <!-- <div class="clearfix"></div> -->
     <div class="d-flex group-list-item" (click)="selectedItem(i)">
       <img
         *ngIf="listType === 'friend requests'"
         class="avatar"
-        [src]="loggedUser.id === item.requestToUserId ? item.avatarFrom :item.avatarTo"
+        [src]="
+          loggedUser.id === item.requestToUserId
+            ? item.avatarFrom
+            : item.avatarTo
+        "
         alt=""
         height="60px"
         width="60px"
@@ -55,7 +59,11 @@
           }}
         </h4>
         <h4 *ngIf="listType === 'friend requests'">
-          {{ item.requestToUserId === loggedUser.id ? item.requestFromUsername :item.requestToUsername }}
+          {{
+            item.requestToUserId === loggedUser.id
+              ? item.requestFromUsername
+              : item.requestToUsername
+          }}
         </h4>
         <p *ngIf="listType === 'chats'">
           {{ item.lastMessageFrom }} : {{ item.lastMessage }}

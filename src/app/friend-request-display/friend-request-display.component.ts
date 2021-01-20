@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MessageService } from '../message.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -7,18 +8,42 @@ import { UserService } from '../user.service';
   templateUrl: './friend-request-display.component.html',
   styleUrls: ['./friend-request-display.component.scss']
 })
-export class FriendRequestDisplayComponent implements OnInit,OnChanges,OnDestroy{
+export class FriendRequestDisplayComponent implements OnInit, OnChanges, OnDestroy {
   loggedUser: any;
   showActionBtn: any;
-  constructor(private userService:UserService) {
+  constructor(private userService: UserService, private messageService: MessageService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
-   }
+  }
 
 
-  @Input() selectedItem: any ;
-  subscriptions:Subscription[] = [];
+  @Input() selectedItem: any;
+  subscriptions: Subscription[] = [];
 
   ngOnInit() {
+
+    this.subscriptions.push(this.messageService.loginEvent.subscribe((value) => {
+
+      if (this.selectedItem.requestToUserId === value.userId) {
+        this.selectedItem['isOnline'] = value.online;
+      }
+
+      if(this.selectedItem.requestFromUserId === value.userId){
+        this.selectedItem['isOnline'] = value.online;
+      }
+
+    }));
+
+    this.subscriptions.push(this.messageService.logoutEvent.subscribe((value) => {
+
+      if (this.selectedItem.requestToUserId === value.userId) {
+        this.selectedItem['isOnline'] = value.online;
+      }
+
+      if(this.selectedItem.requestFromUserId === value.userId){
+        this.selectedItem['isOnline'] = value.online;
+      }
+
+    }));
 
 
   }
@@ -26,14 +51,14 @@ export class FriendRequestDisplayComponent implements OnInit,OnChanges,OnDestroy
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.selectedItem);
 
-    if(this.selectedItem){
-      if(this.selectedItem.requestFromUserId === this.loggedUser.id){
-        if(this.selectedItem.status === 'Accepted' || this.selectedItem.status === 'Rejected'){
+    if (this.selectedItem) {
+      if (this.selectedItem.requestFromUserId === this.loggedUser.id) {
+        if (this.selectedItem.status === 'Accepted' || this.selectedItem.status === 'Rejected') {
           this.showActionBtn = false;
         }
       }
-      if(this.selectedItem.requestFromUserId !== this.loggedUser.id){
-        if(this.selectedItem.status === 'Pending'){
+      if (this.selectedItem.requestFromUserId !== this.loggedUser.id) {
+        if (this.selectedItem.status === 'Pending') {
           this.showActionBtn = true;
         }
       }
@@ -41,7 +66,7 @@ export class FriendRequestDisplayComponent implements OnInit,OnChanges,OnDestroy
 
   }
 
-  updateFriendRequest(status:string){
+  updateFriendRequest(status: string) {
     this.selectedItem.status = status;
     console.log(this.selectedItem);
 
@@ -50,7 +75,7 @@ export class FriendRequestDisplayComponent implements OnInit,OnChanges,OnDestroy
     }));
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 }

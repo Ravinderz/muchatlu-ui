@@ -9,17 +9,17 @@ import { AuthService } from '../auth-service.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit, OnDestroy{
-  subscriptions:Subscription[] = [];
+export class RegisterComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
 
 
 
-  constructor(private authService: AuthService,private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   registerForm = new FormGroup({
-    username : new FormControl(''),
-    email : new FormControl(''),
-    password : new FormControl(''),
+    username: new FormControl(''),
+    email: new FormControl(''),
+    password: new FormControl(''),
     avatar: new FormControl(''),
     status: new FormControl(''),
   })
@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
   ngOnInit() {
   }
 
-  register(){
+  register() {
 
     this.subscriptions.push(this.authService.register(this.registerForm.value).subscribe((data) => {
       console.log(data);
@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy{
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
