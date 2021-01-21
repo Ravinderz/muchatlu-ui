@@ -24,10 +24,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    this.subscriptions.push(this.authService.login(this.loginForm.value).subscribe((data) => {
-      console.log(data);
-      sessionStorage.setItem('loggedUser', JSON.stringify(data));
-      this.router.navigate(['home']);
+
+    this.subscriptions.push(this.authService.authenticate(this.loginForm.value).subscribe((token) => {
+      console.log(token);
+      sessionStorage.setItem('token', JSON.stringify(token));
+      if (token) {
+        this.subscriptions.push(this.authService.login(this.loginForm.value).subscribe((data) => {
+          console.log(data);
+          sessionStorage.setItem('loggedUser', JSON.stringify(data));
+          this.router.navigate(['home']);
+        }));
+      }
     }));
   }
 

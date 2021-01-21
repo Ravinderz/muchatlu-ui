@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -15,31 +15,31 @@ export class AuthService {
 
   constructor(private http: HttpClient){
 
-    if(!localStorage.getItem('avatars')){
-      this.getAvatarImg().subscribe(data => {
-        console.log(data);
-        this.avatars = data;
-        localStorage.setItem('avatars',JSON.stringify(this.avatars));
+    // if(!localStorage.getItem('avatars')){
+    //   this.getAvatarImg().subscribe(data => {
+    //     console.log(data);
+    //     this.avatars = data;
+    //     localStorage.setItem('avatars',JSON.stringify(this.avatars));
 
-      })
-    }else{
-      this.avatars = JSON.parse(localStorage.getItem('avatars'));
-    }
+    //   })
+    // }else{
+    //   this.avatars = JSON.parse(localStorage.getItem('avatars'));
+    // }
   }
 
-  apikey = 'DE94E4AE-B7774FFF-9D379FD1-FBD35969';
+  // apikey = 'DE94E4AE-B7774FFF-9D379FD1-FBD35969';
 
-  getAvatarImg(){
+  // getAvatarImg(){
 
-    const httpHeaders: HttpHeaders = new HttpHeaders({
-      'X-API-KEY': [this.apikey],
-      'Accept': 'application/json',
-      'Cache-Control': 'no-cache'
-  });
+  //   const httpHeaders: HttpHeaders = new HttpHeaders({
+  //     'X-API-KEY': [this.apikey],
+  //     'Accept': 'application/json',
+  //     'Cache-Control': 'no-cache'
+  // });
 
-    return this.http.get("https://uifaces.co/api?limit=30",{ headers: httpHeaders });
+  //   return this.http.get("https://uifaces.co/api?limit=30",{ headers: httpHeaders });
 
-  }
+  // }
 
   randomIntFromInterval(min, max) { // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -54,6 +54,10 @@ export class AuthService {
 
   login(user:any){
     return this.http.post(`${this.baseUrl}login`,user);
+  }
+
+  authenticate(user:any){
+    return this.http.post(`${this.baseUrl}authenticate`,user);
   }
 
   getUser(){

@@ -1,10 +1,11 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AppComponent } from './app.component';
+import { AuthInterceptorService } from './auth-interceptor.service';
 import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { FriendChatComponent } from './friend-chat/friend-chat.component';
 import { FriendDetailsComponent } from './friend-details/friend-details.component';
@@ -51,7 +52,11 @@ const routes: Routes = [
     NgxSkeletonLoaderModule.forRoot()
   ],
   exports: [RouterModule],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS, 
+    useClass: AuthInterceptorService, 
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
