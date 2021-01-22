@@ -40,4 +40,8 @@ export class UserService {
     return this.http.put(`${this.baseUrl}updateUserDetails`,value);
   }
 
+  logout(user:any){
+    return this.http.post(`${this.baseUrl}logoutUser`,{'id':user.id,'username':user.username});
+  }
+
 }

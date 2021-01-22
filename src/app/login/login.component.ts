@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-
+    console.log("inside console");
+    this.clearSession();
     this.subscriptions.push(this.authService.authenticate(this.loginForm.value).subscribe((token) => {
       console.log(token);
       sessionStorage.setItem('token', JSON.stringify(token));
@@ -39,6 +40,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         }));
       }
     }));
+  }
+
+  private clearSession() {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('loggedUser');
   }
 
   ngOnDestroy() {

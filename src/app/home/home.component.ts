@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../common.service';
 import { MessageService } from '../message.service';
@@ -40,8 +41,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   activeContainer: string;
   lastActiveContainer: string;
 
-  constructor(private userService: UserService, private messageService: MessageService, private commonService: CommonService) {
+  constructor(private userService: UserService, private messageService: MessageService, private commonService: CommonService,private route: Router) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+
     this.screenWidth = window.innerWidth;
     this.activeContainer = 'showListGroup';
     this.updateLayout('showListGroup');

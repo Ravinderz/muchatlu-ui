@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class UserProfileComponent implements OnInit {
   loggedUser: any;
   showStatusInput: boolean = false;
   status: string;
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,private route:Router) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
   }
 
@@ -30,6 +31,16 @@ export class UserProfileComponent implements OnInit {
       this.showStatusInput = !this.showStatusInput;
     })
 
+  }
+
+  logout(){
+    this.userService.logout(this.loggedUser).subscribe((value) => {
+      if(value){
+        sessionStorage.removeItem("loggedUser");
+        sessionStorage.removeItem("token");
+        this.route.navigate(['login']);
+      }
+    })
   }
 
 }
