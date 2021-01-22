@@ -21,21 +21,32 @@
         <span class="msg-time">{{ chat.timestamp | date: "shortTime" }}</span>
       </div>
     </div>
-  </div>  
+  </div>
   <div class="typing d-flex" *ngIf="isTyping">
     <div class="typing-content">
-    <span>{{loggedUser.id === selectedItem.userIdTo ? selectedItem.usernameFrom : selectedItem.usernameTo}} is typing ... </span>
-  </div>
-    <!-- <ngx-skeleton-loader count="3" appearance="circle" animation="progress-dark" [theme]="{ 
-      height: '10px',
-      width:'10px'
-    }"></ngx-skeleton-loader> -->
+      <span
+        >{{
+          loggedUser.id === selectedItem.userIdTo
+            ? selectedItem.usernameFrom
+            : selectedItem.usernameTo
+        }}
+        is typing ...
+      </span>
+    </div>
   </div>
   <div id="empty-div"></div>
+  <!-- <div class="typing d-flex" *ngIf="isTyping">
+  <div class="typing-content">
+  <span>{{loggedUser.id === selectedItem.userIdTo ? selectedItem.usernameFrom : selectedItem.usernameTo}} is typing ... </span>
+</div> -->
+  <!-- <ngx-skeleton-loader count="3" appearance="circle" animation="progress-dark" [theme]="{ 
+    height: '10px',
+    width:'10px'
+  }"></ngx-skeleton-loader> -->
 </div>
 <div class="message-input-container">
   <div class="msg-input mt-4">
-    <form class="row g-2" autocomplete="off">
+    <form class="row" autocomplete="off">
       <div class="col-10">
         <input
           type="text"
@@ -48,7 +59,7 @@
           (keyup)="typing()"
         />
       </div>
-      <div class="col-1">
+      <div class="col-2">
         <button
           type="submit"
           class="btn btn-primary mb-3"

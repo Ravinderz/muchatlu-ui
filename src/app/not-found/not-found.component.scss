@@ -1,0 +1,26 @@
+.not-found-container{
+    width:80%;
+    margin: 4em auto;
+    height: 60vh;
+    img{
+        width:70%;
+        height:auto;
+        margin-bottom: 2em;
+    }
+
+    .login-btn{
+        margin: 1em auto;
+        text-decoration: none;
+        padding: 1em 5em;
+        border-radius: 30px;
+        color: #fff;
+        background: #6159e6;
+    }
+
+    span{
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 1px;
+
+    }
+}

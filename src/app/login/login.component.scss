@@ -1,10 +1,16 @@
 .content-container {
   height: calc(100vh - 10vh) !important;
 
-  img {
-    width: 750px;
+  .login-img{
+    width:750px;
+    height:595px;
     margin-left: -30px;
   }
+
+  // img {
+  //   width: 750px;
+    
+  // }
 
   input {
     border-radius: 20px;
@@ -62,3 +68,24 @@
     text-decoration: none;
   }
 }
+
+@media only screen and (max-width: 1200px ) {
+  .login-img {
+    width:500px !important;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .login-img {
+    width:500px !important;
+    height: 250px !important;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .login-img {
+    width:300px !important;
+    height: 250px !important;
+  }
+}
+

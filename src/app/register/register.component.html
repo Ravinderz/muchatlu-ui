@@ -1,6 +1,6 @@
 <div class="container content-container">
   <div class="row content-container">
-    <div class="col-sm-3 align-self-center">
+    <div class="col-12 col-sm-12 col-md-4 align-self-center form-container">
       <h3 class="text-center mb-4">Sign Up</h3>
       <form [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="mb-4">
@@ -42,9 +42,9 @@
         <a [routerLink]="['/login']" class="sign-up-link">Sign in</a>
       </p>
     </div>
-    <div class="col-sm-9 align-self-center">
+    <div class="col-12 col-sm-12 col-md-8 d-flex justify-contents-center align-self-center img-container">
       <img
-        class="mx-auto d-block"
+        class="mx-auto d-block register-img"
         src="./../../assets/images/undraw_Mobile_life_re_jtih.svg"
         alt=""
         width="650px"

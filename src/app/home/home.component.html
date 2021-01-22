@@ -1,6 +1,6 @@
 <div class="container-fluid content-container">
   <div class="row content-container">
-    <div class="col-sm-2 side-bar-nav">
+    <div class="col-1 side-bar-nav top-nav-bar">
       <ul class="nav flex-column mt-5">
         <li
           class="nav-item d-flex justify-content-start align-items-center"
@@ -47,7 +47,7 @@
       </ul>
     </div>
 
-    <div class="col-sm-3 list-container">
+    <div class="col-12 col-md-4 list-container" id="list-container" *ngIf="showListGroup">
       <app-search-box
         [placeholder]="placeholder"
         (friendRequestSentEvent)="frndRqstSent($event)"
@@ -65,7 +65,9 @@
         </div>
       </div>
     </div>
-    <div class="col-sm chat-body-container">
+    <!-- <div class="col-sm chat-body-container"> -->
+    <div class="col-12 col-md chat-body-container" id="chat-body-container" *ngIf="showMainContainer">
+      <!-- col-12 col-md-7 chat-body-container -->
       <ng-template [ngIf]="itemType === 'chats' && selectedListItem">
         <app-item-header [selectedItem]="selectedListItem"></app-item-header>
       </ng-template>
@@ -89,7 +91,11 @@
         ></app-friend-details>
       </ng-template>
     </div>
-    <div class="col-sm-2 profile-container" *ngIf="showProfile">
+    <div
+      class="col-md-2 profile-container"
+      *ngIf="showProfileContainer"
+      id="profile-container"
+    >
       <app-user-profile></app-user-profile>
     </div>
   </div>

@@ -35,7 +35,7 @@ export class MessageService {
     this.stompClient = Stomp.over(ws);
     const that = this;
     // tslint:disable-next-line:only-arrow-functions
-    this.stompClient.connect({}, function(frame) {
+    this.stompClient.connect({"userId": `${userId}`}, function(frame) {
 
       console.log(frame);
       that.stompClient.subscribe(`/topic/${userId}/messages`, (message) => {
