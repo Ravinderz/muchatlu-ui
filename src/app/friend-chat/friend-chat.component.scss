@@ -114,6 +114,7 @@
 }
 .message-input-container {
   border-top: 1px solid rgba(100, 100, 100, 0.2);
+  margin-top: 10px;
 }
 
 .msg-input {
@@ -170,4 +171,10 @@
   // input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
   // input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
   // input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */
+}
+
+@media only screen and (max-width: 766px) {
+  .chat-body {
+    height: calc(100vh - 40vh) !important;
+  }
 }

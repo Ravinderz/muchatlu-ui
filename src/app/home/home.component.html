@@ -47,7 +47,7 @@
       </ul>
     </div>
 
-    <div class="col-12 col-md-4 list-container" id="list-container">
+    <div class="col-12 col-md-4 list-container" id="list-container" *ngIf="showListGroup">
       <app-search-box
         [placeholder]="placeholder"
         (friendRequestSentEvent)="frndRqstSent($event)"
@@ -66,7 +66,7 @@
       </div>
     </div>
     <!-- <div class="col-sm chat-body-container"> -->
-    <div class="col-12 col-md chat-body-container" id="chat-body-container">
+    <div class="col-12 col-md chat-body-container" id="chat-body-container" *ngIf="showMainContainer">
       <!-- col-12 col-md-7 chat-body-container -->
       <ng-template [ngIf]="itemType === 'chats' && selectedListItem">
         <app-item-header [selectedItem]="selectedListItem"></app-item-header>
@@ -93,7 +93,7 @@
     </div>
     <div
       class="col-md-2 profile-container"
-      *ngIf="showProfile"
+      *ngIf="showProfileContainer"
       id="profile-container"
     >
       <app-user-profile></app-user-profile>

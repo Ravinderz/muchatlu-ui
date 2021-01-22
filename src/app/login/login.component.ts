@@ -11,9 +11,12 @@ import { AuthService } from '../auth-service.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {
+    this.screenWidth = window.innerWidth;
+   }
 
   subscriptions: Subscription[] = [];
+  public screenWidth: any;
 
   loginForm = new FormGroup({
     email: new FormControl(''),

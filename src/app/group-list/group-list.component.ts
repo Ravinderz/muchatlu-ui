@@ -18,32 +18,37 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
   @Output() friendRequestEvent = new EventEmitter<any>();
 
   friendRequests: any;
+  screenWidth: number;
 
   constructor(private messageService: MessageService, private userService: UserService, private commonService: CommonService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.screenWidth = window.innerWidth;
   }
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.listType === 'friend requests') {
-    }
-    if (this.listType === 'chats') {
-      if (changes.list.currentValue && changes.list.currentValue.length > 0) {
-        if (this.selectedItemIndex) {
-          this.selectedItem(this.selectedItemIndex)
-        } else {
-          if (this.list.length > 0)
-            this.selectedItem(0)
+    console.log(changes);
+    if (this.screenWidth >= 550) {
+      if (this.listType === 'friend requests') {
+      }
+      if (this.listType === 'chats') {
+        if (changes.list.currentValue && changes.list.currentValue.length > 0) {
+          if (this.selectedItemIndex) {
+            this.selectedItem(this.selectedItemIndex)
+          } else {
+            if (this.list.length > 0)
+              this.selectedItem(0)
+          }
         }
       }
-    }
-    if (this.listType === 'friends') {
-      if (changes.list.currentValue && changes.list.currentValue.length > 0) {
-        if (this.selectedItemIndex) {
-          this.selectedItem(this.selectedItemIndex)
-        } else {
-          if (this.list.length > 0)
-            this.selectedItem(0)
+      if (this.listType === 'friends') {
+        if (changes.list.currentValue && changes.list.currentValue.length > 0) {
+          if (this.selectedItemIndex) {
+            this.selectedItem(this.selectedItemIndex)
+          } else {
+            if (this.list.length > 0)
+              this.selectedItem(0)
+          }
         }
       }
     }
@@ -54,13 +59,16 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit() {
-    if (this.selectedItemIndex) {
-      this.selectedItem(this.selectedItemIndex)
-    } else {
-      if (this.list.length > 0)
-        this.selectedItem(0)
+    console.log(this.screenWidth);
+    if (this.screenWidth >= 550) {
+      console.log("inside if")
+      if (this.selectedItemIndex) {
+        this.selectedItem(this.selectedItemIndex)
+      } else {
+        if (this.list.length > 0)
+          this.selectedItem(0)
+      }
     }
-
 
     this.subscriptions.push(this.messageService.loginEvent.subscribe((value) => {
 

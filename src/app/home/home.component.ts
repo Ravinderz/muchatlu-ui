@@ -25,18 +25,51 @@ export class HomeComponent implements OnInit, OnDestroy {
   activeLink: string = "chats";
   placeholder: string;
   list: any;
-  listType: String = 'friend';
+  listType: String;
   itemType: any;
   selectedListItem: any;
   showFriendRequestDetails = false;
   conversationId: any;
   conversation: any;
   friendDetails: any;
-  selectedItemIndex: any = 0;
-  showProfile: boolean = false;
+  selectedItemIndex: any;
+  screenWidth: number;
+  showListGroup : boolean = true;
+  showMainContainer: boolean = true;
+  showProfileContainer: boolean = true;
+  activeContainer: string;
+  lastActiveContainer: string;
 
   constructor(private userService: UserService, private messageService: MessageService, private commonService: CommonService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+    this.screenWidth = window.innerWidth;
+    this.activeContainer = 'showListGroup';
+    this.updateLayout('showListGroup');
+    if(this.screenWidth >= 550){
+      this.selectedItemIndex = 0;
+      this.listType = 'friend';
+    }
+  }
+
+  updateLayout(action:string){
+    if(this.screenWidth <= 550){
+      console.log(action);
+      this.lastActiveContainer = this.activeContainer;
+      this.activeContainer = action;
+      if(action === 'showListGroup'){
+        this.showListGroup = true;
+        this.showMainContainer = false;
+        this.showProfileContainer = false;
+      }else if(action === 'showMainContainer'){
+        this.showListGroup = false;
+        this.showMainContainer = true;
+        this.showProfileContainer = false;
+      }else if(action === 'showProfileContainer'){
+        this.showListGroup = false;
+        this.showMainContainer = false;
+        this.showProfileContainer = true;
+      } 
+    }
   }
 
 
@@ -51,7 +84,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(this.commonService.showProfileEvent.subscribe((value: boolean) => {
-      this.showProfile = value;
+      //this.updateLayout('showProfileContainer');
+      // TODO :: this is a toggle function need to come back here
+      console.log(value);
+      if(value){
+        this.updateLayout('showProfileContainer');
+      }else{
+        this.updateLayout(this.lastActiveContainer);
+      }
+      
+      //this.showProfileContainer = value;
     }));
 
     // code for friend request subscription
@@ -111,9 +153,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
       this.conversations = temp;
 
-      this.list = this.conversations;
-      this.listType = 'chats';
-      this.selectedListItem = this.list[0];
+      
+        this.list = this.conversations;
+        this.listType = 'chats';
+        this.selectedListItem = this.list[0];
+      
+      
     }));
 
   }
@@ -153,6 +198,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.conversationId = e.conversationId;
         this.itemType = this.listType = "chats";
         this.conversation = this.list[this.selectedItemIndex];
+        console.log("before -- updatelayout  ::: start chat ::: showListGroup");
+        this.updateLayout('showMainContainer');
       });
 
     } else {
@@ -168,6 +215,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.selectedListItem = this.list[0];
           this.itemType = name;
           this.selectedItemIndex = 0;
+          console.log("before -- updatelayout  ::: chats ::: showListGroup");
+          this.updateLayout('showListGroup');
         });
       }
 
@@ -178,6 +227,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.friendDetails = this.list[0];
           this.itemType = name;
           this.selectedItemIndex = 0;
+          console.log("before -- updatelayout  ::: friends ::: showListGroup");
+          this.updateLayout('showListGroup');
         });
       }
       if (name === "friend requests") {
@@ -187,6 +238,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.selectedListItem = this.list[0];
           this.itemType = name;
           this.selectedItemIndex = 0;
+          console.log("before -- updatelayout  ::: friend reqestst :: showListGroup");
+          this.updateLayout('showListGroup');
         });
       }
       if (name === "groups") {
@@ -194,6 +247,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.list = this.friends;
         this.itemType = name;
         this.selectedItemIndex = 0;
+        console.log("before -- updatelayout  ::: groups ::: showListGroup");
+        this.updateLayout('showListGroup');
       }
     }
   }
@@ -212,6 +267,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.friendDetails = e.selectedItem;
       this.friendDetails['conversationId'] = e.conversationId;
     }
+    console.log("before -- updatelayout  ::: showMainContainer");
+    this.updateLayout('showMainContainer');
   }
 
   addFriend(value: any) {
