@@ -38,6 +38,7 @@ export class UserProfileComponent implements OnInit {
       if(value){
         sessionStorage.removeItem("loggedUser");
         sessionStorage.removeItem("token");
+        this.userService.userLogoutEvent.next(false);
         this.route.navigate(['login']);
       }
     })

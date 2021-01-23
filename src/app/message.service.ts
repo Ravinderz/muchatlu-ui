@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth-service.service';
 declare var SockJS;
@@ -19,15 +19,15 @@ export class MessageService {
   }
   public stompClient;
 
-  public messageEvent : BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public messageEvent : Subject<any> = new Subject<any>();
 
-  public typingEvent : BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public typingEvent : Subject<any> = new Subject<any>();
 
-  public loginEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
+  public loginEvent : Subject<any> =new Subject<any>();
 
-  public logoutEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
+  public logoutEvent : Subject<any> =new Subject<any>();
 
-  public friendRequestEvent : BehaviorSubject<any> =new BehaviorSubject<any>({});
+  public friendRequestEvent : Subject<any> =new Subject<any>();
 
   initializeWebSocketConnection(userId) {
     const serverUrl = `${this.baseUrl}chat?userId=${userId}`;

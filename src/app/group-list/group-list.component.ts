@@ -89,7 +89,22 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
       });
 
     }));
+
+    this.subscriptions.push(this.messageService.friendRequestEvent.subscribe((value) => {
+
+      if(value){
+        console.log(value);
+        if(!this.list){
+          this.list = [];
+        }
+        this.list.push(value);
+      }
+
+    }));
+
   }
+
+
 
   selectedItem(index: any) {
 
@@ -111,7 +126,15 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
           'itemType': this.listType,
           'conversation': value
         }
-        this.selectedItemEvent.emit(obj);
+        console.log(obj.selectedItem);
+        this.userService.getUserPresence(obj.selectedItem.userIdTo).subscribe((value:any) => {
+          console.log(value)
+          obj.selectedItem.isUserToOnline = value.online;
+          this.userService.getUserPresence(obj.selectedItem.userIdFrom).subscribe((value:any) => {
+            obj.selectedItem.isUserFromOnline = value.online;
+            this.selectedItemEvent.emit(obj);
+          })
+        })
       })
     } else {
       let obj = {

@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MessageService } from '../message.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-item-header',
@@ -10,7 +11,7 @@ import { MessageService } from '../message.service';
 export class ItemHeaderComponent implements OnInit, OnChanges {
   loggedUser: any;
 
-  constructor(private messageService: MessageService) {
+  constructor(private messageService: MessageService, private userService: UserService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -23,9 +24,7 @@ export class ItemHeaderComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     
-    this.subscriptions.push(this.messageService.loginEvent.subscribe((value) => {
-
-      console.log("inside lgoin event in item header",value);
+    this.subscriptions.push(this.messageService.loginEvent.subscribe((value) => {      
 
       if (this.selectedItem.userIdTo === value.userId) {
         this.selectedItem['isUserToOnline'] = value.online;
@@ -38,9 +37,6 @@ export class ItemHeaderComponent implements OnInit, OnChanges {
     }));
 
     this.subscriptions.push(this.messageService.logoutEvent.subscribe((value) => {
-
-
-      console.log("inside logout event in item header",value);
 
       if (this.selectedItem.userIdTo === value.userId) {
         this.selectedItem['isUserToOnline'] = value.online;

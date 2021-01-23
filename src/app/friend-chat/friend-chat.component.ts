@@ -20,14 +20,10 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
   loggedUser: any;
   isTyping: boolean = false;
 
-
-
   constructor(private messageService: MessageService) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
   }
   ngOnChanges(changes: SimpleChanges): void {
-
-    console.log(changes);
 
     var elem = document.getElementById('empty-div');
     if (elem) {
@@ -44,10 +40,7 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
-    console.log(this.selectedItem);
     this.subscriptions.push(this.messageService.messageEvent.subscribe((value) => {
-      console.log("Inside chat window, message event value ::: ", value);
-
       if (this.conversation) {
         if (!this.isEmpty(value)) {
           if (this.conversation.message[this.conversation.message.length - 1].id !== value.id) {
@@ -70,13 +63,12 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
     }));
 
     this.subscriptions.push(this.messageService.typingEvent.subscribe((value) => {
-      console.log("Inside chat window, message event value ::: ", value);
       if (this.conversation) {
         if (!this.isEmpty(value)) {
           if (this.conversation.id === value.conversationId) {
-            if(this.loggedUser.id !== value.userIdFrom){
+            if (this.loggedUser.id !== value.userIdFrom) {
               this.isTyping = value.isTyping;
-            }else{
+            } else {
               this.isTyping = value.isTyping;
             }
             setTimeout(() => {
@@ -86,7 +78,7 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
           }
         }
       }
-      
+
 
     }));
   }
@@ -150,16 +142,16 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
     }, 10);
   }
 
-  typing(){
+  typing() {
     let msg;
-    
+
     if (this.loggedUser.id === this.selectedItem.userIdFrom) {
       msg = {
         'userIdFrom': this.loggedUser.id,
         'userIdTo': this.selectedItem.userIdTo,
         'isTyping': true,
         'conversationId': this.selectedItem.id,
-        
+
       }
     } else {
       msg = {
@@ -170,9 +162,9 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
 
-    if(this.text && this.text !== ''){
+    if (this.text && this.text !== '') {
       msg.isTyping = true;
-    }else{
+    } else {
       msg.isTyping = false;
     }
 

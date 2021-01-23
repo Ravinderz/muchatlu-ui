@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth-service.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { AuthService } from '../auth-service.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) {
     this.screenWidth = window.innerWidth;
    }
 
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.subscriptions.push(this.authService.login(this.loginForm.value).subscribe((data) => {
           console.log(data);
           sessionStorage.setItem('loggedUser', JSON.stringify(data));
+          this.userService.userLoginEvent.next(true);
           this.router.navigate(['home']);
         }));
       }
