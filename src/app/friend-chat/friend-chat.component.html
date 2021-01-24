@@ -18,7 +18,7 @@
         ewrfwr adsfwea radfa sd -->{{ chat.message }}
       </p>
       <div class="time-wrapper">
-        <span class="msg-time">{{ chat.timestamp | date: "shortTime" }}</span>
+        <span class="msg-time">{{ adjustForTimezone(chat.timestamp) | date: "shortTime" }}</span>
       </div>
     </div>
   </div>

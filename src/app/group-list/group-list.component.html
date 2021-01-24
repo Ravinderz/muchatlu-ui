@@ -78,7 +78,7 @@
         <div class="content d-flex flex-column float-end">
           <p *ngIf="listType !== 'chats'">10:30 PM</p>
           <p *ngIf="listType === 'chats'">
-            {{ item.lastMessageTimestamp | date: "shortTime" }}
+            {{ adjustForTimezone(item.lastMessageTimestamp) | date: "shortTime" }}
           </p>
         </div>
       </div>

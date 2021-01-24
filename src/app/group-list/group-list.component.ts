@@ -25,6 +25,18 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
     this.screenWidth = window.innerWidth;
   }
 
+  adjustForTimezone(value: Date): any {
+    if (value) {
+      let date = new Date(value);
+      var timeOffsetInMS: number = new Date().getTimezoneOffset() * 60000;
+      date.setTime(date.getTime() + timeOffsetInMS);
+      return date.toISOString();
+    } else {
+      return value;
+    }
+
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
@@ -94,9 +106,9 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
 
     this.subscriptions.push(this.messageService.friendRequestEvent.subscribe((value) => {
 
-      if(value){
+      if (value) {
         console.log(value);
-        if(!this.list){
+        if (!this.list) {
           this.list = [];
         }
         this.list.push(value);
@@ -133,10 +145,10 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
           'conversation': value
         }
         console.log(obj.selectedItem);
-        this.userService.getUserPresence(obj.selectedItem.userIdTo).subscribe((value:any) => {
+        this.userService.getUserPresence(obj.selectedItem.userIdTo).subscribe((value: any) => {
           console.log(value)
           obj.selectedItem.isUserToOnline = value.online;
-          this.userService.getUserPresence(obj.selectedItem.userIdFrom).subscribe((value:any) => {
+          this.userService.getUserPresence(obj.selectedItem.userIdFrom).subscribe((value: any) => {
             obj.selectedItem.isUserFromOnline = value.online;
             this.selectedItemEvent.emit(obj);
           })
