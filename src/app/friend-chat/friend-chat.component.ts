@@ -39,6 +39,18 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
+  adjustForTimezone(value: Date): any {
+    if (value) {
+      let date = new Date(value);
+      var timeOffsetInMS: number = new Date().getTimezoneOffset() * 60000;
+      date.setTime(date.getTime() + timeOffsetInMS);
+      return date.toISOString();
+    } else {
+      return value;
+    }
+
+  }
+
   ngOnInit() {
     this.subscriptions.push(this.messageService.messageEvent.subscribe((value) => {
       if (this.conversation) {
@@ -101,6 +113,8 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     let msg;
+    let date = new Date();
+
     if (this.loggedUser.id === this.selectedItem.userIdFrom) {
       msg = {
         'userIdFrom': this.loggedUser.id,
@@ -111,7 +125,7 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
         'avatarTo': this.selectedItem.avatarTo,
         'message': this.text.trim(),
         'conversationId': this.selectedItem.id,
-        'timestamp': new Date().toISOString()
+        'timestamp': new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()
       }
     } else {
       msg = {
@@ -123,7 +137,7 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
         'avatarTo': this.selectedItem.avatarFrom,
         'message': this.text.trim(),
         'conversationId': this.selectedItem.id,
-        'timestamp': new Date().toISOString()
+        'timestamp': new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString()
       }
     }
 

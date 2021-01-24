@@ -1,15 +1,44 @@
 .content-container {
   height: calc(100vh - 10vh) !important;
 
-  .login-img{
-    width:750px;
-    height:595px;
+  .login-img {
+    width: 750px;
+    height: 595px;
     margin-left: -30px;
   }
 
   // img {
   //   width: 750px;
-    
+
+  // }
+
+  // .input-element {
+  //   position: relative;
+
+  //   input:focus ~ .floating-label-placeholder {
+  //     top: -10px;
+  //     bottom: 10px;
+  //     left: 35%;
+  //     font-size: 12px;
+  //     opacity: 1;
+      
+  //   }
+  //   input:not(:focus):valid ~ .floating-label-placeholder {
+  //     top: 10%;
+  //     bottom: 10px;
+  //     left: 32%;
+  //     font-size: 16px;
+  //     opacity: 1;
+  //   }
+
+  //   .floating-label-placeholder {
+  //     position: absolute;
+  //     pointer-events: none;
+  //     left: 20px;
+  //     top: 18px;
+  //     transition: 0.2s ease all;
+  //     color:#6c757d
+  //   }
   // }
 
   input {
@@ -58,6 +87,10 @@
     background-color: darken($color: #6159e6, $amount: 3);
   }
 
+  .message {
+    color: #ff4e4e;
+  }
+
   .sign-up-link {
     color: #6159e6;
     text-decoration: none;
@@ -67,25 +100,28 @@
     color: darken($color: #6159e6, $amount: 3);
     text-decoration: none;
   }
+  .error-input {
+    border: 1px solid #ff4e4e;
+    outline: #ff4e4e;
+  }
 }
 
-@media only screen and (max-width: 1200px ) {
+@media only screen and (max-width: 1200px) {
   .login-img {
-    width:500px !important;
+    width: 500px !important;
   }
 }
 
 @media only screen and (max-width: 800px) {
   .login-img {
-    width:500px !important;
+    width: 500px !important;
     height: 250px !important;
   }
 }
 
 @media only screen and (max-width: 480px) {
   .login-img {
-    width:300px !important;
+    width: 300px !important;
     height: 250px !important;
   }
 }
-
