@@ -19,8 +19,12 @@
             : selectedItem?.usernameTo
         }}
       </h4>
-      <p>{{ selectedItem?.staus }}</p>
-      <p>Online</p>
+      <p>  {{
+        loggedUser.id === selectedItem?.userIdTo
+          ? (selectedItem?.isUserFromOnline ? 'Online' : 'Offline')
+          : (selectedItem?.isUserToOnline ? 'Online' : 'Offline')
+      }}</p>
+      <!-- <p>Online</p> -->
     </div>
     <!-- <div class="text-content">
       <h4>Movies</h4>

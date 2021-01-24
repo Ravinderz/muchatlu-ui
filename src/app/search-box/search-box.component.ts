@@ -16,6 +16,7 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   friendRequests = [];
   message: any;
+  errorMessage: string;
 
 
   constructor(private userService: UserService) {
@@ -33,6 +34,14 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
 
   sendFriendRequest() {
     if (this.email === this.friendRequests[this.friendRequests.length - 1]) {
+      return;
+    }
+
+    if(this.email === this.loggedUser.email){
+      this.errorMessage = "Friend request can't be sent to self";
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 5000);
       return;
     }
     let friendRequest = {
@@ -67,14 +76,26 @@ export class SearchBoxComponent implements OnInit, OnDestroy {
               this.message = null;
             }, 5000);
           }
+        },(err:any) => {
+          console.log(err);
+          this.errorMessage = err.error.message;
+          setTimeout(() => {
+            this.errorMessage = null;
+          }, 5000);
         }));
       } else {
-        this.message = "User doesn't exist";
+        this.errorMessage = "User doesn't exist";
         setTimeout(() => {
-          this.message = null;
+          this.errorMessage = null;
         }, 5000);
       }
 
+    }, (err:any) => {
+      console.log(err);
+      this.errorMessage = err.message;
+      setTimeout(() => {
+        this.errorMessage = null;
+      }, 5000);
     }));
 
 

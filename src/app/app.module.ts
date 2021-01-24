@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { AppComponent } from './app.component';
 import { AuthInterceptorService } from './auth-interceptor.service';
-import { ChatWindowComponent } from './chat-window/chat-window.component';
 import { FriendChatComponent } from './friend-chat/friend-chat.component';
 import { FriendDetailsComponent } from './friend-details/friend-details.component';
 import { FriendRequestDisplayComponent } from './friend-request-display/friend-request-display.component';
@@ -15,7 +14,6 @@ import { HomeComponent } from './home/home.component';
 import { ItemHeaderComponent } from './item-header/item-header.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { RegisterLoginComponent } from './register-login/register-login.component';
 import { RegisterComponent } from './register/register.component';
 import { RouteGuardService } from './route-guard.service';
 import { SearchBoxComponent } from './search-box/search-box.component';
@@ -33,8 +31,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ChatWindowComponent,
-    RegisterLoginComponent,
     RegisterComponent,
     LoginComponent,
     HomeComponent,

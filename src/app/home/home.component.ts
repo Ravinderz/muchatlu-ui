@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommonService } from '../common.service';
 import { MessageService } from '../message.service';
@@ -34,41 +35,48 @@ export class HomeComponent implements OnInit, OnDestroy {
   friendDetails: any;
   selectedItemIndex: any;
   screenWidth: number;
-  showListGroup : boolean = true;
+  showListGroup: boolean = true;
   showMainContainer: boolean = true;
   showProfileContainer: boolean = true;
   activeContainer: string;
   lastActiveContainer: string;
+  showProfile: boolean;
 
-  constructor(private userService: UserService, private messageService: MessageService, private commonService: CommonService) {
+  constructor(private userService: UserService, private messageService: MessageService, private commonService: CommonService, private route: Router) {
     this.loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+
     this.screenWidth = window.innerWidth;
     this.activeContainer = 'showListGroup';
     this.updateLayout('showListGroup');
-    if(this.screenWidth >= 550){
+    if (this.screenWidth >= 550) {
       this.selectedItemIndex = 0;
       this.listType = 'friend';
     }
   }
 
-  updateLayout(action:string){
-    if(this.screenWidth <= 550){
-      console.log(action);
+  updateLayout(action: string) {
+    if (this.screenWidth <= 550) {
       this.lastActiveContainer = this.activeContainer;
       this.activeContainer = action;
-      if(action === 'showListGroup'){
+      if (action === 'showListGroup') {
         this.showListGroup = true;
         this.showMainContainer = false;
         this.showProfileContainer = false;
-      }else if(action === 'showMainContainer'){
+      } else if (action === 'showMainContainer') {
         this.showListGroup = false;
         this.showMainContainer = true;
         this.showProfileContainer = false;
-      }else if(action === 'showProfileContainer'){
+      } else if (action === 'showProfileContainer') {
         this.showListGroup = false;
         this.showMainContainer = false;
         this.showProfileContainer = true;
-      } 
+      }
+    } else {
+      if (action === 'showProfileContainer') {
+        this.showProfileContainer = true;
+      } else {
+        this.showProfileContainer = false;
+      }
     }
   }
 
@@ -84,27 +92,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.push(this.commonService.showProfileEvent.subscribe((value: boolean) => {
-      //this.updateLayout('showProfileContainer');
-      // TODO :: this is a toggle function need to come back here
-      console.log(value);
-      if(value){
+      if (value) {
         this.updateLayout('showProfileContainer');
-      }else{
+      } else {
         this.updateLayout(this.lastActiveContainer);
       }
-      
-      //this.showProfileContainer = value;
+
     }));
 
     // code for friend request subscription
     this.subscriptions.push(this.messageService.friendRequestEvent.subscribe((value) => {
-      console.log(value);
       if (!this.friendRequests) {
         this.friendRequests = [];
       }
 
       if (value && value.requestFromUserId && value.status === 'Pending') {
-        console.log("inside pending");
         this.friendRequests.push(value);
         this.loadPage('friend requests', null);
       }
@@ -152,13 +154,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       });
       this.conversations = temp;
-
-      
-        this.list = this.conversations;
-        this.listType = 'chats';
-        this.selectedListItem = this.list[0];
-      
-      
+      this.list = this.conversations;
+      this.listType = 'chats';
+      this.selectedListItem = this.list[0];
     }));
 
   }
@@ -183,7 +181,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   async getFriendRequests() {
     this.userService.getFriendRequests(this.loggedUser.id).subscribe(value => {
-      console.log(value);
       this.friendRequests = value;
     });
   }
@@ -198,7 +195,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.conversationId = e.conversationId;
         this.itemType = this.listType = "chats";
         this.conversation = this.list[this.selectedItemIndex];
-        console.log("before -- updatelayout  ::: start chat ::: showListGroup");
         this.updateLayout('showMainContainer');
       });
 
@@ -215,7 +211,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.selectedListItem = this.list[0];
           this.itemType = name;
           this.selectedItemIndex = 0;
-          console.log("before -- updatelayout  ::: chats ::: showListGroup");
           this.updateLayout('showListGroup');
         });
       }
@@ -227,7 +222,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.friendDetails = this.list[0];
           this.itemType = name;
           this.selectedItemIndex = 0;
-          console.log("before -- updatelayout  ::: friends ::: showListGroup");
           this.updateLayout('showListGroup');
         });
       }
@@ -238,7 +232,6 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.selectedListItem = this.list[0];
           this.itemType = name;
           this.selectedItemIndex = 0;
-          console.log("before -- updatelayout  ::: friend reqestst :: showListGroup");
           this.updateLayout('showListGroup');
         });
       }
@@ -247,7 +240,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.list = this.friends;
         this.itemType = name;
         this.selectedItemIndex = 0;
-        console.log("before -- updatelayout  ::: groups ::: showListGroup");
         this.updateLayout('showListGroup');
       }
     }
@@ -267,7 +259,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.friendDetails = e.selectedItem;
       this.friendDetails['conversationId'] = e.conversationId;
     }
-    console.log("before -- updatelayout  ::: showMainContainer");
     this.updateLayout('showMainContainer');
   }
 
@@ -295,10 +286,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   frndRqstSent(value: any) {
-    console.log("inside friend request sent", value)
-    console.log(this.friendRequests);
     this.friendRequests.push(value);
-    console.log(this.friendRequests);
     this.loadPage('friend requests', null);
   }
 

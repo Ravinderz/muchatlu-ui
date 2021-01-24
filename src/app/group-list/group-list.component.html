@@ -65,7 +65,7 @@
               : item.requestToUsername
           }}
         </h4>
-        <p *ngIf="listType === 'chats'">
+        <p *ngIf="(listType === 'chats' && item?.lastMessageFrom && item?.lastMessage)">
           {{ item.lastMessageFrom }} : {{ item.lastMessage }}
         </p>
         <p *ngIf="listType === 'groups'">Bharath,Nishant,Sindhu,Sruthi</p>

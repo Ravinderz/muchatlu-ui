@@ -50,8 +50,9 @@ export class FriendRequestDisplayComponent implements OnInit, OnChanges, OnDestr
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.selectedItem);
+    console.log(changes);
 
-    if (this.selectedItem) {
+    if (this.selectedItem && this.selectedItem.id) {
       if (this.selectedItem.requestFromUserId === this.loggedUser.id) {
         if (this.selectedItem.status === 'Accepted' || this.selectedItem.status === 'Rejected') {
           this.showActionBtn = false;
@@ -63,6 +64,20 @@ export class FriendRequestDisplayComponent implements OnInit, OnChanges, OnDestr
         }
       }
     }
+
+    // if (changes.currentValue) {
+    //   let obj: any = changes.currentValue;
+    //   if (obj.requestFromUserId === this.loggedUser.id) {
+    //     if (this.selectedItem.status === 'Accepted' || this.selectedItem.status === 'Rejected') {
+    //       this.showActionBtn = false;
+    //     }
+    //   }
+    //   if (obj.requestFromUserId !== this.loggedUser.id) {
+    //     if (this.selectedItem.status === 'Pending') {
+    //       this.showActionBtn = true;
+    //     }
+    //   }
+    // }
 
   }
 

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -8,6 +9,10 @@ import { environment } from 'src/environments/environment';
 export class UserService {
 
   baseUrl = environment.baseUrl;
+
+  public userLoginEvent : Subject<boolean> =new Subject<boolean>();
+
+  public userLogoutEvent : Subject<boolean> =new Subject<boolean>();
 
   constructor(private http: HttpClient) { }
 
@@ -38,6 +43,14 @@ export class UserService {
 
   updateUserDetails(value:any){
     return this.http.put(`${this.baseUrl}updateUserDetails`,value);
+  }
+
+  logout(user:any){
+    return this.http.post(`${this.baseUrl}logoutUser`,{'id':user.id,'username':user.username});
+  }
+
+  getUserPresence(id:number){
+    return this.http.get(`${this.baseUrl}getUserOnlinePresence/${id}`);
   }
 
 }
