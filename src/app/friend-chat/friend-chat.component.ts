@@ -111,7 +111,7 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
         'avatarTo': this.selectedItem.avatarTo,
         'message': this.text.trim(),
         'conversationId': this.selectedItem.id,
-        'timestamp': null
+        'timestamp': new Date().toISOString()
       }
     } else {
       msg = {
@@ -123,13 +123,11 @@ export class FriendChatComponent implements OnInit, OnChanges, OnDestroy {
         'avatarTo': this.selectedItem.avatarFrom,
         'message': this.text.trim(),
         'conversationId': this.selectedItem.id,
-        'timestamp': null
+        'timestamp': new Date().toISOString()
       }
     }
 
-
     this.messageService.sendMessage(msg);
-    msg.timestamp = new Date();
     console.log(msg);
     if (this.conversation) {
       this.conversation.message.push(msg)
