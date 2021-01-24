@@ -33,22 +33,24 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
       }
       if (this.listType === 'chats') {
         if (changes.list.currentValue && changes.list.currentValue.length > 0) {
-          if (this.selectedItemIndex) {
-            this.selectedItem(this.selectedItemIndex)
-          } else {
-            if (this.list.length > 0)
-              this.selectedItem(0)
-          }
+          this.selectedItem(0)
+          // if (this.selectedItemIndex) {
+          //   this.selectedItem(this.selectedItemIndex)
+          // } else {
+          //   if (this.list.length > 0)
+          //     this.selectedItem(0)
+          // }
         }
       }
       if (this.listType === 'friends') {
         if (changes.list.currentValue && changes.list.currentValue.length > 0) {
-          if (this.selectedItemIndex) {
-            this.selectedItem(this.selectedItemIndex)
-          } else {
-            if (this.list.length > 0)
-              this.selectedItem(0)
-          }
+          this.selectedItem(0)
+          // if (this.selectedItemIndex) {
+          //   this.selectedItem(this.selectedItemIndex)
+          // } else {
+          //   if (this.list.length > 0)
+          //     this.selectedItem(0)
+          // }
         }
       }
     }
@@ -59,7 +61,7 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit() {
-    console.log(this.screenWidth);
+    console.log(this.selectedItemIndex);
     if (this.screenWidth >= 550) {
       console.log("inside if")
       if (this.selectedItemIndex) {
@@ -111,6 +113,8 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedItemIndex = index;
 
     if (this.listType === 'friends') {
+      console.log(this.list);
+      console.log(index);
       this.commonService.getConversationId(this.loggedUser.id, this.list[index].id).subscribe(value => {
         let obj = {
           'selectedItem': this.list[index],
@@ -120,6 +124,8 @@ export class GroupListComponent implements OnInit, OnChanges, OnDestroy {
         this.selectedItemEvent.emit(obj);
       })
     } else if (this.listType === 'chats') {
+      console.log(this.list);
+      console.log(index);
       this.commonService.getConversation(this.list[index].userIdFrom, this.list[index].userIdTo).subscribe(value => {
         let obj = {
           'selectedItem': this.list[index],

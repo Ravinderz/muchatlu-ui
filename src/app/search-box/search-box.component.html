@@ -23,8 +23,11 @@
         <i class="bi bi-plus" *ngIf="email && email.includes('@')"></i>
       </button>
     </div>
-    <div class="feedback-message" *ngIf="message">
+    <div class="feedback-message success" *ngIf="message">
       {{ message }}
+    </div> 
+    <div class="feedback-message error" *ngIf="errorMessage">
+      {{ errorMessage }}
     </div>
   </form>
 </div>
